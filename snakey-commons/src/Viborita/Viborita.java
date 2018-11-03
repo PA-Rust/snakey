@@ -1,6 +1,10 @@
-package Commons;
+package Viborita;
 
 import java.util.ArrayList;
+
+import Commons.Coordenada;
+import Commons.Direccion;
+import Commons.Entidad;
 
 public class Viborita extends Entidad {
 

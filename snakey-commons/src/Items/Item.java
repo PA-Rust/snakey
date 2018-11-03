@@ -1,4 +1,7 @@
-package Commons;
+package Items;
+
+import Commons.Entidad;
+import Viborita.Viborita;
 
 public abstract class Item extends Entidad {
 	private int reloj;

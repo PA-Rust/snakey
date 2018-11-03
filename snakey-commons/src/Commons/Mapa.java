@@ -2,6 +2,9 @@ package Commons;
 
 import java.util.ArrayList;
 
+import Items.Item;
+import Viborita.Viborita;
+
 public class Mapa {
 	private ArrayList<Viborita> viboritas;
 	private Item item;

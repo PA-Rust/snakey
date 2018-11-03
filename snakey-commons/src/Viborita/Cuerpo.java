@@ -1,4 +1,8 @@
-package Commons;
+package Viborita;
+
+import Commons.Coordenada;
+import Commons.Direccion;
+import Commons.Entidad;
 
 public class Cuerpo extends Entidad {
 
