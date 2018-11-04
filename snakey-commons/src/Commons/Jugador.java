@@ -9,6 +9,8 @@ public class Jugador {
 	private int puntajeAcumulado;
 	private int puntajeDePartida;
 	
+	private int puntajeActual = 0;
+	
 	public Jugador(String usuarioId, String nombreDeUsuario, String claveUsuario) {
 		this.usuarioId = usuarioId;
 		this.nombreDeUsuario = nombreDeUsuario;
@@ -70,8 +72,20 @@ public class Jugador {
 		return puntajeAcumulado;
 	}
 
-	public void setPuntajeAcumulado(int puntajeAcumulado) {
-		this.puntajeAcumulado = puntajeAcumulado;
+	public void incrementarPuntajeAcumulado(int nuevoPuntaje) {
+		this.puntajeAcumulado += nuevoPuntaje;
+	}
+	
+	public int getPuntajeActual() {
+		return puntajeActual;
+	}
+	
+	public void incrementarPuntajeActual(int puntaje) {
+		puntajeActual += puntaje;
+	}
+	
+	public void resetearPuntajeActual() {
+		puntajeActual = 0;
 	}
 
 	public int getPuntajeDePartida() {
@@ -83,3 +97,4 @@ public class Jugador {
 	}
 	
 }
+
