@@ -61,6 +61,10 @@ public class Viborita extends Entidad {
 		cuerpo.add(new Cuerpo(nuevaCoordenada));
 	}
 	
+	public float getVelocidad() {
+		return velocidad;
+	}
+	
 	public void decrecer() {
 	}
 	
