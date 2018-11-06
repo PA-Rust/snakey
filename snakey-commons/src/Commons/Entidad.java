@@ -22,6 +22,10 @@ public class Entidad {
 		return posicion;
 	}
 	
+	public void setPosicion(Coordenada nuevaPosicion) {
+		this.posicion = nuevaPosicion;
+	}
+	
 	public String getSprite() {
 		return sprite;
 	}

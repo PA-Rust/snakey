@@ -9,7 +9,7 @@ import Commons.Entidad;
 public class Viborita extends Entidad {
 
 	private ArrayList<Cuerpo> cuerpo;
-	private float velocidad = 1;
+	private int velocidad = 1;
 
 	public Viborita(int y) {
 		cuerpo = new ArrayList<Cuerpo>();
@@ -61,7 +61,7 @@ public class Viborita extends Entidad {
 		cuerpo.add(new Cuerpo(nuevaCoordenada));
 	}
 	
-	public float getVelocidad() {
+	public int getVelocidad() {
 		return velocidad;
 	}
 	
@@ -69,6 +69,57 @@ public class Viborita extends Entidad {
 	}
 	
 	public void desplazar() {
+		Cuerpo cabezaAnterior = getCabeza();
+		Cuerpo cabeza = getCabeza();
+		
+		Coordenada posicionActual = cabeza.obtenerPosicion();
+		switch (cabeza.getDireccion()) {
+			case arriba:
+				cabeza.setPosicion(new Coordenada(posicionActual.getX(), posicionActual.getY() - velocidad));
+			case abajo:
+				cabeza.setPosicion(new Coordenada(posicionActual.getX(), posicionActual.getY() + velocidad));
+			case izquierda:
+				cabeza.setPosicion(new Coordenada(posicionActual.getX() - velocidad, posicionActual.getY()));
+			case derecha:
+				cabeza.setPosicion(new Coordenada(posicionActual.getX() + velocidad, posicionActual.getY()));
+		}
+		
+		for (int i = 1; i < cuerpo.size(); i++) {
+			Cuerpo cuerpoActual = cuerpo.get(i);
+			if (i == 1) {
+				cuerpoActual.setDireccion(cabezaAnterior.getDireccion());
+				cuerpoActual.setPosicion(cabezaAnterior.obtenerPosicion());
+				continue;
+			}
+			cuerpoActual.setDireccion(cuerpo.get(i - 1).getDireccion());
+			cuerpoActual.setPosicion(cuerpo.get(i - 1).obtenerPosicion());
+		}
+		
+	}
+	
+	/**
+	 * Se devuelve la coordenada que va a seguir en base al movimiento
+	 * que lleva la viborita.
+	 * @return Coordenada proximaCoordenada
+	 */
+	public Coordenada getProximaUbicacion() {
+		Coordenada proximaCoordenada;
+		Coordenada posicionActual = getCabeza().obtenerPosicion();
+
+		switch (getCabeza().getDireccion()) {
+			case arriba:
+				proximaCoordenada = new Coordenada(posicionActual.getX(), posicionActual.getY() - velocidad);
+			case abajo:
+				proximaCoordenada = new Coordenada(posicionActual.getX(), posicionActual.getY() + velocidad);
+			case izquierda:
+				proximaCoordenada = new Coordenada(posicionActual.getX() - velocidad, posicionActual.getY());
+			case derecha:
+				proximaCoordenada = new Coordenada(posicionActual.getX() + velocidad, posicionActual.getY());
+			default:
+				proximaCoordenada = new Coordenada(0, 0);
+		}
+		
+		return proximaCoordenada;
 	}
 	
 	public void actualizar() {
@@ -85,6 +136,5 @@ public class Viborita extends Entidad {
 	
 	@Override
 	public void enColision(Entidad entidad) {
-
 	}
 }
