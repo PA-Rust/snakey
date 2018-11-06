@@ -1,6 +1,7 @@
 package Juego;
 
 import javax.swing.JPanel;
+import java.awt.Graphics;
 
 import Commons.Mapa;
 import Commons.Partida;
@@ -9,22 +10,20 @@ public class PanelJuego extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private Partida partida;
-	private Mapa mapa;
 	
 	public PanelJuego(Partida partida) {
 		this.partida = partida;
-		this.mapa = partida.getMapa();
 	}
 	
-	public void dibujar() {
-		mapa.dibujar();
+	public Partida getPartida() {
+		return partida;
 	}
 	
-	public void actualizar() {
+	public void paintComponent(Graphics graphics) {
 		
 	}
 	
-	public static void main(String[] args) {
+	public void actualizar() {
 		
 	}
 }
