@@ -66,14 +66,12 @@ public class IniciarSesion extends JFrame {
 		JButton btnCrearUsuario = new JButton("Crear Usuario");
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				CrearUsuario nuevoUsuario = new CrearUsuario(yo);
 				nuevoUsuario.setVisible(true);
 				nuevoUsuario.setLocationRelativeTo(null);
 				nuevoUsuario.setResizable(false);
-				
-				
-				
+
 			}
 		});
 
@@ -89,23 +87,26 @@ public class IniciarSesion extends JFrame {
 
 				Jugador jugador = new Jugador();
 				jugador.setNombreDeUsuario(txtNombre.getText());
-				// obtengo la clave del usuario para luego consultarlo en la BD
+
+				/* Obtengo la clave del usuario para luego consultarlo en la BD */
+
 				char[] arrayDeChars = ClaveUsuario.getPassword();
 				String clave = new String(arrayDeChars);
 				jugador.setClaveUsuario(clave);
 
 				if (jugador.getNombreDeUsuario().trim().length() == 0
-						|| jugador.getClaveUsuario().trim().length() == 0) {
+						|| jugador.getClaveUsuario().trim().length() == 0) {/* Valido los datos */
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
-					// *BUSCAR EN BASE DE DATOS Y CONSULTAR*//
+
+					/* BUSCAR EN BASE DE DATOS Y CONSULTAR */
 
 					dispose();
-					SalaDisponible disponible = new SalaDisponible();
+					SalaDisponible disponible = new SalaDisponible("");
 					disponible.setLocationRelativeTo(null);
 					disponible.setResizable(false);
 					disponible.setVisible(true);
-					
+
 				}
 
 			}
@@ -118,38 +119,26 @@ public class IniciarSesion extends JFrame {
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuario.setFont(new Font("Stencil", Font.PLAIN, 20));
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel
+				.createSequentialGroup().addContainerGap()
+				.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 						.addComponent(ClaveUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
 						.addComponent(txtNombre, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
 						.addComponent(lblUsuario, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
 						.addComponent(lblClave, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(btnIniciar, GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-							.addGap(156)
-							.addComponent(btnCrearUsuario)))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(39)
-					.addComponent(lblUsuario)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblClave)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(ClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnIniciar)
-						.addComponent(btnCrearUsuario))
-					.addContainerGap())
-		);
+								.addComponent(btnIniciar, GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE).addGap(156)
+								.addComponent(btnCrearUsuario)))
+				.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
+				.createSequentialGroup().addGap(39).addComponent(lblUsuario)
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE).addGap(18)
+				.addComponent(lblClave).addPreferredGap(ComponentPlacement.UNRELATED)
+				.addComponent(ClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED, 141, Short.MAX_VALUE).addGroup(gl_panel
+						.createParallelGroup(Alignment.BASELINE).addComponent(btnIniciar).addComponent(btnCrearUsuario))
+				.addContainerGap()));
 		panel.setLayout(gl_panel);
 
 	}
