@@ -20,24 +20,25 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import Commons.Sala;
-public class CrearNuevaSala extends JFrame {
+public class CrearNuevaSala extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField txtNombreDeSala;
-	JFrame yo;
+	JDialog yo;
 	Sala nuevasala;
 
-	public CrearNuevaSala(JFrame padre) {
+	public  CrearNuevaSala(JFrame padre) {
 
 		yo = this;
-
+		setModal(true);
 		setTitle("Crear Sala");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 380, 240);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,21 +70,10 @@ public class CrearNuevaSala extends JFrame {
 				if (txtNombreDeSala.getText().trim().length() == 0) { /* Valido que el nombre tenga algo valido */
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
-
 					nuevasala = new Sala(txtNombreDeSala.getText(),comboBox.getSelectedIndex() + 1);/* agrego el 1 ya que va de 0-3 */
-
-					/*
-					 * creo un nuevo objeto y le paso como parametro el nombre de la sala creado
-					 * para el JList
-					 */
-					SalaDisponible disponible = new SalaDisponible(nuevasala.getNombreSala());
-					disponible.salaCreada = nuevasala; // le paso la nueva sala
-					disponible.setLocationRelativeTo(null);
-					disponible.setResizable(false);// no lo puedo renderizar
-					disponible.setVisible(true); // visible al usuario
-
+					((SalaDisponible) padre).agregarALista(nuevasala);
 					yo.dispose(); // cierro el frame
-
+					setModal(false);
 				}
 			}
 		});
@@ -93,11 +83,8 @@ public class CrearNuevaSala extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente cancelar la creacion de la sala?",
 						"Cancelar nueva sala", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					SalaDisponible frame = new SalaDisponible("");
-					frame.setResizable(false);// no lo puedo renderizar
-					frame.setVisible(true); // visible al usuario
-					frame.setLocationRelativeTo(null); // para que se posisione en el medio de la pantalla
 					yo.dispose();
+					//padre.setEnabled(true);
 				}
 			}
 		});

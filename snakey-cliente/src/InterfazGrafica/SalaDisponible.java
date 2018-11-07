@@ -11,6 +11,7 @@ import Commons.Sala;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -18,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.DefaultListModel;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 
@@ -29,34 +31,21 @@ public class SalaDisponible extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	JFrame yo;
-	JList listSalasDisponibles;
+	JList<String> listSalasDisponibles;
 	Sala salaCreada;
 	CrearNuevaSala crearNuevaSala;
+	ArrayList<Sala> salas;
+	DefaultListModel<String> modelo;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SalaDisponible frame = new SalaDisponible("");
-					frame.setResizable(false);// no lo puedo renderizar
-					frame.setVisible(true); // visible al usuario
-					frame.setLocationRelativeTo(null); // para que se posisione en el medio de la pantalla
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public SalaDisponible(String nombreSala) {
+	public SalaDisponible() {
+		salas = new ArrayList<>();
 		setTitle("Salas Disponibles");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 353, 272);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
+		yo = this;
 		JPanel panel = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(panel,
@@ -74,13 +63,10 @@ public class SalaDisponible extends JFrame {
 		JButton btnCrearSala = new JButton("Crear Sala");
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				crearNuevaSala = new CrearNuevaSala(yo);
 				crearNuevaSala.setResizable(false);
 				crearNuevaSala.setLocationRelativeTo(null);
 				crearNuevaSala.setVisible(true);
-				dispose();
-
 			}
 		});
 
@@ -97,9 +83,8 @@ public class SalaDisponible extends JFrame {
 		lblSalas.setFont(new Font("Stencil", Font.PLAIN, 20));
 
 		listSalasDisponibles = new JList();
-		DefaultListModel modelo = new DefaultListModel();
-		modelo.addElement(nombreSala);
-		listSalasDisponibles.setModel(modelo);
+		modelo = new DefaultListModel();
+		
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
@@ -140,5 +125,12 @@ public class SalaDisponible extends JFrame {
 						.addContainerGap()));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
+		
+	}
+	
+	public void agregarALista(Sala nuevaSala) {
+		this.modelo.addElement(nuevaSala.getNombreSala());
+		this.salas.add(nuevaSala);
+		this.listSalasDisponibles.setModel(modelo);
 	}
 }
