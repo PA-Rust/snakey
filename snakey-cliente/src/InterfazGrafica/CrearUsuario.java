@@ -15,10 +15,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CrearUsuario extends JFrame {
+public class CrearUsuario extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -26,12 +28,12 @@ public class CrearUsuario extends JFrame {
 	private JTextField idNuevoReg;
 	private JPasswordField claveConfirmatoria;
 	private JTextField nombreNuevoReg;
-	private static JFrame yo;
+	private JDialog yo;
 
 	public CrearUsuario(JFrame padre) {
 
 		yo = this;
-
+		yo.setModal(true);
 		setTitle("Crear nuevo usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // DISPOSE_ON_CLOSE lo que hace es solo cerrar la ventana
 															// secundaria y no todas las demas
@@ -80,21 +82,20 @@ public class CrearUsuario extends JFrame {
 
 				if (nuevoJugador.getNombreDeUsuario().length() == 0 || nuevoJugador.getUsuarioId().length() == 0
 						|| clave.length() == 0 || claveConfirmatoria.length() == 0) // campos incompletos
-					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.WARNING_MESSAGE);
 				else {
 
 					if (claveConfirmatoria.equals(clave)) {
 						System.out.println("SON IGUALES");
 						nuevoJugador.setClaveUsuario(clave);
-
+						yo.dispose();
 						/// VOLCAR A LA BASE DE DATOS
 
 					} else {
 						JOptionPane.showMessageDialog(null, "No se ingreso correctamente la contraseña", "ERROR",
-								JOptionPane.ERROR_MESSAGE);
+								JOptionPane.WARNING_MESSAGE);
 					}
 				}
-				yo.dispose();
 			}
 		});
 		JButton btnCancelar = new JButton("Cancelar");

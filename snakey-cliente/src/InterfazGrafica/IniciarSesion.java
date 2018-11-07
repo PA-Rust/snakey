@@ -76,6 +76,7 @@ public class IniciarSesion extends JFrame {
 		});
 
 		ClaveUsuario = new JPasswordField();
+		ClaveUsuario.setToolTipText("password");
 
 		JLabel lblClave = new JLabel("CLAVE");
 		lblClave.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,32 +114,50 @@ public class IniciarSesion extends JFrame {
 		});
 
 		txtNombre = new JTextField();
+		txtNombre.setText("usuario");
 		txtNombre.setColumns(10);
 
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuario.setFont(new Font("Stencil", Font.PLAIN, 20));
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel
-				.createSequentialGroup().addContainerGap()
-				.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(ClaveUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-						.addComponent(txtNombre, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-						.addComponent(lblUsuario, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-						.addComponent(lblClave, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblUsuario, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+						.addComponent(lblClave, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
 						.addGroup(gl_panel.createSequentialGroup()
-								.addComponent(btnIniciar, GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE).addGap(156)
-								.addComponent(btnCrearUsuario)))
-				.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addGap(39).addComponent(lblUsuario)
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE).addGap(18)
-				.addComponent(lblClave).addPreferredGap(ComponentPlacement.UNRELATED)
-				.addComponent(ClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED, 141, Short.MAX_VALUE).addGroup(gl_panel
-						.createParallelGroup(Alignment.BASELINE).addComponent(btnIniciar).addComponent(btnCrearUsuario))
-				.addContainerGap()));
+							.addComponent(btnIniciar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(139)
+							.addComponent(btnCrearUsuario)
+							.addGap(17))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(6)
+							.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 376, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(6)
+							.addComponent(ClaveUsuario, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(39)
+					.addComponent(lblUsuario)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblClave)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(ClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnIniciar)
+						.addComponent(btnCrearUsuario))
+					.addContainerGap())
+		);
 		panel.setLayout(gl_panel);
 
 	}

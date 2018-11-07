@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class SalaDisponible extends JFrame {
 
@@ -36,6 +37,7 @@ public class SalaDisponible extends JFrame {
 	CrearNuevaSala crearNuevaSala;
 	ArrayList<Sala> salas;
 	DefaultListModel<String> modelo;
+	JButton btnUnirse;
 
 	public SalaDisponible() {
 		salas = new ArrayList<>();
@@ -53,11 +55,19 @@ public class SalaDisponible extends JFrame {
 		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(panel,
 				GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE));
 
-		JButton btnUnirse = new JButton("Unirse");
+		btnUnirse = new JButton("Unirse");
+		btnUnirse.setEnabled(false);
 		btnUnirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-			}
+
+				if (listSalasDisponibles.getSelectedIndex() == -1) {
+					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala", "ERROR", JOptionPane.WARNING_MESSAGE);
+
+				}
+				else {
+					yo.dispose();
+				}
+				}
 		});
 
 		JButton btnCrearSala = new JButton("Crear Sala");
@@ -84,7 +94,6 @@ public class SalaDisponible extends JFrame {
 
 		listSalasDisponibles = new JList();
 		modelo = new DefaultListModel();
-		
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
@@ -125,12 +134,13 @@ public class SalaDisponible extends JFrame {
 						.addContainerGap()));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
-		
+
 	}
-	
+
 	public void agregarALista(Sala nuevaSala) {
 		this.modelo.addElement(nuevaSala.getNombreSala());
 		this.salas.add(nuevaSala);
 		this.listSalasDisponibles.setModel(modelo);
+		btnUnirse.setEnabled(true);
 	}
 }
