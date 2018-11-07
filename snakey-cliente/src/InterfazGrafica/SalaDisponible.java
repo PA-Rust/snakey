@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Commons.Jugador;
 import Commons.Sala;
 
 import javax.swing.GroupLayout;
@@ -33,13 +34,14 @@ public class SalaDisponible extends JFrame {
 	private JPanel contentPane;
 	JFrame yo;
 	JList<String> listSalasDisponibles;
+	DefaultListModel<String> modelo;
 	Sala salaCreada;
 	CrearNuevaSala crearNuevaSala;
+	SalaActual salaActual;
 	ArrayList<Sala> salas;
-	DefaultListModel<String> modelo;
 	JButton btnUnirse;
 
-	public SalaDisponible() {
+	public SalaDisponible(Jugador jugador) {
 		salas = new ArrayList<>();
 		setTitle("Salas Disponibles");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -65,6 +67,7 @@ public class SalaDisponible extends JFrame {
 
 				}
 				else {
+					salaActual = new SalaActual(jugador);
 					yo.dispose();
 				}
 				}
@@ -73,7 +76,7 @@ public class SalaDisponible extends JFrame {
 		JButton btnCrearSala = new JButton("Crear Sala");
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				crearNuevaSala = new CrearNuevaSala(yo);
+				crearNuevaSala = new CrearNuevaSala(yo,jugador);
 				crearNuevaSala.setResizable(false);
 				crearNuevaSala.setLocationRelativeTo(null);
 				crearNuevaSala.setVisible(true);

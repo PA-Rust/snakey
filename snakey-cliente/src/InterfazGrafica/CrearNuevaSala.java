@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Commons.Jugador;
 import Commons.Sala;
 
 import javax.swing.GroupLayout;
@@ -30,10 +31,10 @@ public class CrearNuevaSala extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField txtNombreDeSala;
-	JDialog yo;
-	Sala nuevasala;
+	private JDialog yo;
+	private Sala nuevasala;
 
-	public  CrearNuevaSala(JFrame padre) {
+	public  CrearNuevaSala(JFrame padre,Jugador jugador) {
 
 		yo = this;
 		setModal(true);
@@ -70,7 +71,7 @@ public class CrearNuevaSala extends JDialog {
 				if (txtNombreDeSala.getText().trim().length() == 0) { /* Valido que el nombre tenga algo valido */
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
-					nuevasala = new Sala(txtNombreDeSala.getText(),comboBox.getSelectedIndex() + 1);/* agrego el 1 ya que va de 0-3 */
+					nuevasala = new Sala(txtNombreDeSala.getText(),comboBox.getSelectedIndex() + 1,jugador);/* agrego el 1 ya que va de 0-3 */
 					((SalaDisponible) padre).agregarALista(nuevasala);
 					yo.dispose(); // cierro el frame
 					setModal(false);
