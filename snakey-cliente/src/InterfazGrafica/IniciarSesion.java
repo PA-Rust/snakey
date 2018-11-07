@@ -54,7 +54,7 @@ public class IniciarSesion extends JFrame {
 	public IniciarSesion() {
 		setTitle("Inicio de sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 418, 400);
+		setBounds(100, 100, 400, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -125,38 +125,33 @@ public class IniciarSesion extends JFrame {
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblUsuario, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
-						.addComponent(lblClave, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(btnIniciar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGap(139)
-							.addComponent(btnCrearUsuario)
-							.addGap(17))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(6)
-							.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 376, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(6)
-							.addComponent(ClaveUsuario, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnIniciar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+							.addGap(136)
+							.addComponent(btnCrearUsuario, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(ClaveUsuario, Alignment.LEADING)
+							.addComponent(lblUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(txtNombre, Alignment.LEADING)
+							.addComponent(lblClave, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(39)
-					.addComponent(lblUsuario)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGap(44)
+					.addComponent(lblClave)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(lblClave)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblUsuario)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(ClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnIniciar)
-						.addComponent(btnCrearUsuario))
-					.addContainerGap())
+						.addComponent(btnCrearUsuario)))
 		);
 		panel.setLayout(gl_panel);
 
