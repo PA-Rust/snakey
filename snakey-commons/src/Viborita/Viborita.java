@@ -55,7 +55,7 @@ public class Viborita extends Entidad {
 		}
 		
 		Coordenada nuevaCoordenada = colaDeLaSerpiente
-			.obtenerPosicion();
+			.getPosicion();
 		nuevaCoordenada.desplazar(desplazamiento);
 		
 		cuerpo.add(new Cuerpo(nuevaCoordenada));
@@ -72,7 +72,7 @@ public class Viborita extends Entidad {
 		Cuerpo cabezaAnterior = getCabeza();
 		Cuerpo cabeza = getCabeza();
 		
-		Coordenada posicionActual = cabeza.obtenerPosicion();
+		Coordenada posicionActual = cabeza.getPosicion();
 		switch (cabeza.getDireccion()) {
 			case arriba:
 				cabeza.setPosicion(new Coordenada(posicionActual.getX(), posicionActual.getY() - velocidad));
@@ -88,11 +88,11 @@ public class Viborita extends Entidad {
 			Cuerpo cuerpoActual = cuerpo.get(i);
 			if (i == 1) {
 				cuerpoActual.setDireccion(cabezaAnterior.getDireccion());
-				cuerpoActual.setPosicion(cabezaAnterior.obtenerPosicion());
+				cuerpoActual.setPosicion(cabezaAnterior.getPosicion());
 				continue;
 			}
 			cuerpoActual.setDireccion(cuerpo.get(i - 1).getDireccion());
-			cuerpoActual.setPosicion(cuerpo.get(i - 1).obtenerPosicion());
+			cuerpoActual.setPosicion(cuerpo.get(i - 1).getPosicion());
 		}
 		
 	}
@@ -104,7 +104,7 @@ public class Viborita extends Entidad {
 	 */
 	public Coordenada getProximaUbicacion() {
 		Coordenada proximaCoordenada;
-		Coordenada posicionActual = getCabeza().obtenerPosicion();
+		Coordenada posicionActual = getCabeza().getPosicion();
 
 		switch (getCabeza().getDireccion()) {
 			case arriba:

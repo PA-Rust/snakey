@@ -3,7 +3,7 @@ package Juego;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 
-import Commons.Mapa;
+// import Commons.Mapa;
 import Commons.Partida;
 
 public class PanelJuego extends JPanel {
@@ -12,7 +12,7 @@ public class PanelJuego extends JPanel {
 	private Partida partida;
 	
 	public PanelJuego(Partida partida) {
-		this.partida = partida;
+		
 	}
 	
 	public Partida getPartida() {

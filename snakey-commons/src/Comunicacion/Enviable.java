@@ -6,5 +6,8 @@ public class Enviable {
 	public Enviable(TiposMensaje tipoMensaje) {
 		this.tipoMensaje = tipoMensaje;
 	}
-
+	
+	public TiposMensaje getTipoMensaje() {
+		return tipoMensaje;
+	}
 }
