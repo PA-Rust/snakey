@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-public class SalaDisponible extends JFrame {
+public class SalasDisponibles extends JFrame {
 
 	/**
 	 * 
@@ -33,15 +33,17 @@ public class SalaDisponible extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	JFrame yo;
+	
 	JList<String> listSalasDisponibles;
 	DefaultListModel<String> modelo;
+	ArrayList<Sala> salas;
+	
 	Sala salaCreada;
 	CrearNuevaSala crearNuevaSala;
 	SalaActual salaActual;
-	ArrayList<Sala> salas;
 	JButton btnUnirse;
 
-	public SalaDisponible(Jugador jugador) {
+	public SalasDisponibles(Jugador jugador) {
 		salas = new ArrayList<>();
 		setTitle("Salas Disponibles");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -67,7 +69,7 @@ public class SalaDisponible extends JFrame {
 
 				}
 				else {
-					salaActual = new SalaActual(jugador);
+					salaActual = new SalaActual(jugador,salas.get(listSalasDisponibles.getSelectedIndex()));
 					yo.dispose();
 				}
 				}

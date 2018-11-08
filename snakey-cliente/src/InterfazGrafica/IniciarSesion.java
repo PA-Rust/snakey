@@ -103,7 +103,7 @@ public class IniciarSesion extends JFrame {
 					/* BUSCAR EN BASE DE DATOS Y CONSULTAR */
 
 					dispose();
-					SalaDisponible disponible = new SalaDisponible(jugador);
+					SalasDisponibles disponible = new SalasDisponibles(jugador);
 					disponible.setLocationRelativeTo(null);
 					disponible.setResizable(false);
 					disponible.setVisible(true);
