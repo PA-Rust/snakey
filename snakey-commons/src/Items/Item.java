@@ -13,7 +13,7 @@ public abstract class Item extends Entidad {
 	}
 	
 	public Item(Coordenada coordenada, int reloj) {
-		super(coordenada)
+		super(coordenada);
 		this.reloj = reloj;
 	}
 	

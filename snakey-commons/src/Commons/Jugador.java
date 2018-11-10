@@ -8,7 +8,10 @@ public class Jugador {
 	private int partidasGanadas;
 	private int partidasPerdidas;
 	private int puntajeAcumulado;
-	private int puntajeDePartida;
+	
+	// TODO(toti): Remover lo de clave, poniendolo para hacer funcionar
+	// lo de interfaz grafica
+	private String claveDeUsuario;
 	
 	private transient Color color;
 	private transient int puntajeActual = 0;
@@ -21,6 +24,14 @@ public class Jugador {
 	public Jugador(String nombreDeUsuario, int id) {
 		this.id = id;
 		this.nombreDeUsuario = nombreDeUsuario;
+	}
+	
+	public void setClaveUsuario(String clave) {
+		this.claveDeUsuario = clave;
+	}
+	
+	public String getClaveUsuario() {
+		return claveDeUsuario;
 	}
 
 	/**
@@ -79,17 +90,6 @@ public class Jugador {
 	public void resetearPuntajeActual() {
 		puntajeActual = 0;
 	}
-<<<<<<< HEAD
-
-	public int getPuntajeDePartida() {
-		return puntajeDePartida;
-	}
-
-	public void setPuntajeDePartida(int puntajeDePartida) {
-		this.puntajeDePartida = puntajeDePartida;
-	}
-	
-=======
 	
 	public Color getColor() {
 		return this.color;
@@ -98,6 +98,5 @@ public class Jugador {
 	public void setColor(Color color) {
 		this.color = color;
 	}
->>>>>>> comenzando a agregar logica del servidor
 }
 
