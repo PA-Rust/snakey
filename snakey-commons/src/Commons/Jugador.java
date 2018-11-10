@@ -1,24 +1,37 @@
 package Commons;
 
+import java.awt.Color;
+
 public class Jugador {
-	private String usuarioId;
+	private int id;
 	private String nombreDeUsuario;
-	private String claveUsuario;
 	private int partidasGanadas;
 	private int partidasPerdidas;
 	private int puntajeAcumulado;
-	private int puntajeDePartida;
 	
-	public Jugador(String usuarioId, String nombreDeUsuario, String claveUsuario) {
-		this.usuarioId = usuarioId;
-		this.nombreDeUsuario = nombreDeUsuario;
-		this.claveUsuario = claveUsuario;
-	}
+	// TODO(toti): Remover lo de clave, poniendolo para hacer funcionar
+	// lo de interfaz grafica
+	private String claveDeUsuario;
+	
+	private transient Color color;
+	private transient int puntajeActual = 0;
 
 	public Jugador() {
-		this.usuarioId = null;
+		this.id = 0;
 		this.nombreDeUsuario = null;
-		this.claveUsuario = null;
+	}
+	
+	public Jugador(String nombreDeUsuario, int id) {
+		this.id = id;
+		this.nombreDeUsuario = nombreDeUsuario;
+	}
+	
+	public void setClaveUsuario(String clave) {
+		this.claveDeUsuario = clave;
+	}
+	
+	public String getClaveUsuario() {
+		return claveDeUsuario;
 	}
 
 	/**
@@ -26,12 +39,12 @@ public class Jugador {
 	 * en la base de datos.
 	 */
 
-	public String getUsuarioId() {
-		return usuarioId;
+	public int getID() {
+		return id;
 	}
 
-	public void setUsuarioId(String usuarioId) {
-		this.usuarioId = usuarioId;
+	public void setID(int id) {
+		this.id = id;
 	}
 
 	public String getNombreDeUsuario() {
@@ -40,14 +53,6 @@ public class Jugador {
 
 	public void setNombreDeUsuario(String nombreDeUsuario) {
 		this.nombreDeUsuario = nombreDeUsuario;
-	}
-
-	public String getClaveUsuario() {
-		return claveUsuario;
-	}
-
-	public void setClaveUsuario(String claveUsuario) {
-		this.claveUsuario = claveUsuario;
 	}
 
 	public int getPartidasGanadas() {
@@ -70,16 +75,28 @@ public class Jugador {
 		return puntajeAcumulado;
 	}
 
-	public void setPuntajeAcumulado(int puntajeAcumulado) {
-		this.puntajeAcumulado = puntajeAcumulado;
-	}
-
-	public int getPuntajeDePartida() {
-		return puntajeDePartida;
-	}
-
-	public void setPuntajeDePartida(int puntajeDePartida) {
-		this.puntajeDePartida = puntajeDePartida;
+	public void incrementarPuntajeAcumulado(int nuevoPuntaje) {
+		this.puntajeAcumulado += nuevoPuntaje;
 	}
 	
+	public int getPuntajeActual() {
+		return puntajeActual;
+	}
+	
+	public void incrementarPuntajeActual(int puntaje) {
+		puntajeActual += puntaje;
+	}
+	
+	public void resetearPuntajeActual() {
+		puntajeActual = 0;
+	}
+	
+	public Color getColor() {
+		return this.color;
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
+	}
 }
+

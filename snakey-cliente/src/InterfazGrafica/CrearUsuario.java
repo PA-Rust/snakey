@@ -73,15 +73,15 @@ public class CrearUsuario extends JDialog {
 				Jugador nuevoJugador = new Jugador();
 
 				nuevoJugador.setNombreDeUsuario(nombreNuevoReg.getText());
-				nuevoJugador.setUsuarioId(idNuevoReg.getText());
+				// nuevoJugador.setUsuarioId(idNuevoReg.getText());
 
 				char[] arrayDeChars = clave.getPassword();
 				String clave = new String(arrayDeChars);
 				char[] arrayDeChars2 = claveConfirmatoria.getPassword();
 				String claveConfirmatoria = new String(arrayDeChars2);
 
-				if (nuevoJugador.getNombreDeUsuario().length() == 0 || nuevoJugador.getUsuarioId().length() == 0
-						|| clave.length() == 0 || claveConfirmatoria.length() == 0) // campos incompletos
+				if (nuevoJugador.getNombreDeUsuario().length() == 0 || 
+					clave.length() == 0 || claveConfirmatoria.length() == 0) // campos incompletos
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.WARNING_MESSAGE);
 				else {
 

@@ -18,8 +18,12 @@ public class Entidad {
 	public void dibujar() {
 	}
 	
-	public Coordenada obtenerPosicion() {
+	public Coordenada getPosicion() {
 		return posicion;
+	}
+	
+	public void setPosicion(Coordenada nuevaPosicion) {
+		this.posicion = nuevaPosicion;
 	}
 	
 	public String getSprite() {
