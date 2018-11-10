@@ -7,6 +7,7 @@ public class Jugador {
 	private int partidasGanadas;
 	private int partidasPerdidas;
 	private int puntajeAcumulado;
+	private int puntajeDePartida;
 	
 	public Jugador(String usuarioId, String nombreDeUsuario, String claveUsuario) {
 		this.usuarioId = usuarioId;
@@ -72,4 +73,13 @@ public class Jugador {
 	public void setPuntajeAcumulado(int puntajeAcumulado) {
 		this.puntajeAcumulado = puntajeAcumulado;
 	}
+
+	public int getPuntajeDePartida() {
+		return puntajeDePartida;
+	}
+
+	public void setPuntajeDePartida(int puntajeDePartida) {
+		this.puntajeDePartida = puntajeDePartida;
+	}
+	
 }
