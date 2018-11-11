@@ -1,5 +1,6 @@
 package Commons;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,14 +16,12 @@ public class Mapa {
 	private int alto;
 	private Entidad[][] grilla;
 
-	public Mapa() {
-		this.ancho = 30;
-		this.alto = 30;
-	}
-	
-	public Mapa(int ancho, int alto) {
-		this.ancho = ancho;
-		this.alto = alto;
+	public Mapa(Jugador[] jugadores) {
+		for (int i = 0; i < jugadores.length; i++) {
+			viboritas.add(new Viborita(10 * (i + 1), jugadores[i]));
+		}
+		this.ancho = 50;
+		this.alto = 50;
 	}
 	
 	public int getAncho() {
@@ -37,9 +36,6 @@ public class Mapa {
 		int randomX = ThreadLocalRandom.current().nextInt(0, ancho + 1);
 		int randomY = ThreadLocalRandom.current().nextInt(0, alto + 1);
 		Coordenada coordenadaRandom = new Coordenada(randomX, randomY);
-		// Si la nueva coordenada en donde vamos a spawnear la manzanita
-		// ya esta ocupada por una entidad, intentamos conseguir otra coordenada
-		// de manera aleatoria.
 		if (obtenerEntidad(coordenadaRandom) == null) {
 			grilla[randomX][randomY] = new Manzana(coordenadaRandom);
 		} else {
@@ -47,15 +43,11 @@ public class Mapa {
 		}
 	}
 	
-	// TODO(toti): Tal vez podriamos recibir un deltaTime para ayudar con las colisiones.
 	public void actualizar() {
-		if (item.getReloj() == 0) {
-			// spawnearNuevoItem();
-		}
-
+		if (item.getReloj() == 0)
+			spawnearItem();
 		limpiarGrilla();
 		reubicarViboritas();
-		
 		chequearColisiones();
 	}
 	
@@ -67,7 +59,7 @@ public class Mapa {
 		viboritas.remove(viborita);
 	}
 	
-	public void dibujar() {
+	public void dibujar(Graphics graphics) {
 	}
 	
 	public void reubicarViboritas() {
@@ -98,6 +90,10 @@ public class Mapa {
 				entidadColision.enColision(viborita);
 			}
 		}
+	}
+	
+	public Entidad[][] getGrilla() {
+		return grilla;
 	}
 	
 	public Entidad obtenerEntidad(Coordenada posicion) {

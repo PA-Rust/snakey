@@ -34,11 +34,6 @@ public class Jugador {
 		return claveDeUsuario;
 	}
 
-	/**
-	 * TODO (toti): Recordar que estas cosas habra que actualizarlas
-	 * en la base de datos.
-	 */
-
 	public int getID() {
 		return id;
 	}

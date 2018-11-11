@@ -1,17 +1,20 @@
 package Viborita;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import Commons.Coordenada;
 import Commons.Direccion;
 import Commons.Entidad;
+import Commons.Jugador;
 
 public class Viborita extends Entidad {
-
+	private Jugador jugador;
 	private ArrayList<Cuerpo> cuerpo;
 	private int velocidad = 1;
-
-	public Viborita(int y) {
+	
+	public Viborita(int y, Jugador jugador) {
+		this.jugador = jugador;
 		cuerpo = new ArrayList<Cuerpo>();
 		for (int x = 4; x > 0; x--) {
 			cuerpo.add(new Cuerpo(new Coordenada(x, y)));
@@ -61,11 +64,12 @@ public class Viborita extends Entidad {
 		cuerpo.add(new Cuerpo(nuevaCoordenada));
 	}
 	
-	public int getVelocidad() {
-		return velocidad;
+	public Jugador getJugador() {
+		return jugador;
 	}
 	
-	public void decrecer() {
+	public int getVelocidad() {
+		return velocidad;
 	}
 	
 	public void desplazar() {
@@ -122,10 +126,11 @@ public class Viborita extends Entidad {
 		return proximaCoordenada;
 	}
 	
-	public void actualizar() {
+	public Color getColor() {
+		return color;
 	}
 	
-	public void dibujar() {
+	public void actualizar() {
 	}
 	
 	public void escucharTeclas() {

@@ -8,6 +8,7 @@ import java.net.Socket;
 
 import Commons.Jugador;
 import Comunicacion.Enviable;
+import Controller.ControllerFactory;
 
 public class ManejadorUsuario extends Thread {
 	private Socket usuario;
