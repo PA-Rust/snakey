@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-mapping>
+	<class name="Commons.Jugador" table="JUGADOR"> 
+		<id column="nombreDeUsuario" name="nombreDeUsuario" type="string" > </id>
+		<property column="partidasGanadas" name="partidasGanadas" type="int" />
+		<property column="partidasPerdidas" name="partidasPerdidas" type="int" />
+		<property column="puntajeAcumulado" name="puntajeAcumulado" type="int" />
+		<property column="claveDeUsuario" name="claveDeUsuario" type="string"></property>
+	</class>
+	
+</hibernate-mapping>

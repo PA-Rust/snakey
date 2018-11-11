@@ -1,27 +1,21 @@
 package Commons;
 
 public class Jugador {
-	private int id;
 	private String nombreDeUsuario;
+	private String claveDeUsuario;
 	private int partidasGanadas;
 	private int partidasPerdidas;
 	private int puntajeAcumulado;
-	
-	// TODO(toti): Remover lo de clave, poniendolo para hacer funcionar
-	// lo de interfaz grafica
-	private String claveDeUsuario;
 	
 	private transient Avatar avatar;
 	private transient int puntajeActual = 0;
 
 	public Jugador() {
-		this.id = 0;
 		this.nombreDeUsuario = "toti";
 		this.avatar = Avatar.VIBORITA_VERDE;
 	}
 	
-	public Jugador(String nombreDeUsuario, int id) {
-		this.id = id;
+	public Jugador(String nombreDeUsuario) {
 		this.nombreDeUsuario = nombreDeUsuario;
 	}
 	
@@ -33,20 +27,29 @@ public class Jugador {
 		this.avatar = avatar;
 	}
 	
-	public void setClaveUsuario(String clave) {
-		this.claveDeUsuario = clave;
+
+	public String toString() {
+		return nombreDeUsuario + " " + partidasGanadas + " " + partidasPerdidas + " " + puntajeAcumulado;
 	}
 	
-	public String getClaveUsuario() {
-		return claveDeUsuario;
+	public void incrementarPartidasGanas() {
+		partidasGanadas++;
+	}
+	
+	public void incrementarPartidasPerdidas() {
+		partidasPerdidas++;
 	}
 
-	public int getID() {
-		return id;
+	public void incrementarPuntajeAcumulado(int nuevoPuntaje) {
+		this.puntajeAcumulado += nuevoPuntaje;
 	}
-
-	public void setID(int id) {
-		this.id = id;
+	
+	public void incrementarPuntajeActual(int puntaje) {
+		puntajeActual += puntaje;
+	}
+	
+	public void resetearPuntajeActual() {
+		puntajeActual = 0;
 	}
 
 	public String getNombreDeUsuario() {
@@ -60,37 +63,33 @@ public class Jugador {
 	public int getPartidasGanadas() {
 		return partidasGanadas;
 	}
-	
-	public void incrementarPartidasGanas() {
-		partidasGanadas++;
+
+	public void setPartidasGanadas(int partidasGanadas) {
+		this.partidasGanadas = partidasGanadas;
 	}
-	
+
 	public int getPartidasPerdidas() {
 		return partidasPerdidas;
 	}
-	
-	public void incrementarPartidasPerdidas() {
-		partidasPerdidas++;
+
+	public void setPartidasPerdidas(int partidasPerdidas) {
+		this.partidasPerdidas = partidasPerdidas;
 	}
 
 	public int getPuntajeAcumulado() {
 		return puntajeAcumulado;
 	}
 
-	public void incrementarPuntajeAcumulado(int nuevoPuntaje) {
-		this.puntajeAcumulado += nuevoPuntaje;
+	public void setPuntajeAcumulado(int puntajeAcumulado) {
+		this.puntajeAcumulado = puntajeAcumulado;
 	}
-	
-	public int getPuntajeActual() {
-		return puntajeActual;
+
+	public String getClaveDeUsuario() {
+		return claveDeUsuario;
 	}
-	
-	public void incrementarPuntajeActual(int puntaje) {
-		puntajeActual += puntaje;
-	}
-	
-	public void resetearPuntajeActual() {
-		puntajeActual = 0;
+
+	public void setClaveDeUsuario(String claveDeUsuario) {
+		this.claveDeUsuario = claveDeUsuario;
 	}
 }
 

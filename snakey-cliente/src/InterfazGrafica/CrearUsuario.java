@@ -87,7 +87,7 @@ public class CrearUsuario extends JDialog {
 
 					if (claveConfirmatoria.equals(clave)) {
 						System.out.println("SON IGUALES");
-						nuevoJugador.setClaveUsuario(clave);
+						nuevoJugador.setClaveDeUsuario(clave);
 						yo.dispose();
 						/// VOLCAR A LA BASE DE DATOS
 
