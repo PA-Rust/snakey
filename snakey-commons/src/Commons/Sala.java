@@ -30,6 +30,14 @@ public class Sala {
 	public ArrayList<Jugador> getJugadores() {
 		return jugadores;
 	}
+	
+	public int getCantJugadoresActual() {
+		return jugadores.size();
+	}
+	
+	public boolean getSalaLlena() {
+		return jugadores.size() == cantJugadores;
+	}
 
 	public int getCantJugadores() {
 		return cantJugadores;

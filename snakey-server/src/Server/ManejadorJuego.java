@@ -1,8 +1,6 @@
-package Juego;
+package Server;
 
-import Server.ManejadorUsuario;
-
-public class ManejadorJuego {
+public class ManejadorJuego extends Thread {
 	private ManejadorUsuario[] jugadores;
 	
 	public ManejadorJuego(ManejadorUsuario[] jugadores) {
