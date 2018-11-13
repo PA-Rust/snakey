@@ -1,7 +1,5 @@
 package InterfazGrafica;
 
-import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -19,16 +17,21 @@ import javax.swing.JDialog;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.Color;
 
 public class CrearUsuario extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPasswordField clave;
-	private JTextField idNuevoReg;
+	private JTextField txtIdNuevoReg;
 	private JPasswordField claveConfirmatoria;
-	private JTextField nombreNuevoReg;
 	private JDialog yo;
+	private JLabel lblIdUsuario;
+	private JLabel lblNombre;
+	private JTextField txtNombreNuevoReg;
 
 	public CrearUsuario(JFrame padre) {
 
@@ -39,32 +42,15 @@ public class CrearUsuario extends JDialog {
 															// secundaria y no todas las demas
 		setLocationRelativeTo(null);
 
-		setBounds(100, 100, 400, 300);
-		contentPane = new JPanel();
+		setBounds(100, 100, 383, 371);
+		contentPane = new PanelDeFondo("fondoCrearUsuario.jpg");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
-
-		JLabel lblIdUsuario = new JLabel("ID Usuario");
-
-		JLabel lblClave = new JLabel("Clave");
-
-		clave = new JPasswordField();
-
-		idNuevoReg = new JTextField();
-		idNuevoReg.setColumns(10);
-
 		JLabel lblClaveConfirmar = new JLabel("Confirmar Clave");
-
-		claveConfirmatoria = new JPasswordField();
-
-		nombreNuevoReg = new JTextField();
-		nombreNuevoReg.setColumns(10);
-
-		JLabel lblNombre = new JLabel("Nombre");
+		lblClaveConfirmar.setForeground(Color.WHITE);
+		lblClaveConfirmar.setFont(new Font("Stencil", Font.ITALIC, 12));
+		lblClaveConfirmar.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
@@ -72,16 +58,19 @@ public class CrearUsuario extends JDialog {
 
 				Jugador nuevoJugador = new Jugador();
 
-				nuevoJugador.setNombreDeUsuario(nombreNuevoReg.getText());
-				// nuevoJugador.setUsuarioId(idNuevoReg.getText());
+				nuevoJugador.setNombreDeUsuario(txtNombreNuevoReg.getText());
+				// nuevoJugador.setUsuarioId(txtIdNuevoReg.getText());
 
 				char[] arrayDeChars = clave.getPassword();
 				String clave = new String(arrayDeChars);
 				char[] arrayDeChars2 = claveConfirmatoria.getPassword();
 				String claveConfirmatoria = new String(arrayDeChars2);
 
-				if (nuevoJugador.getNombreDeUsuario().length() == 0 || 
-					clave.length() == 0 || claveConfirmatoria.length() == 0) // campos incompletos
+				if (nuevoJugador.getNombreDeUsuario().trim().length() == 0
+				/* (ADRI) txtIdNuevoReg no lo pongo en ningun lado por ahora, solo confirmo que no este vacio*/
+					|| txtIdNuevoReg.getText().trim().length() == 0 
+					|| clave.trim().length() == 0
+					|| claveConfirmatoria.trim().length() == 0) // campos incompletos
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.WARNING_MESSAGE);
 				else {
 
@@ -95,6 +84,10 @@ public class CrearUsuario extends JDialog {
 						JOptionPane.showMessageDialog(null, "No se ingreso correctamente la contraseña", "ERROR",
 								JOptionPane.WARNING_MESSAGE);
 					}
+					
+					/*luego hay que comprobar en la base de datos si el ID es correcto*/
+					
+					
 				}
 			}
 		});
@@ -109,45 +102,86 @@ public class CrearUsuario extends JDialog {
 
 			}
 		});
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addGap(30)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lblClaveConfirmar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)
-						.addComponent(lblClave, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblIdUsuario, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
-				.addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(nombreNuevoReg, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-						.addComponent(idNuevoReg, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-						.addComponent(clave, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-						.addComponent(claveConfirmatoria, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_panel.createSequentialGroup().addContainerGap().addComponent(btnAceptar)
-						.addPreferredGap(ComponentPlacement.RELATED, 266, Short.MAX_VALUE).addComponent(btnCancelar)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addGap(19).addGap(12)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(lblIdUsuario).addComponent(
-						idNuevoReg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(nombreNuevoReg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNombre))
-				.addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblClave))
-				.addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(claveConfirmatoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblClaveConfirmar))
-				.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE).addGroup(gl_panel
-						.createParallelGroup(Alignment.BASELINE).addComponent(btnAceptar).addComponent(btnCancelar))
+
+		claveConfirmatoria = new JPasswordField();
+
+		clave = new JPasswordField();
+
+		txtIdNuevoReg = new JTextField();
+		txtIdNuevoReg.setColumns(10);
+
+		JLabel lblClave = new JLabel("CLAVE");
+		lblClave.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClave.setForeground(Color.WHITE);
+		lblClave.setFont(new Font("Stencil", Font.ITALIC, 12));
+
+		lblIdUsuario = new JLabel("ID DE USUARIO");
+		lblIdUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIdUsuario.setForeground(Color.WHITE);
+		lblIdUsuario.setFont(new Font("Stencil", Font.ITALIC, 12));
+
+		lblNombre = new JLabel("NOMBRE");
+		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombre.setForeground(Color.WHITE);
+		lblNombre.setFont(new Font("Stencil", Font.ITALIC, 12));
+
+		txtNombreNuevoReg = new JTextField();
+		txtNombreNuevoReg.setColumns(10);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+				.createSequentialGroup().addGap(11)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup().addGroup(gl_contentPane
+								.createParallelGroup(Alignment.TRAILING)
+								.addComponent(clave, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(lblClave, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
+								.addGap(22))
+						.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(lblClaveConfirmar, GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+								.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup().addGroup(gl_contentPane
+								.createParallelGroup(Alignment.TRAILING)
+								.addComponent(claveConfirmatoria, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 326,
+										Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+												.addComponent(txtNombreNuevoReg, Alignment.LEADING,
+														GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+												.addComponent(txtIdNuevoReg, Alignment.LEADING,
+														GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+												.addComponent(lblIdUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
+														326, Short.MAX_VALUE)
+												.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 326,
+														GroupLayout.PREFERRED_SIZE)
+												.addGroup(Alignment.LEADING,
+														gl_contentPane.createSequentialGroup().addComponent(btnAceptar)
+																.addPreferredGap(ComponentPlacement.RELATED, 180,
+																		Short.MAX_VALUE)
+																.addComponent(btnCancelar)))))
+								.addGap(21)))));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING).addGroup(gl_contentPane
+				.createSequentialGroup()
+				.addComponent(lblIdUsuario, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(txtIdNuevoReg, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(txtNombreNuevoReg, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(lblClave, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE).addGap(7)
+				.addComponent(clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(lblClaveConfirmar, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(claveConfirmatoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						GroupLayout.PREFERRED_SIZE)
+				.addGap(18).addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(btnAceptar)
+						.addComponent(btnCancelar))
 				.addContainerGap()));
-		panel.setLayout(gl_panel);
+		contentPane.setLayout(gl_contentPane);
 	}
 }

@@ -3,7 +3,7 @@ package Commons;
 import java.awt.Color;
 
 public class Jugador {
-	private int id;
+	private int id; // el DNI podria ser una opcion
 	private String nombreDeUsuario;
 	private int partidasGanadas;
 	private int partidasPerdidas;
@@ -98,5 +98,7 @@ public class Jugador {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+
 }
 
