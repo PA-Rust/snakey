@@ -3,6 +3,7 @@ package Viborita;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import Commons.Avatar;
 import Commons.Coordenada;
 import Commons.Direccion;
 import Commons.Entidad;
@@ -73,41 +74,19 @@ public class Viborita extends Entidad {
 	}
 	
 	public void desplazar() {
-		Cuerpo cabezaAnterior = getCabeza();
-		Cuerpo cabeza = getCabeza();
-		
-		Coordenada posicionActual = cabeza.getPosicion();
-		switch (cabeza.getDireccion()) {
-			case arriba:
-				cabeza.setPosicion(new Coordenada(posicionActual.getX(), posicionActual.getY() - velocidad));
-			case abajo:
-				cabeza.setPosicion(new Coordenada(posicionActual.getX(), posicionActual.getY() + velocidad));
-			case izquierda:
-				cabeza.setPosicion(new Coordenada(posicionActual.getX() - velocidad, posicionActual.getY()));
-			case derecha:
-				cabeza.setPosicion(new Coordenada(posicionActual.getX() + velocidad, posicionActual.getY()));
-		}
-		
-		for (int i = 1; i < cuerpo.size(); i++) {
+		for (int i = cuerpo.size() - 1; i >= 0; i--) {
 			Cuerpo cuerpoActual = cuerpo.get(i);
-			if (i == 1) {
-				cuerpoActual.setDireccion(cabezaAnterior.getDireccion());
-				cuerpoActual.setPosicion(cabezaAnterior.getPosicion());
-				continue;
+			if (i == 0) {
+				cuerpoActual.setPosicion(getProximaUbicacion());
+			} else {
+				cuerpoActual.setDireccion(cuerpo.get(i - 1).getDireccion());
+				cuerpoActual.setPosicion(cuerpo.get(i - 1).getPosicion());
 			}
-			cuerpoActual.setDireccion(cuerpo.get(i - 1).getDireccion());
-			cuerpoActual.setPosicion(cuerpo.get(i - 1).getPosicion());
 		}
-		
 	}
 	
-	/**
-	 * Se devuelve la coordenada que va a seguir en base al movimiento
-	 * que lleva la viborita.
-	 * @return Coordenada proximaCoordenada
-	 */
 	public Coordenada getProximaUbicacion() {
-		Coordenada proximaCoordenada;
+		Coordenada proximaCoordenada = new Coordenada();
 		Coordenada posicionActual = getCabeza().getPosicion();
 
 		switch (getCabeza().getDireccion()) {
@@ -119,24 +98,22 @@ public class Viborita extends Entidad {
 				proximaCoordenada = new Coordenada(posicionActual.getX() - velocidad, posicionActual.getY());
 			case derecha:
 				proximaCoordenada = new Coordenada(posicionActual.getX() + velocidad, posicionActual.getY());
-			default:
-				proximaCoordenada = new Coordenada(0, 0);
 		}
 		
 		return proximaCoordenada;
 	}
 	
-	public Color getColor() {
-		return color;
-	}
-	
+	@Override
 	public void actualizar() {
+		desplazar();
 	}
 	
-	public void escucharTeclas() {
+	public Avatar getAvatar() {
+		return jugador.getAvatar();
 	}
 	
 	public void cambiarDireccion(Direccion direccion) {
+		getCabeza().setDireccion(direccion);
 	}
 	
 	@Override

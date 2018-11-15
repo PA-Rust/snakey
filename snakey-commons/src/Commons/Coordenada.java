@@ -33,6 +33,26 @@ public class Coordenada {
 		this.x += desplazamiento.x;
 		this.y += desplazamiento.y;
 	}
+	
+	// Esto lo que hara sera que si la coordenada en el eje X o Y
+	// se encuentra menor que 0, deberia ser la coordenada maxima del
+	// otro lado del mapa. Y al reves en el caso de ser mayor que la coordenada
+	// maxima en alguno de los ejes.
+	public Coordenada warp(Coordenada coordenadaMaxima) {
+		if (x < 0) {
+			x = coordenadaMaxima.x;
+		} else if (x >= coordenadaMaxima.x) {
+			x = 0;
+		}
+		
+		if (y < 0) {
+			y = coordenadaMaxima.y;
+		} else if (y >= coordenadaMaxima.y) {
+			y = 0;
+		}
+		
+		return this;
+	}
 
 	@Override
 	public boolean equals(Object other) {

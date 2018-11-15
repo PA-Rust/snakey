@@ -2,14 +2,23 @@ package Commons;
 
 public class Entidad {
 	private Coordenada posicion;
-	private String sprite;
+	private Avatar avatar;
 	
 	public Entidad() {
 		this.posicion = new Coordenada(0, 0);
 	}
 	
+	public Entidad(Avatar avatar) {
+		this.avatar = avatar;
+	}
+	
 	public Entidad(Coordenada posicion) {
 		this.posicion = posicion;
+	}
+	
+	public Entidad(Coordenada posicion, Avatar avatar) {
+		this.posicion = posicion;
+		this.avatar = avatar;
 	}
 	
 	public void actualizar() {
@@ -26,8 +35,12 @@ public class Entidad {
 		this.posicion = nuevaPosicion;
 	}
 	
-	public String getSprite() {
-		return sprite;
+	public Avatar getAvatar() {
+		return avatar;
+	}
+	
+	public void setAvatar(Avatar avatar) {
+		this.avatar = avatar;
 	}
 	
 	public void enColision(Entidad entidad) {

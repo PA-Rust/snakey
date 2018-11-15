@@ -1,7 +1,9 @@
 package Commons;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Items.Item;
@@ -17,11 +19,23 @@ public class Mapa {
 	private Entidad[][] grilla;
 
 	public Mapa(Jugador[] jugadores) {
+		viboritas = new ArrayList<Viborita>();
 		for (int i = 0; i < jugadores.length; i++) {
 			viboritas.add(new Viborita(10 * (i + 1), jugadores[i]));
 		}
 		this.ancho = 50;
 		this.alto = 50;
+		grilla = new Entidad[ancho][alto];
+		item = new Manzana(new Coordenada(45, 10), 1000);
+		grilla[45][10] = item;
+	}
+	
+	public void inicializarGrilla() {
+		for (int i = 0; i < ancho; i++) {
+			for (int j = 0; j < alto; j++) {
+				grilla[i][j] = null;
+			}
+		}
 	}
 	
 	public int getAncho() {
@@ -37,18 +51,23 @@ public class Mapa {
 		int randomY = ThreadLocalRandom.current().nextInt(0, alto + 1);
 		Coordenada coordenadaRandom = new Coordenada(randomX, randomY);
 		if (obtenerEntidad(coordenadaRandom) == null) {
-			grilla[randomX][randomY] = new Manzana(coordenadaRandom);
+			item = new Manzana(coordenadaRandom, 50);
+			grilla[randomX][randomY] = item;
 		} else {
 			spawnearItem();
 		}
 	}
 	
 	public void actualizar() {
-		if (item.getReloj() == 0)
+		if (item.getReloj() == 0) {
 			spawnearItem();
+		} else {
+			item.decrementarReloj(10);
+		}
 		limpiarGrilla();
 		reubicarViboritas();
 		chequearColisiones();
+		actualizarViboritas();
 	}
 	
 	public ArrayList<Viborita> getViboritas() {
@@ -59,13 +78,39 @@ public class Mapa {
 		viboritas.remove(viborita);
 	}
 	
-	public void dibujar(Graphics graphics) {
+	/*
+	 * Expected to have a squared panel to draw on.
+	 */
+	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int screenSize, int tamCuadrado) {
+		for (Viborita viborita: viboritas) {
+			for (Cuerpo cuerpo: viborita.getCuerpo()) {
+				graphics.drawImage(
+					imagenes.get(viborita.getAvatar()),
+					cuerpo.getPosicion().getX() * tamCuadrado,
+					cuerpo.getPosicion().getY() * tamCuadrado,
+					tamCuadrado, tamCuadrado, null);
+			}
+		}
+
+		graphics.drawImage(
+				imagenes.get(item.getAvatar()),
+				item.getPosicion().getX() * tamCuadrado,
+				item.getPosicion().getY() * tamCuadrado,
+				tamCuadrado, tamCuadrado, null);
+	}
+	
+	public void actualizarViboritas() {
+		for (Viborita viborita: viboritas) {
+			viborita.actualizar();
+		}
 	}
 	
 	public void reubicarViboritas() {
 		for (Viborita viborita: viboritas) {
 			for (Cuerpo parte: viborita.getCuerpo()) {
-				Coordenada coordenadaParte = parte.getPosicion();
+				Coordenada coordenadaParte =
+					parte.getPosicion().warp(new Coordenada(ancho, alto));
+				parte.setPosicion(coordenadaParte);
 				grilla[coordenadaParte.getX()][coordenadaParte.getY()] = parte;
 			}
 		}
@@ -83,7 +128,7 @@ public class Mapa {
 	
 	public void chequearColisiones() {
 		for (Viborita viborita: viboritas) {
-			Coordenada proximaCoordenada = viborita.getProximaUbicacion();
+			Coordenada proximaCoordenada = viborita.getProximaUbicacion().warp(new Coordenada(ancho, alto));
 			Entidad entidadColision = obtenerEntidad(proximaCoordenada);
 			if (entidadColision != null) {
 				viborita.enColision(entidadColision);
