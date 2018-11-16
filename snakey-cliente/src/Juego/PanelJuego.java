@@ -16,6 +16,7 @@ import Misc.RutaImagen;
 import Commons.Avatar;
 
 public class PanelJuego extends JPanel {
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Partida partida;

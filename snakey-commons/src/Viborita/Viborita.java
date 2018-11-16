@@ -12,6 +12,7 @@ import Commons.Jugador;
 public class Viborita extends Entidad {
 	private Jugador jugador;
 	private ArrayList<Cuerpo> cuerpo;
+	boolean viva = true;
 	private int velocidad = 1;
 	
 	public Viborita(int y, Jugador jugador) {
@@ -92,12 +93,16 @@ public class Viborita extends Entidad {
 		switch (getCabeza().getDireccion()) {
 			case arriba:
 				proximaCoordenada = new Coordenada(posicionActual.getX(), posicionActual.getY() - velocidad);
+				break;
 			case abajo:
 				proximaCoordenada = new Coordenada(posicionActual.getX(), posicionActual.getY() + velocidad);
+				break;
 			case izquierda:
 				proximaCoordenada = new Coordenada(posicionActual.getX() - velocidad, posicionActual.getY());
+				break;
 			case derecha:
 				proximaCoordenada = new Coordenada(posicionActual.getX() + velocidad, posicionActual.getY());
+				break;
 		}
 		
 		return proximaCoordenada;
@@ -113,10 +118,27 @@ public class Viborita extends Entidad {
 	}
 	
 	public void cambiarDireccion(Direccion direccion) {
+		Direccion direccionActual = getCabeza().getDireccion();
+		if (direccionActual == Direccion.izquierda || direccionActual == Direccion.derecha) {
+			if (direccion == Direccion.izquierda || direccion == Direccion.derecha) {
+				return;
+			}
+		} else if (direccionActual == Direccion.arriba || direccionActual == Direccion.abajo) {
+			if (direccion == Direccion.arriba || direccion == Direccion.abajo) {
+				return;
+			}
+		}
 		getCabeza().setDireccion(direccion);
+	}
+	
+	public boolean estaViva() {
+		return viva;
 	}
 	
 	@Override
 	public void enColision(Entidad entidad) {
+		if (entidad instanceof Cuerpo) {
+			viva = false;
+		}
 	}
 }

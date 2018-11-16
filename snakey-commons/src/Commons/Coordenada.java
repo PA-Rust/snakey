@@ -40,13 +40,13 @@ public class Coordenada {
 	// maxima en alguno de los ejes.
 	public Coordenada warp(Coordenada coordenadaMaxima) {
 		if (x < 0) {
-			x = coordenadaMaxima.x;
+			x = coordenadaMaxima.x - 1;
 		} else if (x >= coordenadaMaxima.x) {
 			x = 0;
 		}
 		
 		if (y < 0) {
-			y = coordenadaMaxima.y;
+			y = coordenadaMaxima.y - 1;
 		} else if (y >= coordenadaMaxima.y) {
 			y = 0;
 		}

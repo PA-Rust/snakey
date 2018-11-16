@@ -51,7 +51,7 @@ public class Mapa {
 		int randomY = ThreadLocalRandom.current().nextInt(0, alto + 1);
 		Coordenada coordenadaRandom = new Coordenada(randomX, randomY);
 		if (obtenerEntidad(coordenadaRandom) == null) {
-			item = new Manzana(coordenadaRandom, 50);
+			item = new Manzana(coordenadaRandom, 600);
 			grilla[randomX][randomY] = item;
 		} else {
 			spawnearItem();
@@ -65,9 +65,9 @@ public class Mapa {
 			item.decrementarReloj(10);
 		}
 		limpiarGrilla();
+		actualizarViboritas();
 		reubicarViboritas();
 		chequearColisiones();
-		actualizarViboritas();
 	}
 	
 	public ArrayList<Viborita> getViboritas() {
@@ -107,6 +107,9 @@ public class Mapa {
 	
 	public void reubicarViboritas() {
 		for (Viborita viborita: viboritas) {
+			if (!viborita.estaViva()) {
+				removerViborita(viborita);
+			}
 			for (Cuerpo parte: viborita.getCuerpo()) {
 				Coordenada coordenadaParte =
 					parte.getPosicion().warp(new Coordenada(ancho, alto));
