@@ -8,17 +8,18 @@ import java.net.Socket;
 
 import Commons.Jugador;
 import Comunicacion.Enviable;
+import Controller.ControllerFactory;
 
 public class ManejadorUsuario extends Thread {
 	private Socket usuario;
-	private Server server;
+	private Server serverSocket;
 	private ObjectOutputStream salida;
 	private ControllerFactory controllerFactory;
 	private Jugador jugador;
 	
 	public ManejadorUsuario(Socket usuario, Server server) {
 		this.usuario = usuario;
-		this.server = server;
+		this.serverSocket = server;
 		this.controllerFactory = new ControllerFactory(this);
 		this.jugador = null;
 		
@@ -55,13 +56,17 @@ public class ManejadorUsuario extends Thread {
 		} finally {
 			System.out.println("Cerrando manejador");
 			try {
-				server.deregistrarManejador(this);
+				serverSocket.deregistrarManejador(this);
 				salida.close();
 				usuario.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public Server getServerSocket() {
+		return serverSocket;
 	}
 	
 	public Jugador getJugador() {

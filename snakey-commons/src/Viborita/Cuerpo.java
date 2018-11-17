@@ -13,6 +13,11 @@ public class Cuerpo extends Entidad {
 		this.direccion = Direccion.derecha;
 	}
 	
+	public Cuerpo(Cuerpo otroCuerpo) {
+		super(otroCuerpo.getPosicion());
+		this.direccion = otroCuerpo.getDireccion();
+	}
+	
 	public Cuerpo(Coordenada posicion, Direccion direccion) {
 		super(posicion);
 		this.direccion = direccion;

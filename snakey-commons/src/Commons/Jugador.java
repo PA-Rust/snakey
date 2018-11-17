@@ -1,7 +1,5 @@
 package Commons;
 
-import java.awt.Color;
-
 public class Jugador {
 	private int id;
 	private String nombreDeUsuario;
@@ -13,17 +11,26 @@ public class Jugador {
 	// lo de interfaz grafica
 	private String claveDeUsuario;
 	
-	private transient Color color;
+	private transient Avatar avatar;
 	private transient int puntajeActual = 0;
 
 	public Jugador() {
 		this.id = 0;
-		this.nombreDeUsuario = null;
+		this.nombreDeUsuario = "toti";
+		this.avatar = Avatar.VIBORITA_VERDE;
 	}
 	
 	public Jugador(String nombreDeUsuario, int id) {
 		this.id = id;
 		this.nombreDeUsuario = nombreDeUsuario;
+	}
+	
+	public Avatar getAvatar() {
+		return avatar;
+	}
+	
+	public void setAvatar(Avatar avatar) {
+		this.avatar = avatar;
 	}
 	
 	public void setClaveUsuario(String clave) {
@@ -33,11 +40,6 @@ public class Jugador {
 	public String getClaveUsuario() {
 		return claveDeUsuario;
 	}
-
-	/**
-	 * TODO (toti): Recordar que estas cosas habra que actualizarlas
-	 * en la base de datos.
-	 */
 
 	public int getID() {
 		return id;
@@ -89,14 +91,6 @@ public class Jugador {
 	
 	public void resetearPuntajeActual() {
 		puntajeActual = 0;
-	}
-	
-	public Color getColor() {
-		return this.color;
-	}
-	
-	public void setColor(Color color) {
-		this.color = color;
 	}
 }
 

@@ -1,5 +1,6 @@
 package Items;
 
+import Commons.Avatar;
 import Commons.Coordenada;
 import Commons.Entidad;
 import Viborita.Viborita;
@@ -12,8 +13,13 @@ public abstract class Item extends Entidad {
 		reloj = 5000;
 	}
 	
-	public Item(Coordenada coordenada, int reloj) {
-		super(coordenada);
+	public Item(Coordenada coordenada, Avatar avatar) {
+		super(coordenada, avatar);
+		reloj = 5000;
+	}
+	
+	public Item(Coordenada coordenada, Avatar avatar, int reloj) {
+		super(coordenada, avatar);
 		this.reloj = reloj;
 	}
 	

@@ -1,6 +1,9 @@
 package Commons;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Items.Item;
@@ -15,14 +18,24 @@ public class Mapa {
 	private int alto;
 	private Entidad[][] grilla;
 
-	public Mapa() {
-		this.ancho = 30;
-		this.alto = 30;
+	public Mapa(Jugador[] jugadores) {
+		viboritas = new ArrayList<Viborita>();
+		for (int i = 0; i < jugadores.length; i++) {
+			viboritas.add(new Viborita(10 * (i + 1), jugadores[i]));
+		}
+		this.ancho = 50;
+		this.alto = 50;
+		grilla = new Entidad[ancho][alto];
+		item = new Manzana(new Coordenada(45, 10), 1000);
+		grilla[45][10] = item;
 	}
 	
-	public Mapa(int ancho, int alto) {
-		this.ancho = ancho;
-		this.alto = alto;
+	public void inicializarGrilla() {
+		for (int i = 0; i < ancho; i++) {
+			for (int j = 0; j < alto; j++) {
+				grilla[i][j] = null;
+			}
+		}
 	}
 	
 	public int getAncho() {
@@ -37,25 +50,23 @@ public class Mapa {
 		int randomX = ThreadLocalRandom.current().nextInt(0, ancho + 1);
 		int randomY = ThreadLocalRandom.current().nextInt(0, alto + 1);
 		Coordenada coordenadaRandom = new Coordenada(randomX, randomY);
-		// Si la nueva coordenada en donde vamos a spawnear la manzanita
-		// ya esta ocupada por una entidad, intentamos conseguir otra coordenada
-		// de manera aleatoria.
 		if (obtenerEntidad(coordenadaRandom) == null) {
-			grilla[randomX][randomY] = new Manzana(coordenadaRandom);
+			item = new Manzana(coordenadaRandom, 600);
+			grilla[randomX][randomY] = item;
 		} else {
 			spawnearItem();
 		}
 	}
 	
-	// TODO(toti): Tal vez podriamos recibir un deltaTime para ayudar con las colisiones.
 	public void actualizar() {
 		if (item.getReloj() == 0) {
-			// spawnearNuevoItem();
+			spawnearItem();
+		} else {
+			item.decrementarReloj(10);
 		}
-
 		limpiarGrilla();
+		actualizarViboritas();
 		reubicarViboritas();
-		
 		chequearColisiones();
 	}
 	
@@ -64,16 +75,47 @@ public class Mapa {
 	}
 	
 	public void removerViborita(Viborita viborita) {
+		// TODO(toti): Remover la viborita de la grilla inmediatamente
+		// para no tenerla en los calculos de otra viborita.
 		viboritas.remove(viborita);
 	}
 	
-	public void dibujar() {
+	/*
+	 * Expected to have a squared panel to draw on.
+	 */
+	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int screenSize, int tamCuadrado) {
+		for (Viborita viborita: viboritas) {
+			for (Cuerpo cuerpo: viborita.getCuerpo()) {
+				graphics.drawImage(
+					imagenes.get(viborita.getAvatar()),
+					cuerpo.getPosicion().getX() * tamCuadrado,
+					cuerpo.getPosicion().getY() * tamCuadrado,
+					tamCuadrado, tamCuadrado, null);
+			}
+		}
+
+		graphics.drawImage(
+				imagenes.get(item.getAvatar()),
+				item.getPosicion().getX() * tamCuadrado,
+				item.getPosicion().getY() * tamCuadrado,
+				tamCuadrado, tamCuadrado, null);
+	}
+	
+	public void actualizarViboritas() {
+		for (Viborita viborita: viboritas) {
+			viborita.actualizar();
+		}
 	}
 	
 	public void reubicarViboritas() {
 		for (Viborita viborita: viboritas) {
+			if (!viborita.estaViva()) {
+				removerViborita(viborita);
+			}
 			for (Cuerpo parte: viborita.getCuerpo()) {
-				Coordenada coordenadaParte = parte.getPosicion();
+				Coordenada coordenadaParte =
+					parte.getPosicion().warp(new Coordenada(ancho, alto));
+				parte.setPosicion(coordenadaParte);
 				grilla[coordenadaParte.getX()][coordenadaParte.getY()] = parte;
 			}
 		}
@@ -91,13 +133,17 @@ public class Mapa {
 	
 	public void chequearColisiones() {
 		for (Viborita viborita: viboritas) {
-			Coordenada proximaCoordenada = viborita.getProximaUbicacion();
+			Coordenada proximaCoordenada = viborita.getProximaUbicacion().warp(new Coordenada(ancho, alto));
 			Entidad entidadColision = obtenerEntidad(proximaCoordenada);
 			if (entidadColision != null) {
 				viborita.enColision(entidadColision);
 				entidadColision.enColision(viborita);
 			}
 		}
+	}
+	
+	public Entidad[][] getGrilla() {
+		return grilla;
 	}
 	
 	public Entidad obtenerEntidad(Coordenada posicion) {

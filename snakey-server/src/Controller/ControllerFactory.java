@@ -1,6 +1,7 @@
-package Server;
+package Controller;
 
 import Comunicacion.Enviable;
+import Server.ManejadorUsuario;
 
 public class ControllerFactory {
 	private ManejadorUsuario manejador;
@@ -13,6 +14,8 @@ public class ControllerFactory {
 		switch (enviable.getTipoMensaje()) {
 			case LOGIN_REQUEST:
 				return new LoginController(enviable, manejador);
+			case REGISTER_REQUEST:
+				return new RegisterController(enviable, manejador);
 			default:
 				throw new RuntimeException("Tipo de mensaje desconocido.");
 		}

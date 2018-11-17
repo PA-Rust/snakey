@@ -1,17 +1,22 @@
 package Viborita;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
+import Commons.Avatar;
 import Commons.Coordenada;
 import Commons.Direccion;
 import Commons.Entidad;
+import Commons.Jugador;
 
 public class Viborita extends Entidad {
-
+	private Jugador jugador;
 	private ArrayList<Cuerpo> cuerpo;
+	boolean viva = true;
 	private int velocidad = 1;
-
-	public Viborita(int y) {
+	
+	public Viborita(int y, Jugador jugador) {
+		this.jugador = jugador;
 		cuerpo = new ArrayList<Cuerpo>();
 		for (int x = 4; x > 0; x--) {
 			cuerpo.add(new Cuerpo(new Coordenada(x, y)));
@@ -61,80 +66,79 @@ public class Viborita extends Entidad {
 		cuerpo.add(new Cuerpo(nuevaCoordenada));
 	}
 	
+	public Jugador getJugador() {
+		return jugador;
+	}
+	
 	public int getVelocidad() {
 		return velocidad;
 	}
 	
-	public void decrecer() {
-	}
-	
 	public void desplazar() {
-		Cuerpo cabezaAnterior = getCabeza();
-		Cuerpo cabeza = getCabeza();
-		
-		Coordenada posicionActual = cabeza.getPosicion();
-		switch (cabeza.getDireccion()) {
-			case arriba:
-				cabeza.setPosicion(new Coordenada(posicionActual.getX(), posicionActual.getY() - velocidad));
-			case abajo:
-				cabeza.setPosicion(new Coordenada(posicionActual.getX(), posicionActual.getY() + velocidad));
-			case izquierda:
-				cabeza.setPosicion(new Coordenada(posicionActual.getX() - velocidad, posicionActual.getY()));
-			case derecha:
-				cabeza.setPosicion(new Coordenada(posicionActual.getX() + velocidad, posicionActual.getY()));
-		}
-		
-		for (int i = 1; i < cuerpo.size(); i++) {
+		for (int i = cuerpo.size() - 1; i >= 0; i--) {
 			Cuerpo cuerpoActual = cuerpo.get(i);
-			if (i == 1) {
-				cuerpoActual.setDireccion(cabezaAnterior.getDireccion());
-				cuerpoActual.setPosicion(cabezaAnterior.getPosicion());
-				continue;
+			if (i == 0) {
+				cuerpoActual.setPosicion(getProximaUbicacion());
+			} else {
+				cuerpoActual.setDireccion(cuerpo.get(i - 1).getDireccion());
+				cuerpoActual.setPosicion(cuerpo.get(i - 1).getPosicion());
 			}
-			cuerpoActual.setDireccion(cuerpo.get(i - 1).getDireccion());
-			cuerpoActual.setPosicion(cuerpo.get(i - 1).getPosicion());
 		}
-		
 	}
 	
-	/**
-	 * Se devuelve la coordenada que va a seguir en base al movimiento
-	 * que lleva la viborita.
-	 * @return Coordenada proximaCoordenada
-	 */
 	public Coordenada getProximaUbicacion() {
-		Coordenada proximaCoordenada;
+		Coordenada proximaCoordenada = new Coordenada();
 		Coordenada posicionActual = getCabeza().getPosicion();
 
 		switch (getCabeza().getDireccion()) {
 			case arriba:
 				proximaCoordenada = new Coordenada(posicionActual.getX(), posicionActual.getY() - velocidad);
+				break;
 			case abajo:
 				proximaCoordenada = new Coordenada(posicionActual.getX(), posicionActual.getY() + velocidad);
+				break;
 			case izquierda:
 				proximaCoordenada = new Coordenada(posicionActual.getX() - velocidad, posicionActual.getY());
+				break;
 			case derecha:
 				proximaCoordenada = new Coordenada(posicionActual.getX() + velocidad, posicionActual.getY());
-			default:
-				proximaCoordenada = new Coordenada(0, 0);
+				break;
 		}
 		
 		return proximaCoordenada;
 	}
 	
+	@Override
 	public void actualizar() {
+		desplazar();
 	}
 	
-	public void dibujar() {
-	}
-	
-	public void escucharTeclas() {
+	public Avatar getAvatar() {
+		return jugador.getAvatar();
 	}
 	
 	public void cambiarDireccion(Direccion direccion) {
+		Direccion direccionActual = getCabeza().getDireccion();
+		if (direccionActual == Direccion.izquierda || direccionActual == Direccion.derecha) {
+			if (direccion == Direccion.izquierda || direccion == Direccion.derecha) {
+				return;
+			}
+		} else if (direccionActual == Direccion.arriba || direccionActual == Direccion.abajo) {
+			if (direccion == Direccion.arriba || direccion == Direccion.abajo) {
+				return;
+			}
+		}
+		getCabeza().setDireccion(direccion);
+	}
+	
+	public boolean estaViva() {
+		return viva;
 	}
 	
 	@Override
 	public void enColision(Entidad entidad) {
+		if (entidad instanceof Cuerpo) {
+			viva = false;
+		}
 	}
 }

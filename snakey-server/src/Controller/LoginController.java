@@ -1,9 +1,10 @@
-package Server;
+package Controller;
 
 import Commons.Jugador;
 import Comunicacion.Enviable;
 import Comunicacion.Mensajes.LoginRequest;
 import Comunicacion.Mensajes.LoginResponse;
+import Server.ManejadorUsuario;
 
 public class LoginController implements Controller {
 	private LoginRequest loginRequest;
