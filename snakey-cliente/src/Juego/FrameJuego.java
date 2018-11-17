@@ -32,9 +32,6 @@ public class FrameJuego extends JFrame {
 				try {
 					FrameJuego frame = new FrameJuego(new Jugador[] {
 						new Jugador(),
-						new Jugador(),
-						new Jugador(),
-						new Jugador(),
 					});
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -50,9 +47,6 @@ public class FrameJuego extends JFrame {
 	public FrameJuego(Jugador[] jugadores) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 800);
-		jugadores[1].setAvatar(Avatar.VIBORITA_AMARILLA);
-		jugadores[2].setAvatar(Avatar.VIBORITA_AZUL);
-		jugadores[3].setAvatar(Avatar.VIBORITA_NARANJA);
 		this.partida = new Partida(jugadores);
 		panelJuego = new PanelJuego(partida);
 		addKeyListener(new KeyAdapter() {
@@ -71,24 +65,6 @@ public class FrameJuego extends JFrame {
 				}
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					partida.getMapa().getViboritas().get(0)
-							.cambiarDireccion(Direccion.derecha);
-				}
-				
-
-				if (e.getKeyCode() == KeyEvent.VK_W) {
-					partida.getMapa().getViboritas().get(1)
-							.cambiarDireccion(Direccion.arriba);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_S) {
-					partida.getMapa().getViboritas().get(1)
-							.cambiarDireccion(Direccion.abajo);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_A) {
-					partida.getMapa().getViboritas().get(1)
-							.cambiarDireccion(Direccion.izquierda);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_D) {
-					partida.getMapa().getViboritas().get(1)
 							.cambiarDireccion(Direccion.derecha);
 				}
 			}
