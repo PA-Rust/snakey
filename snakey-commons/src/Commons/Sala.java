@@ -9,6 +9,7 @@ public class Sala {
 	private ArrayList<Jugador> espectadores;
 	private Jugador jugadorPropietario;
 	private int cantJugadores;
+	private Partida partidaAnterior;
 
 	public Sala(String nombreSala, int cantJugadores, Jugador propietario) {
 		this.nombreSala = nombreSala;

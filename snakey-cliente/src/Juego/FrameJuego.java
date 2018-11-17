@@ -2,20 +2,15 @@ package Juego;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-import javax.swing.DefaultFocusManager;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 
-import Commons.Avatar;
 import Commons.Direccion;
 import Commons.Jugador;
 import Commons.Partida;
-import javafx.scene.input.KeyCode;
 
 public class FrameJuego extends JFrame {
 	private static final long serialVersionUID = 1L;

@@ -1,5 +1,7 @@
 package Controller;
 
+import Comunicacion.Enviable;
+
 public interface Controller {
-	public abstract Object manejarMensaje();
+	public abstract Enviable manejarMensaje();
 }

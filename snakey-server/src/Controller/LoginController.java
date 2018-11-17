@@ -16,7 +16,7 @@ public class LoginController implements Controller {
 	}
 
 	@Override
-	public Object manejarMensaje() {
+	public Enviable manejarMensaje() {
 		// TODO(toti): Buscar el usuario a la base de datos, y en caso de que exista,
 		// lo seteamos en el manejador de suaurios.
 		String mensaje = "Logueo exitoso";

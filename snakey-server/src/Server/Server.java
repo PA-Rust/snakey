@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import Commons.Jugador;
 import Commons.Sala;
 import Comunicacion.Enviable;
 
@@ -13,7 +14,10 @@ public class Server {
 	ArrayList<ManejadorUsuario> manejadoresDeUsuario;
 	ArrayList<ManejadorSala> manejadoresDeSala;
 	ArrayList<ManejadorJuego> manejadoresDeJuego;
-	ArrayList<Sala> salas;
+	
+	public static void log(String mensaje) {
+		System.out.println("SERVER LOG: " + mensaje);
+	}
 	
 	public Server(int puerto) {
 		ServerSocket serverSocket;
@@ -21,13 +25,13 @@ public class Server {
 			manejadoresDeUsuario = new ArrayList<ManejadorUsuario>();
 			serverSocket = new ServerSocket(puerto);
 			
-			System.out.println("Servidor iniciado en puerto " + puerto);
+			log("Servidor iniciado en puerto " + puerto);
 			
 			while (true) {
 				Socket nuevoUsuario = serverSocket.accept();
 				ManejadorUsuario nuevoManejador = new ManejadorUsuario(nuevoUsuario, this);
 				manejadoresDeUsuario.add(nuevoManejador);
-				log("SERVER LOG: nuevo cliente unido.");
+				log("nuevo cliente unido.");
 				nuevoManejador.start();
 			}
 		} catch (IOException e) {
@@ -35,8 +39,29 @@ public class Server {
 		}
 	}
 	
-	public void log(String mensaje) {
-		System.out.println("SERVER LOG: " + mensaje);
+	public boolean jugadorYaTieneSala(Jugador jugador) {
+		boolean encontrado = false;
+		for (ManejadorSala manejadorSala: manejadoresDeSala) {
+			if (manejadorSala.getSala().getJugadorPropietario() == jugador) {
+				encontrado = true;
+			}
+		}
+		return encontrado;
+	}
+	
+	public Sala registrarManejadorSala(ManejadorUsuario manejadorUsuario, String nombreSala, int cantidadJugadores) {
+		Sala nuevaSala = new Sala(nombreSala, cantidadJugadores, manejadorUsuario.getJugador());
+		manejadoresDeSala.add(
+			new ManejadorSala(
+				nuevaSala,
+				manejadorUsuario
+			)
+		);
+		return nuevaSala;
+	}
+	
+	public void eliminatManejadorSala(ManejadorSala manejadorSala) {
+		manejadoresDeSala.remove(manejadorSala);
 	}
 	
 	public void deregistrarManejador(ManejadorUsuario manejador) {
