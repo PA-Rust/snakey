@@ -10,7 +10,6 @@ import Comunicacion.Enviable;
 public class ManejadorSala extends Thread {
 	private Sala sala;
 	private ArrayList<ManejadorUsuario> listeners;
-	private Partida partidaAnterior = null;
 	
 	public ManejadorSala(Sala sala, ManejadorUsuario manejadorUsuario) {
 		this.sala = sala;
@@ -21,7 +20,7 @@ public class ManejadorSala extends Thread {
 		return sala;
 	}
 	
-	public void unirNuevoUsuario(ManejadorUsuario manejadorUsuario) {
+	public synchronized void unirNuevoUsuario(ManejadorUsuario manejadorUsuario) {
 		addListener(manejadorUsuario);
 	}
 	

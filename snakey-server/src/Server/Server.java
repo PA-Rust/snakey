@@ -10,7 +10,6 @@ import Commons.Sala;
 import Comunicacion.Enviable;
 
 public class Server {
-	int puerto = 3000;
 	ArrayList<ManejadorUsuario> manejadoresDeUsuario;
 	ArrayList<ManejadorSala> manejadoresDeSala;
 	ArrayList<ManejadorJuego> manejadoresDeJuego;
@@ -47,6 +46,24 @@ public class Server {
 			}
 		}
 		return encontrado;
+	}
+	
+	public synchronized ArrayList<Sala> getSalas() {
+		ArrayList<Sala> salas = new ArrayList<Sala>();
+		for (ManejadorSala manejador: manejadoresDeSala) {
+			salas.add(manejador.getSala());
+		}
+		
+		return salas;
+	}
+	
+	public synchronized ManejadorSala getManejadorSala(Sala sala) {
+		for (ManejadorSala manejador: manejadoresDeSala) {
+			if (manejador.getSala() == sala) {
+				return manejador;
+			}
+		}
+		return null;
 	}
 	
 	public Sala registrarManejadorSala(ManejadorUsuario manejadorUsuario, String nombreSala, int cantidadJugadores) {

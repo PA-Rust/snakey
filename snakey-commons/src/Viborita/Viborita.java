@@ -1,6 +1,5 @@
 package Viborita;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import Commons.Avatar;
