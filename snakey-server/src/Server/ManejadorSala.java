@@ -3,6 +3,7 @@ package Server;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import Commons.Partida;
 import Commons.Sala;
 import Comunicacion.Enviable;
 
@@ -17,6 +18,10 @@ public class ManejadorSala extends Thread {
 	
 	public Sala getSala() {
 		return sala;
+	}
+	
+	public synchronized void unirNuevoUsuario(ManejadorUsuario manejadorUsuario) {
+		addListener(manejadorUsuario);
 	}
 	
 	public void addListener(ManejadorUsuario listener) {

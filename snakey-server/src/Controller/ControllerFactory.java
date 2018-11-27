@@ -16,6 +16,8 @@ public class ControllerFactory {
 				return new LoginController(enviable, manejador);
 			case REGISTER_REQUEST:
 				return new RegisterController(enviable, manejador);
+			case CREATE_SALA_REQUEST:
+				return new CrearSalaController(enviable, manejador);
 			default:
 				throw new RuntimeException("Tipo de mensaje desconocido.");
 		}

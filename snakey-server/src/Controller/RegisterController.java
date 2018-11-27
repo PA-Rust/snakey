@@ -15,7 +15,7 @@ public class RegisterController implements Controller {
 	}
 	
 	@Override
-	public Object manejarMensaje() {
+	public Enviable manejarMensaje() {
 		String mensaje = "Registro exitoso";
 		// TODO: Chequear en la base de datos con los datos (registerRequest)
 		// y si los valores ingresados tienen sentido (no estan vacios, etc).

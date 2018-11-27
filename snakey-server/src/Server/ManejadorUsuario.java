@@ -37,8 +37,9 @@ public class ManejadorUsuario extends Thread {
 				new ObjectInputStream(usuario.getInputStream());
 			while (usuario.isConnected()) {
 				try {
-					Enviable nuevoMensaje = (Enviable)entrada.readObject();
-					Object response = controllerFactory.manejarEnviables(nuevoMensaje);
+					Enviable nuevoMensaje = (Enviable) entrada.readObject();
+					Enviable response =
+						(Enviable) controllerFactory.manejarEnviables(nuevoMensaje);
 					if (response != null) {
 						enNuevoMensaje(response);
 					}
@@ -77,7 +78,7 @@ public class ManejadorUsuario extends Thread {
 		this.jugador = jugador;
 	}
 	
-	public void enNuevoMensaje(Object nuevoMensaje) throws IOException {
+	public void enNuevoMensaje(Enviable nuevoMensaje) throws IOException {
 		salida.writeObject(nuevoMensaje);
 	}
 }
