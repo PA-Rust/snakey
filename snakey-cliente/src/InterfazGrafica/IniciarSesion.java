@@ -93,10 +93,10 @@ public class IniciarSesion extends JFrame {
 
 				char[] arrayDeChars = ClaveUsuario.getPassword();
 				String clave = new String(arrayDeChars);
-				jugador.setClaveUsuario(clave);
+				jugador.setClaveDeUsuario(clave);
 
 				if (jugador.getNombreDeUsuario().trim().length() == 0
-						|| jugador.getClaveUsuario().trim().length() == 0) {/* Valido los datos */
+						|| jugador.getClaveDeUsuario().trim().length() == 0) {/* Valido los datos */
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
 
