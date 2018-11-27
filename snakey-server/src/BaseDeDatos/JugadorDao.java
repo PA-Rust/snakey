@@ -25,7 +25,7 @@ public class JugadorDao extends Dao<Jugador, String> {
 		return false;
 	}
 	
-	public boolean ContraseñaCorrecta(Jugador jugador) {
+	public boolean claveCorrecta(Jugador jugador) {
 		long cantidad = (long) getSession().createQuery(
 				"select count(*) from Jugador j where j.claveDeUsuario = '" + jugador.getClaveDeUsuario() + "' and j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ")
 				.uniqueResult();
