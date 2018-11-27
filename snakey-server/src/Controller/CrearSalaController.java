@@ -2,8 +2,8 @@ package Controller;
 
 import Commons.Sala;
 import Comunicacion.Enviable;
-import Comunicacion.Mensajes.CrearSalaRequest;
-import Comunicacion.Mensajes.CrearSalaResponse;
+import Comunicacion.Requests.CrearSalaRequest;
+import Comunicacion.Responses.CrearSalaResponse;
 import Server.ManejadorUsuario;
 
 public class CrearSalaController implements Controller {

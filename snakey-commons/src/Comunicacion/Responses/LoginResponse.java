@@ -1,4 +1,4 @@
-package Comunicacion.Mensajes;
+package Comunicacion.Responses;
 
 import Commons.Jugador;
 import Comunicacion.Enviable;

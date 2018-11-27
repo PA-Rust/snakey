@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.UnknownHostException;
+import java.util.ArrayList;
 
 public class HiloCliente extends Thread {
 	private static boolean instanciado = false;
@@ -14,11 +15,24 @@ public class HiloCliente extends Thread {
 	private Socket server;
 	private ObjectOutputStream emisor;
 	private ObjectInputStream receptor;
+	private ArrayList<Escuchador> escuchadores;
 	
+	public interface EscuchadorRegister extends Escuchador {
+		public void notificarRegisterResponse(Enviable enviable);
+	}
+	
+	public interface EscuchadorLogin extends Escuchador {
+		public void notificarLoginResponse(Enviable enviable);
+	}
+	
+	public interface EscuchadorSalas extends Escuchador {
+		public void notificarGetSalasResponse(Enviable enviable);
+	}
 	
 	private HiloCliente() {
 		this.estado = "no_autenticado";
-		this.instanciado =  true;
+		HiloCliente.instanciado =  true;
+		escuchadores = new ArrayList<Escuchador>();
 		try {
 			server = new Socket("localhost", 3000);
 			emisor = new ObjectOutputStream(server.getOutputStream());
@@ -30,12 +44,25 @@ public class HiloCliente extends Thread {
 		}
 	}
 	
+	public void agregarEscuchador(Escuchador escuchador) {
+		this.escuchadores.add(escuchador);
+	}
+	
+	public void removerEscuchador(Escuchador escuchador) {
+		this.escuchadores.remove(escuchador);
+	}
+	
 	@Override
 	public void run() {
 		try {
 			receptor = new ObjectInputStream(server.getInputStream());
 			while (server.isConnected()) {
-				
+				try {
+					Enviable nuevoMensaje = (Enviable) receptor.readObject();
+					ManejadorDeRespuestas.getInstancia().manejarMensaje(nuevoMensaje);
+				} catch (ClassNotFoundException e) {
+					System.out.println("Error de formato de mensaje recibido");
+				}
 			}
 		} catch (EOFException e) {
 			System.out.println("connexion terminada");
@@ -55,7 +82,7 @@ public class HiloCliente extends Thread {
 	}
 	
 	public static HiloCliente getInstance() {
-		if (!instanciado) {
+		if (!HiloCliente.instanciado) {
 			instancia = new HiloCliente();
 		}
 		return instancia;

@@ -1,4 +1,4 @@
-package Comunicacion.Mensajes;
+package Comunicacion.Requests;
 
 import Commons.Jugador;
 import Commons.Sala;

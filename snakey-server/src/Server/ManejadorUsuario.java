@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import Commons.Jugador;
+import Commons.Sala;
 import Comunicacion.Enviable;
 import Controller.ControllerFactory;
 
@@ -16,6 +17,7 @@ public class ManejadorUsuario extends Thread {
 	private ObjectOutputStream salida;
 	private ControllerFactory controllerFactory;
 	private Jugador jugador;
+	private Sala salaActual;
 	
 	public ManejadorUsuario(Socket usuario, Server server) {
 		this.usuario = usuario;
@@ -38,8 +40,7 @@ public class ManejadorUsuario extends Thread {
 			while (usuario.isConnected()) {
 				try {
 					Enviable nuevoMensaje = (Enviable) entrada.readObject();
-					Enviable response =
-						(Enviable) controllerFactory.manejarEnviables(nuevoMensaje);
+					Enviable response = controllerFactory.manejarEnviables(nuevoMensaje).manejarMensaje();
 					if (response != null) {
 						enNuevoMensaje(response);
 					}
@@ -64,6 +65,10 @@ public class ManejadorUsuario extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void setSalaActual(Sala sala) {
+		this.salaActual = sala;
 	}
 	
 	public Server getServerSocket() {

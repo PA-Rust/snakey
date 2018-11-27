@@ -3,8 +3,8 @@ package Controller;
 import BaseDeDatos.JugadorDao;
 import Commons.Jugador;
 import Comunicacion.Enviable;
-import Comunicacion.Mensajes.LoginRequest;
-import Comunicacion.Mensajes.LoginResponse;
+import Comunicacion.Requests.LoginRequest;
+import Comunicacion.Responses.LoginResponse;
 import Server.ManejadorUsuario;
 
 public class LoginController implements Controller {

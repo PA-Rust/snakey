@@ -1,8 +1,8 @@
 package Controller;
 
 import Comunicacion.Enviable;
-import Comunicacion.Mensajes.UnirseSalaRequest;
-import Comunicacion.Mensajes.UnirseSalaResponse;
+import Comunicacion.Requests.UnirseSalaRequest;
+import Comunicacion.Responses.UnirseSalaResponse;
 import Server.ManejadorSala;
 import Server.ManejadorUsuario;
 

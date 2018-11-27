@@ -37,7 +37,6 @@ public class IniciarSesion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-
 					IniciarSesion frame = new IniciarSesion();
 					frame.setResizable(false);// no lo puedo renderizar
 					frame.setVisible(true); // visible al usuario
