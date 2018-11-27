@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 
 import Commons.Jugador;
+import Comunicacion.Mensajes.LoginResponse;
 
 public class JugadorDao extends Dao<Jugador, String> {
 
@@ -25,9 +26,19 @@ public class JugadorDao extends Dao<Jugador, String> {
 		return false;
 	}
 	
+	public Jugador getJugador(Jugador jugador) {
+		Jugador jugadorDB = (Jugador)getSession().createQuery(
+				"select j from Jugador j where j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ");
+		if(jugadorDB!=null) {
+			jugadorDB.setClaveDeUsuario(null);
+			return jugadorDB;
+		}
+		return null;
+	}
+	
 	public boolean claveCorrecta(Jugador jugador) {
 		long cantidad = (long) getSession().createQuery(
-				"select count(*) from Jugador j where j.claveDeUsuario = '" + jugador.getClaveDeUsuario() + "' and j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ")
+				"select count(*) from Jugador j where j.claveDeUsuario = '" + jugador.getClaveDeUsuario()+ "' and j.nombreDeUsuario = '" + jugador.getClaveDeUsuario() + "' ")
 				.uniqueResult();
 		System.out.println(cantidad);
 		if (cantidad == 1)
@@ -42,7 +53,9 @@ public class JugadorDao extends Dao<Jugador, String> {
 	}
 
 	public void actualizarDatos(Jugador jugador) {
-		getSession().saveOrUpdate(jugador);
+		getSession().update("UPDATE Jugador j SET j.partidasGanadas = jugador.partidasGanadas WHERE j.nombreDeUsuario = '" + jugador.getNombreDeUsuario()+"'", jugador);
+		getSession().update("UPDATE Jugador j SET j.partidasPerdidas = jugador.partidasPerdidas WHERE j.nombreDeUsuario = '" + jugador.getNombreDeUsuario()+"'", jugador);
+		getSession().update("UPDATE Jugador j SET j.puntajeAcumulado = jugador.puntajeAcumulado WHERE j.nombreDeUsuario = '" + jugador.getNombreDeUsuario()+"'", jugador);
 	}
 
 	public void mostrarJugadores() {

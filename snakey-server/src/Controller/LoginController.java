@@ -1,5 +1,6 @@
 package Controller;
 
+import BaseDeDatos.JugadorDao;
 import Commons.Jugador;
 import Comunicacion.Enviable;
 import Comunicacion.Mensajes.LoginRequest;
@@ -17,14 +18,21 @@ public class LoginController implements Controller {
 
 	@Override
 	public Enviable manejarMensaje() {
-		// TODO(toti): Buscar el usuario a la base de datos, y en caso de que exista,
-		// lo seteamos en el manejador de suaurios.
-		String mensaje = "Logueo exitoso";
-		boolean usuarioValido = loginRequest.getNombre().equals("totiimon")
-			&& loginRequest.getPassword().equals("ninaesunagenia");
-		if (usuarioValido) {
-			manejadorUsuario.setJugador(new Jugador());
+		Jugador jugador = new Jugador(loginRequest.getNombre(), loginRequest.getPassword());
+		JugadorDao daoJugador = new JugadorDao();
+		
+		boolean existeUsuario = daoJugador.existenciaDeJugador(jugador);
+		
+		if (!existeUsuario) {
+			return new LoginResponse(existeUsuario, null, "No exite el usuario " + jugador.getNombreDeUsuario());
 		}
-		return new LoginResponse(usuarioValido, mensaje);
+		
+		boolean usuarioValido = daoJugador.claveCorrecta(jugador);
+		
+		if (usuarioValido) {
+			Jugador jugadorDB = daoJugador.getJugador(jugador);
+			return new LoginResponse(usuarioValido, jugadorDB, "Inicio de sesion correcto");
+		}
+		return new LoginResponse(usuarioValido, null, "Nombre de usuario o contraseña incorrecta");
 	}
 }

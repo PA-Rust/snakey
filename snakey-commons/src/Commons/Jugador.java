@@ -1,8 +1,8 @@
 package Commons;
-
+	
 public class Jugador {
 	private String nombreDeUsuario;
-	private String claveDeUsuario;
+	transient private String claveDeUsuario;
 	private int partidasGanadas;
 	private int partidasPerdidas;
 	private int puntajeAcumulado;
@@ -15,8 +15,11 @@ public class Jugador {
 		this.avatar = Avatar.VIBORITA_VERDE;
 	}
 	
-	public Jugador(String nombreDeUsuario) {
+	
+	
+	public Jugador(String nombreDeUsuario,String claveDeUsuario) {
 		this.nombreDeUsuario = nombreDeUsuario;
+		this.claveDeUsuario = claveDeUsuario;
 	}
 	
 	public Avatar getAvatar() {
@@ -52,6 +55,14 @@ public class Jugador {
 		puntajeActual = 0;
 	}
 
+	public String getClaveDeUsuario() {
+		return nombreDeUsuario;
+	}
+
+	public void setClaveDeUsuario(String claveDeUsuario) {
+		this.claveDeUsuario = claveDeUsuario;
+	}
+	
 	public String getNombreDeUsuario() {
 		return nombreDeUsuario;
 	}
@@ -84,12 +95,6 @@ public class Jugador {
 		this.puntajeAcumulado = puntajeAcumulado;
 	}
 
-	public String getClaveDeUsuario() {
-		return claveDeUsuario;
-	}
 
-	public void setClaveDeUsuario(String claveDeUsuario) {
-		this.claveDeUsuario = claveDeUsuario;
-	}
 }
 
