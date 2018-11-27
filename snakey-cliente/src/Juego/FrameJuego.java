@@ -49,16 +49,13 @@ public class FrameJuego extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					partida.getMapa().getViboritas().get(0)
 							.cambiarDireccion(Direccion.arriba);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+				} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 					partida.getMapa().getViboritas().get(0)
 							.cambiarDireccion(Direccion.abajo);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+				} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 					partida.getMapa().getViboritas().get(0)
 							.cambiarDireccion(Direccion.izquierda);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				}else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					partida.getMapa().getViboritas().get(0)
 							.cambiarDireccion(Direccion.derecha);
 				}
