@@ -1,4 +1,4 @@
-package Comunicacion.Mensajes;
+package Comunicacion.Requests;
 
 import Comunicacion.Enviable;
 import Comunicacion.TiposMensaje;

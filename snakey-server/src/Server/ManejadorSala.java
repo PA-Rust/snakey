@@ -3,12 +3,13 @@ package Server;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import Commons.Partida;
 import Commons.Sala;
 import Comunicacion.Enviable;
+import Comunicacion.Notifications.NuevoUsuarioNotification;
 
 public class ManejadorSala extends Thread {
 	private Sala sala;
+	private ManejadorJuego partidaActual = null;
 	private ArrayList<ManejadorUsuario> listeners;
 	
 	public ManejadorSala(Sala sala, ManejadorUsuario manejadorUsuario) {
@@ -21,7 +22,20 @@ public class ManejadorSala extends Thread {
 	}
 	
 	public synchronized void unirNuevoUsuario(ManejadorUsuario manejadorUsuario) {
-		addListener(manejadorUsuario);
+		try {
+			enNuevoMensaje(new NuevoUsuarioNotification(manejadorUsuario.getJugador()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// TODO(toti): Tal vez podriamos mover el addListener
+			// al try y en el catch volver a intentar unirlo.
+			manejadorUsuario.setSalaActual(sala);
+			addListener(manejadorUsuario);
+		}
+	}
+	
+	public ManejadorJuego getPartidaActual() {
+		return partidaActual;
 	}
 	
 	public void addListener(ManejadorUsuario listener) {
@@ -29,6 +43,7 @@ public class ManejadorSala extends Thread {
 	}
 	
 	public void removeListener(ManejadorUsuario listener) {
+		listener.setSalaActual(null);
 		listeners.remove(listener);
 	}
 	

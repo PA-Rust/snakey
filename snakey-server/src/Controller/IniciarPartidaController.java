@@ -1,7 +1,7 @@
 package Controller;
 
 import Comunicacion.Enviable;
-import Comunicacion.Mensajes.IniciarPartidaRequest;
+import Comunicacion.Requests.IniciarPartidaRequest;
 import Server.ManejadorUsuario;
 
 public class IniciarPartidaController implements Controller {

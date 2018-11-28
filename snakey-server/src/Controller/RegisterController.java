@@ -1,8 +1,8 @@
 package Controller;
 
 import Comunicacion.Enviable;
-import Comunicacion.Mensajes.RegisterRequest;
-import Comunicacion.Mensajes.RegisterResponse;
+import Comunicacion.Requests.RegisterRequest;
+import Comunicacion.Responses.RegisterResponse;
 import Server.ManejadorUsuario;
 
 public class RegisterController implements Controller {
@@ -10,7 +10,8 @@ public class RegisterController implements Controller {
 	private ManejadorUsuario manejadorUsuario;
 	
 	public RegisterController(Enviable enviable, ManejadorUsuario manejadorUsuario) {
-		this.registerRequest = (RegisterRequest)enviable;
+		System.out.println("Nuevo mensaje de register request???" + enviable);
+		this.registerRequest = (RegisterRequest) enviable;
 		this.manejadorUsuario = manejadorUsuario;
 	}
 	

@@ -5,7 +5,12 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import Commons.Jugador;
+import Comunicacion.Enviable;
+import Comunicacion.HiloCliente;
+import Comunicacion.ManejadorDeRespuestas;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorRegister;
+import Comunicacion.Requests.RegisterRequest;
+import Comunicacion.Responses.RegisterResponse;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -20,7 +25,7 @@ import javax.swing.JDialog;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CrearUsuario extends JDialog {
+public class CrearUsuario extends JDialog implements EscuchadorRegister {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -31,7 +36,7 @@ public class CrearUsuario extends JDialog {
 	private JDialog yo;
 
 	public CrearUsuario(JFrame padre) {
-
+		ManejadorDeRespuestas.getInstancia().setEscuchadorRegister(this);
 		yo = this;
 		yo.setModal(true);
 		setTitle("Crear nuevo usuario");
@@ -69,33 +74,11 @@ public class CrearUsuario extends JDialog {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				Jugador nuevoJugador = new Jugador();
-
-				nuevoJugador.setNombreDeUsuario(nombreNuevoReg.getText());
-				// nuevoJugador.setUsuarioId(idNuevoReg.getText());
-
 				char[] arrayDeChars = clave.getPassword();
+				String nombreUsuario = nombreNuevoReg.getText();
 				String clave = new String(arrayDeChars);
-				char[] arrayDeChars2 = claveConfirmatoria.getPassword();
-				String claveConfirmatoria = new String(arrayDeChars2);
-
-				if (nuevoJugador.getNombreDeUsuario().length() == 0 || 
-					clave.length() == 0 || claveConfirmatoria.length() == 0) // campos incompletos
-					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.WARNING_MESSAGE);
-				else {
-
-					if (claveConfirmatoria.equals(clave)) {
-						System.out.println("SON IGUALES");
-						nuevoJugador.setClaveDeUsuario(clave);
-						yo.dispose();
-						/// VOLCAR A LA BASE DE DATOS
-
-					} else {
-						JOptionPane.showMessageDialog(null, "No se ingreso correctamente la contraseña", "ERROR",
-								JOptionPane.WARNING_MESSAGE);
-					}
-				}
+				Enviable registerRequest = new RegisterRequest(nombreUsuario, clave);
+				HiloCliente.getInstance().enMensaje(registerRequest);
 			}
 		});
 		JButton btnCancelar = new JButton("Cancelar");
@@ -149,5 +132,15 @@ public class CrearUsuario extends JDialog {
 						.createParallelGroup(Alignment.BASELINE).addComponent(btnAceptar).addComponent(btnCancelar))
 				.addContainerGap()));
 		panel.setLayout(gl_panel);
+	}
+
+	@Override
+	public void notificarRegisterResponse(RegisterResponse registerResponse) {
+		if (!registerResponse.getSuccess()) {
+			JOptionPane.showMessageDialog(this, registerResponse.getMensaje(), "Error al registrar Usuario", JOptionPane.ERROR_MESSAGE);
+			// TODO(ernesto): Volver a habilitar los inputs del formulario.
+			return;
+		}
+		JOptionPane.showMessageDialog(this, registerResponse.getMensaje(), "Usuario creado correctamente!", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
