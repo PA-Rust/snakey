@@ -30,10 +30,11 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPasswordField clave;
-	private JTextField idNuevoReg;
 	private JPasswordField claveConfirmatoria;
 	private JTextField nombreNuevoReg;
 	private JDialog yo;
+	private JButton btnAceptar;
+	private JButton btnCancelar;
 
 	public CrearUsuario(JFrame padre) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorRegister(this);
@@ -53,14 +54,9 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 
-		JLabel lblIdUsuario = new JLabel("ID Usuario");
-
 		JLabel lblClave = new JLabel("Clave");
 
 		clave = new JPasswordField();
-
-		idNuevoReg = new JTextField();
-		idNuevoReg.setColumns(10);
 
 		JLabel lblClaveConfirmar = new JLabel("Confirmar Clave");
 
@@ -70,8 +66,8 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 		nombreNuevoReg.setColumns(10);
 
 		JLabel lblNombre = new JLabel("Nombre");
-
-		JButton btnAceptar = new JButton("Aceptar");
+		
+		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				char[] arrayDeChars = clave.getPassword();
@@ -81,7 +77,8 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 				HiloCliente.getInstance().enMensaje(registerRequest);
 			}
 		});
-		JButton btnCancelar = new JButton("Cancelar");
+		
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -93,44 +90,46 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addGap(30)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lblClaveConfirmar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(30)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(lblClaveConfirmar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(lblClave, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblIdUsuario, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
-				.addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNombre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(nombreNuevoReg, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-						.addComponent(idNuevoReg, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 						.addComponent(clave, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 						.addComponent(claveConfirmatoria, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_panel.createSequentialGroup().addContainerGap().addComponent(btnAceptar)
-						.addPreferredGap(ComponentPlacement.RELATED, 266, Short.MAX_VALUE).addComponent(btnCancelar)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addGap(19).addGap(12)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(lblIdUsuario).addComponent(
-						idNuevoReg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(nombreNuevoReg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnAceptar)
+					.addPreferredGap(ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+					.addComponent(btnCancelar))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(63)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(nombreNuevoReg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNombre))
-				.addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblClave))
-				.addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(claveConfirmatoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(claveConfirmatoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblClaveConfirmar))
-				.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE).addGroup(gl_panel
-						.createParallelGroup(Alignment.BASELINE).addComponent(btnAceptar).addComponent(btnCancelar))
-				.addContainerGap()));
+					.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnAceptar)
+						.addComponent(btnCancelar))
+					.addContainerGap())
+		);
 		panel.setLayout(gl_panel);
 	}
 

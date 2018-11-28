@@ -46,16 +46,20 @@ public class JugadorDao extends Dao<Jugador, String> {
 		return false;
 	}
 
-	public void insertarEnBdd(Jugador jugador) {
-		if(!existenciaDeJugador(jugador)) 
+	public boolean insertarEnBdd(Jugador jugador) {
+		if(!existenciaDeJugador(jugador)) {
 			getSession().save(jugador);
-		return;
+			return true;
+		}
+		return false;
 	}
 
 	public void actualizarDatos(Jugador jugador) {
-		getSession().update("UPDATE Jugador j SET j.partidasGanadas = jugador.partidasGanadas WHERE j.nombreDeUsuario = '" + jugador.getNombreDeUsuario()+"'", jugador);
-		getSession().update("UPDATE Jugador j SET j.partidasPerdidas = jugador.partidasPerdidas WHERE j.nombreDeUsuario = '" + jugador.getNombreDeUsuario()+"'", jugador);
-		getSession().update("UPDATE Jugador j SET j.puntajeAcumulado = jugador.puntajeAcumulado WHERE j.nombreDeUsuario = '" + jugador.getNombreDeUsuario()+"'", jugador);
+		getSession().update("UPDATE Jugador j SET j.partidasGanadas = jugador.partidasGanadas "
+				+ "and j.partidasPerdidas = jugador.partidasPerdidas "
+				+ "and j.puntajeAcumulado = jugador.puntajeAcumulado WHERE j.nombreDeUsuario = '"
+				+ jugador.getNombreDeUsuario()+"'", jugador);
+		return;
 	}
 
 	public void mostrarJugadores() {
