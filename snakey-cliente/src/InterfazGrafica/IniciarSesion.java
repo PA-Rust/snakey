@@ -32,7 +32,10 @@ public class IniciarSesion extends JFrame {
 	private JPasswordField ClaveUsuario;
 	private JTextField txtNombre;
 	JFrame yo;
-
+	private JButton btnIniciar;
+	private JButton btnCrearUsuario;
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -62,7 +65,7 @@ public class IniciarSesion extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 
-		JButton btnCrearUsuario = new JButton("Crear Usuario");
+		btnCrearUsuario = new JButton("Crear Usuario");
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -81,13 +84,13 @@ public class IniciarSesion extends JFrame {
 		lblClave.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClave.setFont(new Font("Stencil", Font.PLAIN, 20));
 
-		JButton btnIniciar = new JButton("Iniciar Sesion");
+		btnIniciar = new JButton("Iniciar Sesion");
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				
 				Jugador jugador = new Jugador();
 				jugador.setNombreDeUsuario(txtNombre.getText());
-
+				
 				/* Obtengo la clave del usuario para luego consultarlo en la BD */
 
 				char[] arrayDeChars = ClaveUsuario.getPassword();
@@ -100,12 +103,22 @@ public class IniciarSesion extends JFrame {
 				} else {
 
 					/* BUSCAR EN BASE DE DATOS Y CONSULTAR */
-
-					dispose();
-					SalasDisponibles disponible = new SalasDisponibles(jugador);
-					disponible.setLocationRelativeTo(null);
-					disponible.setResizable(false);
-					disponible.setVisible(true);
+					///envio request para verificar existencia en la bdd
+					btnIniciar.setText("enviando..");
+					txtNombre.setEnabled(false);
+					ClaveUsuario.setEnabled(false);
+					btnCrearUsuario.setEnabled(false);
+					///if(response = true)
+					///cierro y paso al otro frame
+//					SalasDisponibles disponible = new SalasDisponibles(jugador);
+//					disponible.setLocationRelativeTo(null);
+//					disponible.setResizable(false);
+//					disponible.setVisible(true);
+					///sino...informo error
+					
+					
+//					dispose();
+					
 
 				}
 

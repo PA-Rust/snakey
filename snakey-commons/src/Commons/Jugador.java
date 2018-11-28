@@ -15,8 +15,6 @@ public class Jugador {
 		this.avatar = Avatar.VIBORITA_VERDE;
 	}
 	
-	
-	
 	public Jugador(String nombreDeUsuario,String claveDeUsuario) {
 		this.nombreDeUsuario = nombreDeUsuario;
 		this.claveDeUsuario = claveDeUsuario;
@@ -56,7 +54,7 @@ public class Jugador {
 	}
 
 	public String getClaveDeUsuario() {
-		return nombreDeUsuario;
+		return claveDeUsuario;
 	}
 
 	public void setClaveDeUsuario(String claveDeUsuario) {
