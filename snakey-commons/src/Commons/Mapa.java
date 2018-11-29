@@ -17,7 +17,8 @@ public class Mapa {
 	private int ancho;
 	private int alto;
 	private Entidad[][] grilla;
-
+	/*El mapa es de 50 x 50,
+	 * con una sola manzanita en la posicion 45 10 (?*/
 	public Mapa(Jugador[] jugadores) {
 		viboritas = new ArrayList<Viborita>();
 		for (int i = 0; i < jugadores.length; i++) {
@@ -29,7 +30,7 @@ public class Mapa {
 		item = new Manzana(new Coordenada(45, 10), 1000);
 		grilla[45][10] = item;
 	}
-	
+	/*Inicializa la grilla poniendala toda en null*/
 	public void inicializarGrilla() {
 		for (int i = 0; i < ancho; i++) {
 			for (int j = 0; j < alto; j++) {
@@ -45,7 +46,9 @@ public class Mapa {
 	public int getAlto() {
 		return alto;
 	}
-	
+/*Creo una coordenada aleatoria,
+ * y si la coordenada esa esta vacia, instancio una manzanita alli
+ * sino vuelvo a llamar a este metodo*/	
 	public void spawnearItem() {
 		int randomX = ThreadLocalRandom.current().nextInt(0, ancho + 1);
 		int randomY = ThreadLocalRandom.current().nextInt(0, alto + 1);
@@ -57,7 +60,9 @@ public class Mapa {
 			spawnearItem();
 		}
 	}
-	
+/*Todo el mapa depende del reloj del item(?
+ * 
+ * */	
 	public void actualizar() {
 		if (item.getReloj() == 0) {
 			spawnearItem();
@@ -121,12 +126,9 @@ public class Mapa {
 		}
 	}
 	
+	
 	public void limpiarGrilla() {
-		for (int x = 0; x < ancho; x++) {
-			for (int y = 0; y < alto; y++) {
-				grilla[x][y] = null;
-			}
-		}
+		inicializarGrilla();
 		Coordenada coordenadaItem = item.getPosicion();
 		grilla[coordenadaItem.getX()][coordenadaItem.getY()] = item;
 	}

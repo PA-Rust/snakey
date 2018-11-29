@@ -35,7 +35,7 @@ public class FrameJuego extends JFrame {
 			public void run() {
 				try {
 					FrameJuego frame = new FrameJuego(new Jugador[] {
-						new Jugador(),
+						new Jugador()
 					});
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -50,11 +50,13 @@ public class FrameJuego extends JFrame {
 		setBounds(100, 100, 800, 800);
 		this.partida = new Partida(jugadores);
 		panelJuego = new PanelJuego(partida);
+		HiloCliente.currentThread().run();
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.arriba));
+					System.out.println(Direccion.arriba.toString()+ "  Direccionn   ");
 				} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.abajo));

@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.rmi.UnknownHostException;
 import java.util.ArrayList;
 
+import Server.Server;
+
 public class HiloCliente extends Thread {
 	private static boolean instanciado = false;
 	private static HiloCliente instancia;
@@ -46,6 +48,7 @@ public class HiloCliente extends Thread {
 	
 	public void agregarEscuchador(Escuchador escuchador) {
 		this.escuchadores.add(escuchador);
+		
 	}
 	
 	public void removerEscuchador(Escuchador escuchador) {
