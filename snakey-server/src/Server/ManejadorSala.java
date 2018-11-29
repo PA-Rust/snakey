@@ -17,6 +17,7 @@ public class ManejadorSala extends Thread {
 	private ArrayList<ManejadorUsuario> listeners;
 	
 	public ManejadorSala(Sala sala, ManejadorUsuario manejadorUsuario) {
+		listeners = new ArrayList<ManejadorUsuario>();
 		this.sala = sala;
 		addListener(manejadorUsuario);
 	}

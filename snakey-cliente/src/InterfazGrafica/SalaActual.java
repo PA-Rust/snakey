@@ -30,7 +30,8 @@ public class SalaActual extends JFrame {
 	JButton btnIniciarPartida;
 	JButton btnEspectearPartida;
 	
-	public SalaActual(Jugador jugador, Sala sala) {
+	public SalaActual(Jugador jugador, Sala sala, JFrame framePadre) {
+		framePadre.dispose();
 		this.jugadorAAgregar = jugador;
 		yo = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

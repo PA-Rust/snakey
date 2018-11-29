@@ -11,6 +11,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import Commons.Jugador;
+import Comunicacion.Enviable;
+import Comunicacion.HiloCliente;
+import Comunicacion.ManejadorDeRespuestas;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorLogin;
+import Comunicacion.Requests.LoginRequest;
+import Comunicacion.Responses.LoginResponse;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,17 +30,21 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class IniciarSesion extends JFrame {
+public class IniciarSesion extends JFrame implements EscuchadorLogin {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	static ImageIcon fondo;
-	private JPasswordField ClaveUsuario;
-	private JTextField txtNombre;
-	JFrame yo;
+	private JPasswordField passClaveUsuario;
+	private JTextField textTxtNombre;
+	private JFrame yo;
 	private JButton btnIniciar;
 	private JButton btnCrearUsuario;
-	
+	private JPanel panel;
+	private JLabel lblClave;
+	private JLabel lblUsuario;
+	private GroupLayout gl_panel;
+	private Jugador jugador;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,16 +54,15 @@ public class IniciarSesion extends JFrame {
 					frame.setResizable(false);// no lo puedo renderizar
 					frame.setVisible(true); // visible al usuario
 					frame.setLocationRelativeTo(null); // para que se posisione en el medio de la pantalla
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
 	}
 
 	public IniciarSesion() {
+		ManejadorDeRespuestas.getInstancia().setEscuchadorLogin(this);
 		setTitle("Inicio de sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 400);
@@ -62,25 +71,23 @@ public class IniciarSesion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 
 		btnCrearUsuario = new JButton("Crear Usuario");
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				CrearUsuario nuevoUsuario = new CrearUsuario(yo);
 				nuevoUsuario.setVisible(true);
 				nuevoUsuario.setLocationRelativeTo(null);
 				nuevoUsuario.setResizable(false);
-
 			}
 		});
 
-		ClaveUsuario = new JPasswordField();
-		ClaveUsuario.setToolTipText("password");
+		passClaveUsuario = new JPasswordField();
+		passClaveUsuario.setToolTipText("password");
 
-		JLabel lblClave = new JLabel("CLAVE");
+		lblClave = new JLabel("CLAVE");
 		lblClave.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClave.setFont(new Font("Stencil", Font.PLAIN, 20));
 
@@ -88,12 +95,12 @@ public class IniciarSesion extends JFrame {
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Jugador jugador = new Jugador();
-				jugador.setNombreDeUsuario(txtNombre.getText());
+				jugador = new Jugador();
+				jugador.setNombreDeUsuario(textTxtNombre.getText());
 				
 				/* Obtengo la clave del usuario para luego consultarlo en la BD */
 
-				char[] arrayDeChars = ClaveUsuario.getPassword();
+				char[] arrayDeChars = passClaveUsuario.getPassword();
 				String clave = new String(arrayDeChars);
 				jugador.setClaveDeUsuario(clave);
 
@@ -104,68 +111,79 @@ public class IniciarSesion extends JFrame {
 
 					/* BUSCAR EN BASE DE DATOS Y CONSULTAR */
 					///envio request para verificar existencia en la bdd
+					String nombreUsuario = textTxtNombre.getText();
 					btnIniciar.setText("enviando..");
-					txtNombre.setEnabled(false);
-					ClaveUsuario.setEnabled(false);
+					textTxtNombre.setEnabled(false);
+					passClaveUsuario.setEnabled(false);
 					btnCrearUsuario.setEnabled(false);
-					///if(response = true)
-					///cierro y paso al otro frame
-//					SalasDisponibles disponible = new SalasDisponibles(jugador);
-//					disponible.setLocationRelativeTo(null);
-//					disponible.setResizable(false);
-//					disponible.setVisible(true);
-					///sino...informo error
+					btnIniciar.setEnabled(false);
+					Enviable loginRequest = new LoginRequest(nombreUsuario, clave);
+					HiloCliente.getInstance().enviarMensaje(loginRequest);
 					
-					
-//					dispose();
-					
-
 				}
 
 			}
 		});
 
-		txtNombre = new JTextField();
-		txtNombre.setText("usuario");
-		txtNombre.setColumns(10);
+		textTxtNombre = new JTextField();
+		textTxtNombre.setText("usuario");
+		textTxtNombre.setColumns(10);
 
-		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario = new JLabel("Usuario");
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuario.setFont(new Font("Stencil", Font.PLAIN, 20));
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(btnIniciar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-							.addGap(136)
-							.addComponent(btnCrearUsuario, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
-						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(ClaveUsuario, Alignment.LEADING)
-							.addComponent(lblUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(txtNombre, Alignment.LEADING)
-							.addComponent(lblClave, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(44)
-					.addComponent(lblClave)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblUsuario)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(ClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnIniciar)
-						.addComponent(btnCrearUsuario)))
-		);
+		gl_panel = new GroupLayout(panel);
+		manejarPanel();
 		panel.setLayout(gl_panel);
 
+	}
+	
+	public void manejarPanel() {
+		gl_panel.setHorizontalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(btnIniciar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+								.addGap(136)
+								.addComponent(btnCrearUsuario, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(passClaveUsuario, Alignment.LEADING)
+								.addComponent(lblUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(textTxtNombre, Alignment.LEADING)
+								.addComponent(lblClave, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)))
+						.addContainerGap())
+			);
+			gl_panel.setVerticalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addGap(44)
+						.addComponent(lblClave)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textTxtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(lblUsuario)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(passClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnIniciar)
+							.addComponent(btnCrearUsuario)))
+			);
+	}
+
+	@Override
+	public void notificarLoginResponse(LoginResponse loginResponse) {
+		if(!loginResponse.getSuccess()) {
+			JOptionPane.showMessageDialog(this, loginResponse.getMensaje(), "Error, ingreso fallido", JOptionPane.ERROR_MESSAGE);
+			textTxtNombre.setEnabled(true);
+			passClaveUsuario.setEnabled(true);
+			btnCrearUsuario.setEnabled(true);
+			btnIniciar.setEnabled(true);
+			btnIniciar.setText("Iniciar Sesion");
+			return;
+		}
+		new SalasDisponibles(jugador, this);
 	}
 }

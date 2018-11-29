@@ -8,7 +8,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 
 import Commons.Jugador;
-import Comunicacion.Mensajes.LoginResponse;
 
 public class JugadorDao extends Dao<Jugador, String> {
 
@@ -20,15 +19,17 @@ public class JugadorDao extends Dao<Jugador, String> {
 		long cantidad = (long) getSession().createQuery(
 				"select count(*) from Jugador j where j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ")
 				.uniqueResult();
-		System.out.println(cantidad);
-		if (cantidad == 1)
+		if (cantidad == 1) {
+			System.out.println("verifico que existe");
 			return true;
+		}
+		System.out.println("verifico que no existe");
 		return false;
 	}
 	
 	public Jugador getJugador(Jugador jugador) {
 		Jugador jugadorDB = (Jugador)getSession().createQuery(
-				"select j from Jugador j where j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ");
+				"select j from Jugador j where j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ").uniqueResult();
 		if(jugadorDB!=null) {
 			jugadorDB.setClaveDeUsuario(null);
 			return jugadorDB;
@@ -38,19 +39,28 @@ public class JugadorDao extends Dao<Jugador, String> {
 	
 	public boolean claveCorrecta(Jugador jugador) {
 		long cantidad = (long) getSession().createQuery(
-				"select count(*) from Jugador j where j.claveDeUsuario = '" + jugador.getClaveDeUsuario()+ "' and j.nombreDeUsuario = '" + jugador.getClaveDeUsuario() + "' ")
+				"select count(*) from Jugador j where j.claveDeUsuario = '" + jugador.getClaveDeUsuario()+ "' and j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ")
 				.uniqueResult();
+		
 		System.out.println(cantidad);
-		if (cantidad == 1)
+		if (cantidad == 1) {
+			getSession().flush();
+			System.out.println("verifico que contraseña es correcta");
 			return true;
+		}
+		System.out.println("verifico que contraseña es incorrecta");
+
 		return false;
 	}
 
 	public boolean insertarEnBdd(Jugador jugador) {
 		if(!existenciaDeJugador(jugador)) {
 			getSession().save(jugador);
+			getSession().getTransaction().commit();
 			return true;
 		}
+
+		getSession().getTransaction().commit();
 		return false;
 	}
 

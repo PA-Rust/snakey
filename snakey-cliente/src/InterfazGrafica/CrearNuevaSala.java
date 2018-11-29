@@ -72,7 +72,7 @@ public class CrearNuevaSala extends JDialog {
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
 					nuevasala = new Sala(txtNombreDeSala.getText(),comboBox.getSelectedIndex() + 1,jugador);/* agrego el 1 ya que va de 0-3 */
-					((SalasDisponibles) padre).agregarALista(nuevasala);
+					((SalasDisponibles) padre).llamarARequest(nuevasala);
 					yo.dispose(); // cierro el frame
 					setModal(false);
 				}
