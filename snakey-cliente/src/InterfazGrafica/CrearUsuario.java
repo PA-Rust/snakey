@@ -74,7 +74,7 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 				String nombreUsuario = nombreNuevoReg.getText();
 				String clave = new String(arrayDeChars);
 				Enviable registerRequest = new RegisterRequest(nombreUsuario, clave);
-				HiloCliente.getInstance().enMensaje(registerRequest);
+				HiloCliente.getInstance().enviarMensaje(registerRequest);
 			}
 		});
 		

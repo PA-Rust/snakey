@@ -42,7 +42,7 @@ public class ManejadorUsuario extends Thread {
 					Enviable nuevoMensaje = (Enviable) entrada.readObject();
 					Enviable response = controllerFactory.manejarEnviables(nuevoMensaje).manejarMensaje();
 					if (response != null) {
-						enNuevoMensaje(response);
+						enviarMensaje(response);
 					}
 				} catch (ClassNotFoundException e) {
 					System.out.println("Error de formato de mensaje recibido");
@@ -83,7 +83,11 @@ public class ManejadorUsuario extends Thread {
 		this.jugador = jugador;
 	}
 	
-	public void enNuevoMensaje(Enviable nuevoMensaje) throws IOException {
+	public void enviarMensaje(Enviable nuevoMensaje) throws IOException {
 		salida.writeObject(nuevoMensaje);
+	}
+	
+	public Sala getSalaActual() {
+		return salaActual;
 	}
 }

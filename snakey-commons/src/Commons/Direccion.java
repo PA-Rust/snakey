@@ -1,8 +1,14 @@
 package Commons;
 
-public enum Direccion {
+import Commons.Input;
+
+public enum Direccion implements Input {
 	arriba,
 	abajo,
 	izquierda,
-	derecha,
+	derecha;
+	
+	public String getTipoInput() {
+		return "Direccion";
+	}
 }

@@ -3,13 +3,13 @@ package Commons;
 import java.util.ArrayList;
 
 public class Sala {
+	private Jugador jugadorPropietario;
 	private String nombreSala;
 	private ArrayList<Jugador> jugadores;
-	private boolean tieneEspectadores;
 	private ArrayList<Jugador> espectadores;
-	private Jugador jugadorPropietario;
+	private boolean jugando;
+	private boolean tieneEspectadores;
 	private int cantJugadores;
-	private Partida partidaAnterior;
 
 	public Sala(String nombreSala, int cantJugadores, Jugador propietario) {
 		this.nombreSala = nombreSala;
@@ -18,6 +18,14 @@ public class Sala {
 		this.tieneEspectadores = false;
 		jugadores = new ArrayList<Jugador>(cantJugadores);
 		jugadores.add(propietario);
+	}
+	
+	public void agregarJugador(Jugador jugador) {
+		jugadores.add(jugador);
+	}
+	
+	public void removerJugador(Jugador jugador) {
+		jugadores.remove(jugador);
 	}
 	
 	public String getNombreSala() {
@@ -62,5 +70,13 @@ public class Sala {
 	
 	public ArrayList<Jugador> getEspectadores() {
 		return espectadores;
+	}
+	
+	public boolean getJugando() {
+		return jugando;
+	}
+	
+	public void setJugando(boolean jugando) {
+		this.jugando = jugando;
 	}
 }

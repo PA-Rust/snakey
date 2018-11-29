@@ -5,6 +5,7 @@ import Comunicacion.Enviable;
 import Comunicacion.TiposMensaje;
 
 public class JuegoIniciadoNotification extends Enviable {
+	private static final long serialVersionUID = 9219535306119377363L;
 	private Partida partida;
 	
 	public JuegoIniciadoNotification(Partida partida) {

@@ -1,5 +1,7 @@
 package Commons;
 
+import Viborita.Viborita;
+
 public class Partida {
 	private Jugador[] jugadores;
 	private int timer;
@@ -21,6 +23,16 @@ public class Partida {
 	
 	public Mapa getMapa() {
 		return mapa;
+	}
+	
+	public Viborita getViboritaJugador(Jugador jugador) {
+		Viborita viborita = null;
+		for (Viborita viboritaActual: getMapa().getViboritas()) {
+			if (viborita.getJugador() == jugador) {
+				viborita = viboritaActual;
+			}
+		}
+		return viborita;
 	}
 	
 	public Jugador[] getJugadores() {
