@@ -88,7 +88,7 @@ public class HiloCliente extends Thread {
 		return instancia;
 	}
 	
-	public void enMensaje(Enviable enviable) {
+	public void enviarMensaje(Enviable enviable) {
 		try {
 			emisor.writeObject(enviable);
 		} catch (IOException e) {

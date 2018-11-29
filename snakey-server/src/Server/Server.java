@@ -7,12 +7,10 @@ import java.util.ArrayList;
 
 import Commons.Jugador;
 import Commons.Sala;
-import Comunicacion.Enviable;
 
 public class Server {
 	ArrayList<ManejadorUsuario> manejadoresDeUsuario;
 	ArrayList<ManejadorSala> manejadoresDeSala;
-	ArrayList<ManejadorJuego> manejadoresDeJuego;
 	
 	public static void log(String mensaje) {
 		System.out.println("SERVER LOG: " + mensaje);
