@@ -9,6 +9,7 @@ import Commons.Partida;
 import Commons.Sala;
 import Comunicacion.Enviable;
 import Comunicacion.Notifications.JuegoIniciadoNotification;
+import Comunicacion.Notifications.CambioSalaNotification;
 import Comunicacion.Notifications.NuevoUsuarioNotification;
 
 public class ManejadorSala extends Thread {
@@ -38,7 +39,7 @@ public class ManejadorSala extends Thread {
 		sala.agregarJugador(manejadorUsuario.getJugador());
 		manejadorUsuario.setSalaActual(sala);
 		addListener(manejadorUsuario);
-		enNuevoMensaje(new NuevoUsuarioNotification(manejadorUsuario.getJugador()));
+		enviarMensajeListeners(new CambioSalaNotification(sala));
 	}
 	
 	public void nuevaInput(Jugador jugador, Input input) {
@@ -56,12 +57,13 @@ public class ManejadorSala extends Thread {
 	}
 	
 	public void removeListener(ManejadorUsuario listener) {
-		sala.agregarJugador(listener.getJugador());
+		sala.removerJugador(listener.getJugador());
 		listener.setSalaActual(null);
 		listeners.remove(listener);
+		enviarMensajeListeners(new CambioSalaNotification(sala));
 	}
 	
-	public void enNuevoMensaje(Enviable enviable) {
+	public void enviarMensajeListeners(Enviable enviable) {
 		for (ManejadorUsuario listener: listeners) {
 			try {
 				listener.enviarMensaje(enviable);

@@ -3,6 +3,7 @@ package Comunicacion;
 import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.JuegoFinalizadoNotification;
 import Comunicacion.Notifications.JuegoIniciadoNotification;
+import Comunicacion.Notifications.CambioSalaNotification;
 import Comunicacion.Notifications.NuevoUsuarioNotification;
 import Comunicacion.Notifications.UsuarioSalioSalaNotification;
 import Comunicacion.Responses.CrearSalaResponse;
@@ -43,15 +44,10 @@ public class ManejadorDeRespuestas {
 	}
 	private EscuchadorUsuario escuchadorUsuario;
 	
-	public interface EscuchadorNuevoUsuarioSala {
-		public void notificarNuevoUsuario(NuevoUsuarioNotification nuevoUsuarioNotification);
+	public interface EscuchadorCambioSala {
+		public void notificarCambioSala(CambioSalaNotification cambioSalaNotification);
 	}
-	private EscuchadorNuevoUsuarioSala escuchadorUsuarioSala;
-	
-	public interface EscuchadorUsuarioSalio {
-		public void notificarUsuarioSalio(UsuarioSalioSalaNotification usuarioSalioNotification);
-	}
-	private EscuchadorUsuarioSalio escuchadorUsuarioSalio;
+	private EscuchadorCambioSala escuchadorCambioSala;
 	
 	public interface EscuchadorJuegoComenzo {
 		public void notificarJuegoComenzo(JuegoIniciadoNotification juegoIniciadoNotification);
@@ -97,13 +93,9 @@ public class ManejadorDeRespuestas {
 				if (escuchadorEntrarSala != null)
 					escuchadorEntrarSala.notificarUnirseSalaResponse((UnirseSalaResponse) mensaje);
 				break;
-			case USUARIO_NUEVO_EN_SALA:
-				if (escuchadorUsuarioSala != null)
-					escuchadorUsuarioSala.notificarNuevoUsuario((NuevoUsuarioNotification) mensaje);
-				break;
-			case USUARIO_SALE_DE_SALA:
-				if (escuchadorUsuarioSalio != null)
-					escuchadorUsuarioSalio.notificarUsuarioSalio((UsuarioSalioSalaNotification) mensaje);
+			case NOTIFICACION_CAMBIO_SALA:
+				if (escuchadorCambioSala != null)
+					escuchadorCambioSala.notificarCambioSala((CambioSalaNotification) mensaje);
 				break;
 			case GAME_STARTED:
 				if (escuchadorJuegoComenzo != null)
@@ -154,12 +146,8 @@ public class ManejadorDeRespuestas {
 		this.escuchadorUsuario = escuchadorUsuario;
 	}
 
-	public void setEscuchadorUsuarioSala(EscuchadorNuevoUsuarioSala escuchadorUsuarioSala) {
-		this.escuchadorUsuarioSala = escuchadorUsuarioSala;
-	}
-
-	public void setEscuchadorUsuarioSalio(EscuchadorUsuarioSalio escuchadorUsuarioSalio) {
-		this.escuchadorUsuarioSalio = escuchadorUsuarioSalio;
+	public void setEscuchadorCambioSala(EscuchadorCambioSala escuchadorCambioSala) {
+		this.escuchadorCambioSala = escuchadorCambioSala;
 	}
 
 	public void setEscuchadorJuegoComenzo(EscuchadorJuegoComenzo escuchadorJuegoComenzo) {

@@ -45,10 +45,9 @@ public class FrameJuego extends JFrame {
 		});
 	}
 
-	public FrameJuego(Jugador[] jugadores) {
+	public FrameJuego(Partida partida) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 800);
-		this.partida = new Partida(jugadores);
 		panelJuego = new PanelJuego(partida);
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
