@@ -54,10 +54,11 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	public SalasDisponibles(Jugador jugador, JFrame frameParent) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorSalas(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCrearSala(this);
-		frameParent.dispose();
-		setVisible(true);
+		
 		setLocationRelativeTo(null);
 		setResizable(false);
+		setVisible(true);
+		frameParent.dispose();
 		salas = new ArrayList<>();
 		setTitle("Salas Disponibles");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -196,7 +197,6 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 			JOptionPane.showMessageDialog(this, crearSalaResponse.getTipoMensaje(), "Error,no se pudo crear sala", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		JOptionPane.showMessageDialog(this, crearSalaResponse.getTipoMensaje(), "Sala creada correctamente", JOptionPane.INFORMATION_MESSAGE);
 		new SalaActual(crearSalaResponse.getSala().getJugadorPropietario(), crearSalaResponse.getSala(), this);
 	}
 }
