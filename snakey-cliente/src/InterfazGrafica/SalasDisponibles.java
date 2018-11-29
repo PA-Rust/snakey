@@ -8,6 +8,14 @@ import javax.swing.border.EmptyBorder;
 
 import Commons.Jugador;
 import Commons.Sala;
+import Comunicacion.HiloCliente;
+import Comunicacion.ManejadorDeRespuestas;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorCrearSala;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorSalas;
+import Comunicacion.Requests.CrearSalaRequest;
+import Comunicacion.Requests.GetSalasRequest;
+import Comunicacion.Responses.CrearSalaResponse;
+import Comunicacion.Responses.GetSalasResponse;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -25,7 +33,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-public class SalasDisponibles extends JFrame {
+public class SalasDisponibles extends JFrame implements EscuchadorSalas,EscuchadorCrearSala{
 
 	/**
 	 * 
@@ -43,7 +51,13 @@ public class SalasDisponibles extends JFrame {
 	SalaActual salaActual;
 	JButton btnUnirse;
 
-	public SalasDisponibles(Jugador jugador) {
+	public SalasDisponibles(Jugador jugador, JFrame frameParent) {
+		ManejadorDeRespuestas.getInstancia().setEscuchadorSalas(this);
+		ManejadorDeRespuestas.getInstancia().setEscuchadorCrearSala(this);
+		frameParent.dispose();
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		salas = new ArrayList<>();
 		setTitle("Salas Disponibles");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -69,8 +83,8 @@ public class SalasDisponibles extends JFrame {
 
 				}
 				else {
-					salaActual = new SalaActual(jugador,salas.get(listSalasDisponibles.getSelectedIndex()));
-					yo.dispose();
+					//salaActual = new SalaActual(jugador,salas.get(listSalasDisponibles.getSelectedIndex()));
+					// yo.dispose();
 				}
 				}
 		});
@@ -99,53 +113,90 @@ public class SalasDisponibles extends JFrame {
 
 		listSalasDisponibles = new JList();
 		modelo = new DefaultListModel();
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				HiloCliente.getInstance().enviarMensaje(new GetSalasRequest());
+			}
+		});
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addContainerGap()
-				.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(listSalasDisponibles, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(lblSalas, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
-								.addGap(18)
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblRta, GroupLayout.PREFERRED_SIZE, 147,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(lbldisponible, GroupLayout.PREFERRED_SIZE, 147,
-												GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.RELATED))
-						.addGroup(Alignment.LEADING,
-								gl_panel.createSequentialGroup().addComponent(btnUnirse)
-										.addPreferredGap(ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
-										.addComponent(btnCrearSala)))
-				.addGap(10)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addGap(11)
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lbldisponible, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblSalas, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(
-								gl_panel.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblRta, GroupLayout.PREFERRED_SIZE, 32,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(listSalasDisponibles, GroupLayout.PREFERRED_SIZE, 113,
-												GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(btnUnirse)
-								.addComponent(btnCrearSala))
-						.addContainerGap()));
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(listSalasDisponibles, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblSalas, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblRta, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lbldisponible, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnUnirse)
+							.addPreferredGap(ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+							.addComponent(btnCrearSala)))
+					.addGap(10))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(46)
+					.addComponent(btnRefresh)
+					.addContainerGap(202, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(11)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lbldisponible, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSalas, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblRta, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(listSalasDisponibles, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(btnRefresh)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnUnirse)
+						.addComponent(btnCrearSala))
+					.addContainerGap())
+		);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 
 	}
-
-	public void agregarALista(Sala nuevaSala) {
-		this.modelo.addElement(nuevaSala.getNombreSala());
-		this.salas.add(nuevaSala);
+	
+	public void mostrarSala() {
+		
+		for(int i=0;i<salas.size();i++) {
+			modelo.add(i, salas.get(i).getNombreSala());
+		}
+				
 		this.listSalasDisponibles.setModel(modelo);
 		btnUnirse.setEnabled(true);
+	}
+	
+	public void llamarARequest(Sala sala) {
+		HiloCliente.getInstance().enviarMensaje(new CrearSalaRequest(sala.getNombreSala(), sala.getCantJugadores()));
+	}
+	
+	@Override
+	public void notificarSalasResponse(GetSalasResponse salaResponse) {
+		salas = salaResponse.getSalas();
+		mostrarSala();
+	}
+
+	@Override
+	public void notificarCrearSalaResponse(CrearSalaResponse crearSalaResponse) {
+		if(!crearSalaResponse.getSuccess()) {
+			JOptionPane.showMessageDialog(this, crearSalaResponse.getTipoMensaje(), "Error,no se pudo crear sala", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		JOptionPane.showMessageDialog(this, crearSalaResponse.getTipoMensaje(), "Sala creada correctamente", JOptionPane.INFORMATION_MESSAGE);
+		new SalaActual(crearSalaResponse.getSala().getJugadorPropietario(), crearSalaResponse.getSala(), this);
 	}
 }

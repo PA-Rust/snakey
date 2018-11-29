@@ -20,19 +20,18 @@ public class LoginController implements Controller {
 	public Enviable manejarMensaje() {
 		Jugador jugador = new Jugador(loginRequest.getNombre(), loginRequest.getPassword());
 		JugadorDao daoJugador = new JugadorDao();
-		
 		boolean existeUsuario = daoJugador.existenciaDeJugador(jugador);
 		
 		if (!existeUsuario) {
 			return new LoginResponse(existeUsuario, null, "No existe el usuario " + jugador.getNombreDeUsuario());
 		}
-	
-		boolean usuarioValido = daoJugador.claveCorrecta(jugador);
+
+		boolean contraseñaValida = daoJugador.claveCorrecta(jugador);
 		
-		if (usuarioValido) {
+		if (contraseñaValida) {
 			Jugador jugadorDB = daoJugador.getJugador(jugador);
-			return new LoginResponse(usuarioValido, jugadorDB, "Inicio de sesion correcto");
+			return new LoginResponse(contraseñaValida, jugadorDB, "Inicio de sesion correcto");
 		}
-		return new LoginResponse(usuarioValido, null, "Contraseña incorrecta");
+		return new LoginResponse(contraseñaValida, null, "Contraseña incorrecta");
 	}
 }

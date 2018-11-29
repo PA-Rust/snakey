@@ -91,10 +91,13 @@ public class HiloCliente extends Thread {
 	public void enviarMensaje(Enviable enviable) {
 		try {
 			emisor.writeObject(enviable);
+			System.out.println("se rompe antes de aca");
 		} catch (IOException e) {
+			System.out.println("llegue a escribir algo");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("no pasa naranja");
 	}
 	
 	public String getEstado() {

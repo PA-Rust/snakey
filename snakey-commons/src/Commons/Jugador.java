@@ -1,6 +1,9 @@
 package Commons;
-	
-public class Jugador {
+
+import java.io.Serializable;
+
+public class Jugador implements Serializable {
+	private static final long serialVersionUID = 5586482952939968026L;
 	private String nombreDeUsuario;
 	transient private String claveDeUsuario;
 	private int partidasGanadas;

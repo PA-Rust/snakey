@@ -17,6 +17,7 @@ public class Server {
 	}
 	
 	public Server(int puerto) {
+		manejadoresDeSala = new ArrayList<ManejadorSala>();
 		ServerSocket serverSocket;
 		try {
 			manejadoresDeUsuario = new ArrayList<ManejadorUsuario>();

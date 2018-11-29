@@ -14,7 +14,7 @@ public class GetSalasController implements Controller {
 		this.getSalasRequest = (GetSalasRequest) enviable;
 		this.manejadorUsuario = manejadorUsuario;
 	}
-	
+
 	@Override
 	public Enviable manejarMensaje() {
 		return new GetSalasResponse(manejadorUsuario.getServerSocket().getSalas());

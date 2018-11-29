@@ -1,8 +1,10 @@
 package Commons;
 
+import java.io.Serializable;
 import Viborita.Viborita;
 
-public class Partida {
+public class Partida implements Serializable {
+	private static final long serialVersionUID = -7869712406560321495L;
 	private Jugador[] jugadores;
 	private int timer;
 	private Mapa mapa;

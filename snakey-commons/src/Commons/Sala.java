@@ -1,10 +1,12 @@
 package Commons;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Sala {
-	private Jugador jugadorPropietario;
+public class Sala implements Serializable {
+	private static final long serialVersionUID = 3579975091518717473L;
 	private String nombreSala;
+	private Jugador jugadorPropietario;
 	private ArrayList<Jugador> jugadores;
 	private ArrayList<Jugador> espectadores;
 	private boolean jugando;
