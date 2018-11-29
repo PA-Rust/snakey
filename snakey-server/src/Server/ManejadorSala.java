@@ -10,7 +10,6 @@ import Commons.Sala;
 import Comunicacion.Enviable;
 import Comunicacion.Notifications.JuegoIniciadoNotification;
 import Comunicacion.Notifications.CambioSalaNotification;
-import Comunicacion.Notifications.NuevoUsuarioNotification;
 
 public class ManejadorSala extends Thread {
 	private Sala sala;
