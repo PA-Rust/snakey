@@ -19,11 +19,8 @@ public class JugadorDao extends Dao<Jugador, String> {
 		long cantidad = (long) getSession().createQuery(
 				"select count(*) from Jugador j where j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ")
 				.uniqueResult();
-		if (cantidad == 1) {
-			System.out.println("verifico que existe");
+		if (cantidad == 1) 
 			return true;
-		}
-		System.out.println("verifico que no existe");
 		return false;
 	}
 	
@@ -45,11 +42,8 @@ public class JugadorDao extends Dao<Jugador, String> {
 		System.out.println(cantidad);
 		if (cantidad == 1) {
 			getSession().flush();
-			System.out.println("verifico que contraseña es correcta");
 			return true;
 		}
-		System.out.println("verifico que contraseña es incorrecta");
-
 		return false;
 	}
 
@@ -59,7 +53,6 @@ public class JugadorDao extends Dao<Jugador, String> {
 			getSession().getTransaction().commit();
 			return true;
 		}
-
 		getSession().getTransaction().commit();
 		return false;
 	}

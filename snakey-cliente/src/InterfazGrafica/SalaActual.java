@@ -2,6 +2,7 @@ package InterfazGrafica;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Panel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,33 +24,39 @@ import java.awt.event.ActionEvent;
 public class SalaActual extends JFrame {
 
 	private JPanel contentPane;
-	JFrame yo;
-	Jugador jugadorAAgregar;
-	JList<String> listaJugadores;
-	DefaultListModel<String> modelo;
-	JButton btnIniciarPartida;
-	JButton btnEspectearPartida;
+	private JFrame yo;
+	private Jugador jugadorAAgregar;
+	private JList<String> listaJugadores;
+	private DefaultListModel<String> modelo;
+	private JButton btnIniciarPartida;
+	private JButton btnEspectearPartida;
+	private JLabel lblNewLabel;
+	private GroupLayout gl_panel;
+	private JPanel panel;
 	
 	public SalaActual(Jugador jugador, Sala sala, JFrame framePadre) {
-		framePadre.dispose();
 		this.jugadorAAgregar = jugador;
 		yo = this;
+		setSize(450, 300);
+		setLocationRelativeTo(framePadre);
+		setResizable(false);
+		setVisible(true);
+//		framePadre.dispose();
+		setTitle(sala.getNombreSala());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		setVisible(true);
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		listaJugadores = new JList();
 		modelo = new DefaultListModel();
-		this.modelo.addElement(jugadorAAgregar.getNombreDeUsuario());
-		this.listaJugadores.setModel(modelo);
+//		this.modelo.addElement(jugadorAAgregar.getNombreDeUsuario());
+//		this.listaJugadores.setModel(modelo);
 		
-		JLabel lblNewLabel = new JLabel(sala.getNombreSala());
+		lblNewLabel = new JLabel(sala.getNombreSala());
 		
 		btnIniciarPartida = new JButton("Iniciar partida");
 		btnIniciarPartida.addActionListener(new ActionListener() {
@@ -75,37 +82,41 @@ public class SalaActual extends JFrame {
 		});
 		
 		
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(listaJugadores, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(180, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-					.addContainerGap(188, Short.MAX_VALUE)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
-					.addGap(75))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(86)
-					.addComponent(btnIniciarPartida)
-					.addGap(60)
-					.addComponent(btnEspectearPartida)
-					.addContainerGap(90, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(6)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(listaJugadores, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnIniciarPartida)
-						.addComponent(btnEspectearPartida))
-					.addGap(21))
-		);
+		gl_panel = new GroupLayout(panel);
+		manejarPanel();
 		panel.setLayout(gl_panel);
+	}
+	
+	public void manejarPanel() {
+		gl_panel.setHorizontalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(listaJugadores, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(180, Short.MAX_VALUE))
+					.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+						.addContainerGap(188, Short.MAX_VALUE)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+						.addGap(75))
+					.addGroup(gl_panel.createSequentialGroup()
+						.addGap(86)
+						.addComponent(btnIniciarPartida)
+						.addGap(60)
+						.addComponent(btnEspectearPartida)
+						.addContainerGap(90, Short.MAX_VALUE))
+			);
+			gl_panel.setVerticalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addGap(6)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(listaJugadores, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnIniciarPartida)
+							.addComponent(btnEspectearPartida))
+						.addGap(21))
+			);
 	}
 }

@@ -78,9 +78,9 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CrearUsuario nuevoUsuario = new CrearUsuario(yo);
-				nuevoUsuario.setVisible(true);
 				nuevoUsuario.setLocationRelativeTo(null);
 				nuevoUsuario.setResizable(false);
+				nuevoUsuario.setVisible(true);
 			}
 		});
 
@@ -109,8 +109,6 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
 
-					/* BUSCAR EN BASE DE DATOS Y CONSULTAR */
-					///envio request para verificar existencia en la bdd
 					String nombreUsuario = textTxtNombre.getText();
 					btnIniciar.setText("enviando..");
 					textTxtNombre.setEnabled(false);
@@ -184,6 +182,9 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 			btnIniciar.setText("Iniciar Sesion");
 			return;
 		}
-		new SalasDisponibles(jugador, this);
+		SalasDisponibles disponibles= new SalasDisponibles(jugador, this);
+		disponibles.setLocationRelativeTo(null);
+		disponibles.setResizable(false);
+		
 	}
 }
