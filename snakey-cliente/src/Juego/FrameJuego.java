@@ -34,9 +34,9 @@ public class FrameJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameJuego frame = new FrameJuego(new Jugador[] {
-						new Jugador(),
-					});
+					FrameJuego frame = new FrameJuego(new Partida(new Jugador[] {
+							
+					}));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
