@@ -4,8 +4,6 @@ import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.JuegoFinalizadoNotification;
 import Comunicacion.Notifications.JuegoIniciadoNotification;
 import Comunicacion.Notifications.CambioSalaNotification;
-import Comunicacion.Notifications.NuevoUsuarioNotification;
-import Comunicacion.Notifications.UsuarioSalioSalaNotification;
 import Comunicacion.Responses.CrearSalaResponse;
 import Comunicacion.Responses.GetProfileResponse;
 import Comunicacion.Responses.GetSalasResponse;
