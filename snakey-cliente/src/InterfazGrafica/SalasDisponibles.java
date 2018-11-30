@@ -11,11 +11,14 @@ import Commons.Sala;
 import Comunicacion.HiloCliente;
 import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorCrearSala;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorEntrarSala;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorSalas;
 import Comunicacion.Requests.CrearSalaRequest;
 import Comunicacion.Requests.GetSalasRequest;
+import Comunicacion.Requests.UnirseSalaRequest;
 import Comunicacion.Responses.CrearSalaResponse;
 import Comunicacion.Responses.GetSalasResponse;
+import Comunicacion.Responses.UnirseSalaResponse;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -33,11 +36,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-public class SalasDisponibles extends JFrame implements EscuchadorSalas,EscuchadorCrearSala{
+public class SalasDisponibles extends JFrame implements EscuchadorSalas,EscuchadorCrearSala,EscuchadorEntrarSala{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	JFrame yo;
@@ -54,7 +54,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	public SalasDisponibles(Jugador jugador, JFrame frameParent) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorSalas(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCrearSala(this);
-		
+		ManejadorDeRespuestas.getInstancia().setEscuchadorEntrarSala(this);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
@@ -81,13 +81,11 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 
 				if (listSalasDisponibles.getSelectedIndex() == -1) {
 					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala", "ERROR", JOptionPane.WARNING_MESSAGE);
-
 				}
 				else {
-					//salaActual = new SalaActual(jugador,salas.get(listSalasDisponibles.getSelectedIndex()));
-					// yo.dispose();
+					HiloCliente.getInstance().enviarMensaje(new UnirseSalaRequest(salas.get(listSalasDisponibles.getSelectedIndex())));
 				}
-				}
+			}
 		});
 
 		JButton btnCrearSala = new JButton("Crear Sala");
@@ -197,5 +195,14 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 			return;
 		}
 		new SalaActual(crearSalaResponse.getSala(), this);
+	}
+
+	@Override
+	public void notificarUnirseSalaResponse(UnirseSalaResponse unirseSalaResponse) {
+		if(!unirseSalaResponse.getSuccess()) {
+			JOptionPane.showMessageDialog(this, unirseSalaResponse.getTipoMensaje(), "Error,no se pudo ingresar a sala", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		new SalaActual(unirseSalaResponse.getSala(), this);	
 	}
 }
