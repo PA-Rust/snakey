@@ -87,11 +87,11 @@ public class Server {
 	
 	public void deregistrarManejador(ManejadorUsuario manejador) {
 		log("Deregistrando manejador");
-		
-		// TODO(toti): Acordarse de borrar como listener de sala y
-		// juego en caso de estar participando de uno / varios de ellos.
 		if (manejador.getSalaActual() != null) {
-			getManejadorSala(manejador.getSalaActual()).removeListener(manejador);
+			ManejadorSala manejadorSala = getManejadorSala(manejador.getSalaActual());
+			if (manejadorSala != null) {
+				manejadorSala.removeListener(manejador);
+			}
 		}
 		manejadoresDeUsuario.remove(manejador);
 	}

@@ -57,6 +57,15 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		ManejadorDeRespuestas.getInstancia().setEscuchadorSalas(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCrearSala(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEntrarSala(this);
+
+		yo = this;
+		modelo = new DefaultListModel<String>();
+		listSalasDisponibles = new JList();
+		JButton btnCrearSala = new JButton("Crear Sala");
+		JPanel panel = new JPanel();
+		JLabel lblEstado = new JLabel("");
+		JButton btnRefresh = new JButton("Refrezcar Salas");
+		GroupLayout gl_panel = new GroupLayout(panel);
 		
 		HiloCliente.getInstance().enviarMensaje(new GetSalasRequest());
 		
@@ -71,8 +80,6 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		yo = this;
-		JPanel panel = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -99,7 +106,6 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 			}
 		});
 
-		JButton btnCrearSala = new JButton("Crear Sala");
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				crearNuevaSala = new CrearNuevaSala(yo);
@@ -109,11 +115,8 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 			}
 		});
 
-		JLabel lblEstado = new JLabel("");
 		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEstado.setFont(new Font("Stencil", Font.PLAIN, 20));
-
-		listSalasDisponibles = new JList();
 		listSalasDisponibles.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				btnUnirse.setEnabled(true);
@@ -131,16 +134,13 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 				}
 			}
 		});
-		modelo = new DefaultListModel();
 		
-		JButton btnRefresh = new JButton("Refrezcar Salas");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				HiloCliente.getInstance().enviarMensaje(new GetSalasRequest());
 			}
 		});
 
-		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
