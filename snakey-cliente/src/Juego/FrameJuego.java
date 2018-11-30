@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
@@ -21,12 +22,14 @@ import Commons.Partida;
 import Comunicacion.HiloCliente;
 import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorEstadoPartida;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorPartidaFinalizada;
 import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.InputNotification;
+import Comunicacion.Notifications.JuegoFinalizadoNotification;
 import InterfazGrafica.SalaActual;
 import Misc.RutaImagen;
 
-public class FrameJuego extends JFrame implements EscuchadorEstadoPartida {
+public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, EscuchadorPartidaFinalizada {
 	private static final long serialVersionUID = 5255914042969054269L;
 	private PanelJuego panelJuego;
 	private Partida partida;
@@ -103,5 +106,10 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida {
 		if (g != null)
 			panelJuego.paintComponent(g);
 		panelJuego.repaint();
+	}
+
+	@Override
+	public void notificarPartidaFinalizada(JuegoFinalizadoNotification juegoFinalizadoNotification) {
+		JOptionPane.showMessageDialog(this, "Partida Finalizada", "La partida termino!", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

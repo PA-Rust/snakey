@@ -60,7 +60,7 @@ public class Mapa implements Serializable {
 		}
 	}
 	
-	public void actualizar() {
+	public synchronized void actualizar() {
 		if (item.getReloj() == 0) {
 			spawnearItem();
 		} else {
