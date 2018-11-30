@@ -1,5 +1,6 @@
 package Controller;
 
+import Commons.Sala;
 import Comunicacion.Enviable;
 import Comunicacion.Requests.UnirseSalaRequest;
 import Comunicacion.Responses.UnirseSalaResponse;
@@ -29,7 +30,8 @@ public class UnirseSalaController implements Controller {
 		}
 		
 		manejadorSala.unirNuevoUsuario(manejadorUsuario);
-		return new UnirseSalaResponse(true, manejadorSala.getSala(), "Se ha unido a la sala exitosamente");
+		Sala sala = manejadorSala.getSala();
+		return new UnirseSalaResponse(true, sala, "Se ha unido a la sala exitosamente");
 	}
 
 }

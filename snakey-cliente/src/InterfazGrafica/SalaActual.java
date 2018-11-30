@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import Commons.Jugador;
 import Commons.Sala;
 import Comunicacion.HiloCliente;
+import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorCambioSala;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorJuegoComenzo;
 import Comunicacion.Notifications.CambioSalaNotification;
@@ -21,7 +22,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,EscuchadorCambioSala{
@@ -32,19 +32,24 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	private JPanel panel;
 	private JButton btnEspectear;
 	private JPanel panel_jugadores;
+	private Sala sala;
 	
-	public SalaActual(Sala sala,JFrame frameParent) {
+	public SalaActual(Sala sala, JFrame frameParent) {
+		ManejadorDeRespuestas.getInstancia().setEscuchadorCambioSala(this);
+		ManejadorDeRespuestas.getInstancia().setEscuchadorJuegoComenzo(this);
+		this.sala = sala;
 		setSize(450, 300);
 		setLocationRelativeTo(frameParent);
 		setResizable(false);
 		setVisible(true);
-		frameParent.dispose();
-		setTitle(sala.getNombreSala());
+		setTitle(this.sala.getNombreSala());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+
+		frameParent.dispose();
 		
 	    panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
@@ -91,11 +96,12 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		);
 		panel.add(panel_jugadores);
 		panel.setLayout(gl_panel);
-		repintarJPanel(sala.getJugadores());
+		
+		repintarJPanel();
 	}
 	
-	public void repintarJPanel(ArrayList<Jugador> jugadores) {
-		for (Jugador jugador :jugadores) {
+	public void repintarJPanel() {
+		for (Jugador jugador: this.sala.getJugadores()) {
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
 			jLabel.setForeground(jugador.getAvatar().getColor());
 			panel_jugadores.add(jLabel);
@@ -109,7 +115,9 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 
 	@Override
 	public void notificarCambioSala(CambioSalaNotification cambioSalaNotification) {
+		System.out.println("Alguien entro???");
 		panel_jugadores.removeAll();
-		repintarJPanel(cambioSalaNotification.getSala().getJugadores());			
+		this.sala = cambioSalaNotification.getSala();
+		repintarJPanel();			
 	}
 }

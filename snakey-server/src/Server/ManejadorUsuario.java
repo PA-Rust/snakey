@@ -10,6 +10,7 @@ import Commons.Jugador;
 import Commons.Sala;
 import Comunicacion.Enviable;
 import Comunicacion.Notifications.EstadoPartidaNotification;
+import Comunicacion.Responses.UnirseSalaResponse;
 import Controller.ControllerFactory;
 
 public class ManejadorUsuario extends Thread {
@@ -86,6 +87,10 @@ public class ManejadorUsuario extends Thread {
 	
 	public synchronized void enviarMensaje(Enviable nuevoMensaje) {
 		try {
+			if (nuevoMensaje instanceof UnirseSalaResponse) {
+				UnirseSalaResponse response = (UnirseSalaResponse) nuevoMensaje;
+				System.out.println(response.getSala() == null ? "Sala null al enviar" : "Sala " + response.getSala().getNombreSala());
+			}
 			salida.writeObject(nuevoMensaje);
 			salida.reset();
 		} catch (IOException e) {

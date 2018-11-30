@@ -16,6 +16,7 @@ public class UnirseSalaResponse extends Enviable {
 	public UnirseSalaResponse(boolean success, Sala sala, String message) {
 		super(TiposMensaje.JOIN_SALA_RESPONSE);
 		this.success = success;
+		this.sala = sala;
 		this.message = message;
 	}
 

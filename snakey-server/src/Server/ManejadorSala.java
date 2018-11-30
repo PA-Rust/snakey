@@ -38,8 +38,8 @@ public class ManejadorSala extends Thread {
 	public synchronized void unirNuevoUsuario(ManejadorUsuario manejadorUsuario) {
 		sala.agregarJugador(manejadorUsuario.getJugador());
 		manejadorUsuario.setSalaActual(sala);
-		addListener(manejadorUsuario);
 		enviarMensajeListeners(new CambioSalaNotification(sala));
+		addListener(manejadorUsuario);
 	}
 	
 	public synchronized void nuevaInput(Jugador jugador, Input input) {
