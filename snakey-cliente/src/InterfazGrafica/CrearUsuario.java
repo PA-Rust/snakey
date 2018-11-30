@@ -83,7 +83,7 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 					}
 					else {
 						char[] arrayDeChars = passClave.getPassword();
-						String nombreUsuario = textNombreNuevoReg.getText();
+						String nombreUsuario = textNombreNuevoReg.getText().toLowerCase();
 						String clave = new String(arrayDeChars);
 						textNombreNuevoReg.setEnabled(false);
 						passClave.setEnabled(false);

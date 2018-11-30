@@ -113,7 +113,7 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
 
-					String nombreUsuario = textTxtNombre.getText();
+					String nombreUsuario = textTxtNombre.getText().toLowerCase();
 					btnIniciar.setText("enviando..");
 					textTxtNombre.setEnabled(false);
 					passClaveUsuario.setEnabled(false);
