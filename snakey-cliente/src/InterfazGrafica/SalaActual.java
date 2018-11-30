@@ -10,6 +10,14 @@ import javax.swing.border.EmptyBorder;
 
 import Commons.Jugador;
 import Commons.Sala;
+import Comunicacion.HiloCliente;
+import Comunicacion.ManejadorDeRespuestas;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorCambioSala;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorJuegoComenzo;
+import Comunicacion.Notifications.CambioSalaNotification;
+import Comunicacion.Notifications.JuegoIniciadoNotification;
+import Comunicacion.Requests.IniciarPartidaRequest;
+import Juego.FrameJuego;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -21,11 +29,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SalaActual extends JFrame {
-
+public class SalaActual extends JFrame implements EscuchadorCambioSala, EscuchadorJuegoComenzo {
 	private JPanel contentPane;
-	private JFrame yo;
-	private Jugador jugadorAAgregar;
 	private JList<String> listaJugadores;
 	private DefaultListModel<String> modelo;
 	private JButton btnIniciarPartida;
@@ -34,14 +39,14 @@ public class SalaActual extends JFrame {
 	private GroupLayout gl_panel;
 	private JPanel panel;
 	
-	public SalaActual(Jugador jugador, Sala sala, JFrame framePadre) {
-		this.jugadorAAgregar = jugador;
-		yo = this;
+	public SalaActual(Sala sala, JFrame framePadre) {
+		ManejadorDeRespuestas.getInstancia().setEscuchadorCambioSala(this);
+		ManejadorDeRespuestas.getInstancia().setEscuchadorJuegoComenzo(this);
 		setSize(450, 300);
 		setLocationRelativeTo(framePadre);
 		setResizable(false);
 		setVisible(true);
-//		framePadre.dispose();
+		framePadre.dispose();
 		setTitle(sala.getNombreSala());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
@@ -61,14 +66,9 @@ public class SalaActual extends JFrame {
 		btnIniciarPartida = new JButton("Iniciar partida");
 		btnIniciarPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				///deberia permitirme iniciar partida solo si soy el propietario
-				if(jugador.getNombreDeUsuario().equals(sala.getJugadorPropietario().getNombreDeUsuario())) {
-					///inicia partida
-					System.out.println("iniciando partida");
-					btnEspectearPartida.setEnabled(true); ///habilito el boton de espectear
-				}
-				else
-					System.out.println("No se tienen permisos para iniciarla");
+				HiloCliente.getInstance().enviarMensaje(
+					new IniciarPartidaRequest()
+				);
 			}
 		});
 		
@@ -80,7 +80,6 @@ public class SalaActual extends JFrame {
 				
 			}
 		});
-		
 		
 		gl_panel = new GroupLayout(panel);
 		manejarPanel();
@@ -118,5 +117,15 @@ public class SalaActual extends JFrame {
 							.addComponent(btnEspectearPartida))
 						.addGap(21))
 			);
+	}
+
+	@Override
+	public void notificarCambioSala(CambioSalaNotification cambioSalaNotification) {
+		// TODO(toti): Hacer que se actualice la lista de jugadores en la sala.
+	}
+
+	@Override
+	public void notificarJuegoComenzo(JuegoIniciadoNotification juegoIniciadoNotification) {
+		new FrameJuego(juegoIniciadoNotification.getPartida(), this);
 	}
 }

@@ -1,7 +1,10 @@
 package Controller;
 
+import java.io.IOException;
+
 import Comunicacion.Enviable;
 import Comunicacion.Requests.IniciarPartidaRequest;
+import Server.ManejadorSala;
 import Server.ManejadorUsuario;
 
 public class IniciarPartidaController implements Controller {
@@ -15,7 +18,14 @@ public class IniciarPartidaController implements Controller {
 
 	@Override
 	public Enviable manejarMensaje() {
-		
+		try {
+			ManejadorSala manejadorDeSala = manejadorUsuario.getServerSocket()
+				.getManejadorSala(manejadorUsuario.getSalaActual());
+			manejadorDeSala.iniciarNuevaPartida();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 

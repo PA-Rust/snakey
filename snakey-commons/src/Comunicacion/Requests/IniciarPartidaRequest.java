@@ -1,25 +1,12 @@
 package Comunicacion.Requests;
 
-import Commons.Jugador;
-import Commons.Sala;
 import Comunicacion.Enviable;
 import Comunicacion.TiposMensaje;
 
 public class IniciarPartidaRequest extends Enviable {
-	private Sala sala;
-	private Jugador jugador;
+	private static final long serialVersionUID = 4013027630340908873L;
 	
-	public IniciarPartidaRequest(Sala sala, Jugador jugador) {
+	public IniciarPartidaRequest() {
 		super(TiposMensaje.START_GAME_REQUEST);
-		this.sala = sala;
-		this.jugador = jugador;
-	}
-
-	public Sala getSala() {
-		return sala;
-	}
-
-	public Jugador getJugador() {
-		return jugador;
 	}
 }

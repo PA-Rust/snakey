@@ -12,7 +12,6 @@ public class BucleJuego extends Thread {
 	private Partida partida;
 	private ManejadorJuego manejadorJuego;
 	
-	// private double interpolation = 0;
 	private final int TICKS_PER_SECOND = 25;
 	private final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 	private final int MAX_FRAMESKIP = 5;
@@ -27,25 +26,21 @@ public class BucleJuego extends Thread {
 		double nextGameTick = System.currentTimeMillis();
 	    int loops;
 
-	    while (partida.getMapa().getViboritas().size() != 0) {
+	    while (partida.getTimer() > 0 || partida.getMapa().getViboritas().size() != 0) {
 	        loops = 0;
 	        while (System.currentTimeMillis() > nextGameTick
 	                && loops < MAX_FRAMESKIP) {
-
 	        	partida.getMapa().actualizar();
+	        	partida.decrementarTimer(1);
 	        	nextGameTick += SKIP_TICKS;
+
+		        try {
+					manejadorJuego.enviarPartidaListeners();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 	            loops++;
 	        }
-
-	        try {
-				manejadorJuego.enviarPartidaListeners(partida);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	        
-	        // interpolation = (System.currentTimeMillis() + SKIP_TICKS - nextGameTick
-	        //         / (double) SKIP_TICKS);
-	        // display_game(interpolation);
 	    }
 	    
 	    try {
@@ -59,7 +54,7 @@ public class BucleJuego extends Thread {
 		return partida;
 	}
 	
-	public void nuevaInput(Jugador jugador, Input input) {
+	public synchronized void nuevaInput(Jugador jugador, Input input) {
 		if (input.getTipoInput() == "Direccion") {
 			Direccion nuevaDireccion = (Direccion) input;
 			Viborita viborita = partida.getViboritaJugador(jugador);

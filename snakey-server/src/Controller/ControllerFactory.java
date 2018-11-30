@@ -20,6 +20,10 @@ public class ControllerFactory {
 				return new CrearSalaController(enviable, manejador);
 			case GET_SALAS_REQUEST:
 				return new GetSalasController(enviable, manejador);
+			case START_GAME_REQUEST:
+				return new IniciarPartidaController(enviable, manejador);
+			case MENSAJE_INPUTS:
+				return new InputNotificationController(enviable, manejador);
 			default:
 				throw new RuntimeException("Tipo de mensaje desconocido.");
 		}

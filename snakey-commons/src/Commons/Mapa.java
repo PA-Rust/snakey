@@ -2,6 +2,7 @@ package Commons;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -11,17 +12,18 @@ import Items.Manzana;
 import Viborita.Cuerpo;
 import Viborita.Viborita;
 
-public class Mapa {
+public class Mapa implements Serializable {
+	private static final long serialVersionUID = -6285779595846322113L;
 	private ArrayList<Viborita> viboritas;
 	private Item item;
 	private int ancho;
 	private int alto;
 	private Entidad[][] grilla;
 
-	public Mapa(Jugador[] jugadores) {
+	public Mapa(ArrayList<Jugador> jugadores) {
 		viboritas = new ArrayList<Viborita>();
-		for (int i = 0; i < jugadores.length; i++) {
-			viboritas.add(new Viborita(10 * (i + 1), jugadores[i]));
+		for (int i = 0; i < jugadores.size(); i++) {
+			viboritas.add(new Viborita(10 * (i + 1), jugadores.get(i)));
 		}
 		this.ancho = 50;
 		this.alto = 50;
@@ -47,11 +49,11 @@ public class Mapa {
 	}
 	
 	public void spawnearItem() {
-		int randomX = ThreadLocalRandom.current().nextInt(0, ancho + 1);
-		int randomY = ThreadLocalRandom.current().nextInt(0, alto + 1);
+		int randomX = ThreadLocalRandom.current().nextInt(0, ancho);
+		int randomY = ThreadLocalRandom.current().nextInt(0, alto);
 		Coordenada coordenadaRandom = new Coordenada(randomX, randomY);
 		if (obtenerEntidad(coordenadaRandom) == null) {
-			item = new Manzana(coordenadaRandom, 600);
+			item = new Manzana(coordenadaRandom, 300);
 			grilla[randomX][randomY] = item;
 		} else {
 			spawnearItem();
@@ -62,7 +64,7 @@ public class Mapa {
 		if (item.getReloj() == 0) {
 			spawnearItem();
 		} else {
-			item.decrementarReloj(10);
+			item.decrementarReloj(1);
 		}
 		limpiarGrilla();
 		actualizarViboritas();
@@ -83,22 +85,24 @@ public class Mapa {
 	/*
 	 * Expected to have a squared panel to draw on.
 	 */
-	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int screenSize, int tamCuadrado) {
+	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int tamBloque) {
 		for (Viborita viborita: viboritas) {
 			for (Cuerpo cuerpo: viborita.getCuerpo()) {
 				graphics.drawImage(
-					imagenes.get(viborita.getAvatar()),
-					cuerpo.getPosicion().getX() * tamCuadrado,
-					cuerpo.getPosicion().getY() * tamCuadrado,
-					tamCuadrado, tamCuadrado, null);
+					imagenes.get(viborita.getJugador().getAvatar()),
+					cuerpo.getPosicion().getX() * tamBloque,
+					cuerpo.getPosicion().getY() * tamBloque,
+					tamBloque, tamBloque, null
+				);
 			}
 		}
 
 		graphics.drawImage(
-				imagenes.get(item.getAvatar()),
-				item.getPosicion().getX() * tamCuadrado,
-				item.getPosicion().getY() * tamCuadrado,
-				tamCuadrado, tamCuadrado, null);
+			imagenes.get(item.getAvatar()),
+			item.getPosicion().getX() * tamBloque,
+			item.getPosicion().getY() * tamBloque,
+			tamBloque, tamBloque, null
+		);
 	}
 	
 	public void actualizarViboritas() {
@@ -109,6 +113,9 @@ public class Mapa {
 	
 	public void reubicarViboritas() {
 		for (Viborita viborita: viboritas) {
+			if (viborita == null) {
+				return;
+			}
 			if (!viborita.estaViva()) {
 				removerViborita(viborita);
 			}

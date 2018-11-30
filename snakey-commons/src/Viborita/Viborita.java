@@ -9,6 +9,7 @@ import Commons.Entidad;
 import Commons.Jugador;
 
 public class Viborita extends Entidad {
+	private static final long serialVersionUID = 1314787374446017470L;
 	private Jugador jugador;
 	private ArrayList<Cuerpo> cuerpo;
 	boolean viva = true;
@@ -31,14 +32,6 @@ public class Viborita extends Entidad {
 	}
 	
 	public void crecer() {
-		/**
-		 * Podriamos hacer que el nuevo 'cuerpo'
-		 * aparezca en la misma posicion que la cola de la serpiente
-		 * y que a la hora de movernos cuando detectamos que la
-		 * posicion del cuerpo en el que estamos
-		 * es la misma que la del cuerpo anterior antes de moverse
-		 * se quede en el mismo lugar por ese 'frame'.
-		 */
 		Cuerpo colaDeLaSerpiente = cuerpo.get(cuerpo.size() - 1);
 		Direccion direccion = colaDeLaSerpiente.getDireccion();
 		Coordenada desplazamiento;
@@ -62,6 +55,7 @@ public class Viborita extends Entidad {
 			.getPosicion();
 		nuevaCoordenada.desplazar(desplazamiento);
 		
+		getJugador().incrementarPuntajeActual(10);
 		cuerpo.add(new Cuerpo(nuevaCoordenada));
 	}
 	

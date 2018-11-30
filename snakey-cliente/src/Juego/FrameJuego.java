@@ -1,7 +1,7 @@
 package Juego;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
@@ -9,46 +9,42 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.BevelBorder;
 
 import Commons.Avatar;
 import Commons.Direccion;
-import Commons.Jugador;
 import Commons.Partida;
 import Comunicacion.HiloCliente;
+import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorEstadoPartida;
 import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.InputNotification;
 import Misc.RutaImagen;
 
-public class FrameJuego extends JFrame {
+public class FrameJuego extends JFrame implements EscuchadorEstadoPartida {
 	private static final long serialVersionUID = 1L;
 	
 	private PanelJuego panelJuego;
 	private Partida partida;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameJuego frame = new FrameJuego(new Partida(new Jugador[] {
-							
-					}));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public FrameJuego(Partida partida) {
+	public FrameJuego(Partida partida, JFrame padre) {
+		ManejadorDeRespuestas.getInstancia().setEscuchadorEstadoPartida(this);
+		this.partida = partida;
+		setLocationRelativeTo(padre);
+		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 800);
-		panelJuego = new PanelJuego(partida);
+		setBounds(100, 100, 1000, 600);
+		setBackground(Color.GRAY);
+		
+		panelJuego = new PanelJuego();
+		panelJuego.setBackground(Color.black);
+		panelJuego.setBounds(0, 0, 550, 550);
+		panelJuego.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		panelJuego.setLayout(new BorderLayout(0, 0));
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -66,47 +62,38 @@ public class FrameJuego extends JFrame {
 				}
 			}
 		});
-		panelJuego.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelJuego.setLayout(new BorderLayout(0, 0));
 		setContentPane(panelJuego);
 	}
 	
-	public class PanelJuego extends JPanel implements EscuchadorEstadoPartida  {
+	public class PanelJuego extends JPanel {
 		private static final long serialVersionUID = 1L;
-		
-		private Partida partida;
 		private Map<Avatar, Image> imagenes;
+		final int TAM_BLOQUE = 600 / 50;
 		
-		public PanelJuego(Partida partida) {
+		public PanelJuego() {
 			imagenes = new HashMap<Avatar, Image>();
 			for (Avatar avatar: Avatar.values()) {
 				imagenes.put(avatar, new ImageIcon(RutaImagen.get("sprites/" + avatar.getSprite())).getImage());
 			}
-			this.partida = partida;
-		}
-		
-		public Partida getPartida() {
-			return partida;
 		}
 		
 		@Override
-		public void paint(Graphics graphics) {
-			super.paint(graphics);
+		public void paintComponent(Graphics graphics) {
+			super.paintComponent(graphics);
 			actualizar(graphics);
 		}
 		
 		public void actualizar(Graphics g) {
-			int blockSize = this.getSize().width / partida.getMapa().getAncho();
-			partida.getMapa().dibujar(g, imagenes, 600, blockSize);
+			partida.getMapa().dibujar(g, imagenes, TAM_BLOQUE);
 		}
-
-		@Override
-		public void notificarEstadoPartida(EstadoPartidaNotification estadoPartidaNotification) {
-			partida = estadoPartidaNotification.getPartida();
-			Graphics g = getGraphics();
-			if (g != null)
-				paintComponent(g);
-			else repaint();
-		}
+	}
+	
+	@Override
+	public void notificarEstadoPartida(EstadoPartidaNotification estadoPartidaNotification) {
+		partida = estadoPartidaNotification.getPartida();
+		Graphics g = getGraphics();
+		if (g != null)
+			panelJuego.paintComponent(g);
+		panelJuego.repaint();
 	}
 }

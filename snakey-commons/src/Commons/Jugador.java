@@ -4,14 +4,13 @@ import java.io.Serializable;
 
 public class Jugador implements Serializable {
 	private static final long serialVersionUID = 5586482952939968026L;
-	private String nombreDeUsuario;
 	transient private String claveDeUsuario;
+	private String nombreDeUsuario;
 	private int partidasGanadas;
 	private int partidasPerdidas;
 	private int puntajeAcumulado;
-	
-	private transient Avatar avatar;
-	private transient int puntajeActual = 0;
+	private Avatar avatar;
+	private int puntajeActual = 0;
 
 	public Jugador() {
 		this.nombreDeUsuario = "toti";

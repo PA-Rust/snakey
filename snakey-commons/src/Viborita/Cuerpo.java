@@ -5,7 +5,7 @@ import Commons.Direccion;
 import Commons.Entidad;
 
 public class Cuerpo extends Entidad {
-
+	private static final long serialVersionUID = -4560862251817393136L;
 	private Direccion direccion;
 	
 	public Cuerpo(Coordenada posicion) {
