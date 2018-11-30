@@ -2,6 +2,7 @@ package Commons;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Sala implements Serializable {
 	private static final long serialVersionUID = 3579975091518717473L;
@@ -12,23 +13,35 @@ public class Sala implements Serializable {
 	private boolean jugando;
 	private boolean tieneEspectadores;
 	private int cantJugadores;
+	private Stack<Avatar> avatares;
 
 	public Sala(String nombreSala, int cantJugadores, Jugador propietario) {
+		avatares = new Stack<Avatar>();
+		inicializarStackAvatares();
 		this.nombreSala = nombreSala;
 		this.cantJugadores = cantJugadores;
 		this.jugadorPropietario = propietario;
 		this.tieneEspectadores = false;
 		jugadores = new ArrayList<Jugador>(cantJugadores);
-		propietario.setAvatar(Avatar.VIBORITA_VERDE);
+		propietario.setAvatar(avatares.pop());
 		jugadores.add(propietario);
 	}
 	
+	public void inicializarStackAvatares() {
+		avatares.push(Avatar.VIBORITA_AMARILLA);
+		avatares.push(Avatar.VIBORITA_NARANJA);
+		avatares.push(Avatar.VIBORITA_AZUL);
+		avatares.push(Avatar.VIBORITA_VERDE);
+	}
+	
 	public void agregarJugador(Jugador jugador) {
+		jugador.setAvatar(avatares.pop());
 		jugadores.add(jugador);
 	}
 	
 	public void removerJugador(Jugador jugador) {
 		jugadores.remove(jugador);
+		avatares.push(jugador.getAvatar());
 	}
 	
 	public String getNombreSala() {
