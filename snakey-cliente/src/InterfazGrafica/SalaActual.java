@@ -136,7 +136,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	
 	@Override
 	public void notificarJuegoComenzo(JuegoIniciadoNotification juegoIniciadoNotification) {	
-		frameJuego = new FrameJuego(juegoIniciadoNotification.getPartida(), yo);
+		frameJuego = new FrameJuego(juegoIniciadoNotification.getPartida(), this);
 	}
 
 	@Override

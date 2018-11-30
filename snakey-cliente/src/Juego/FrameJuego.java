@@ -33,20 +33,19 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	private static final long serialVersionUID = 5255914042969054269L;
 	private PanelJuego panelJuego;
 	private Partida partida;
-	private JFrame yo;
-	public FrameJuego(Partida partida, JFrame padre) {
+
+	public FrameJuego(Partida partida, SalaActual padre) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEstadoPartida(this);
-		yo = this;
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				((SalaActual) padre).requestDeCerrar();
+				padre.requestDeCerrar();
 		    }
 		});
 		this.partida = partida;
 		setLocationRelativeTo(padre);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 1000, 600);
 		setBackground(Color.GRAY);
 		
