@@ -19,6 +19,7 @@ public class Sala implements Serializable {
 		this.jugadorPropietario = propietario;
 		this.tieneEspectadores = false;
 		jugadores = new ArrayList<Jugador>(cantJugadores);
+		propietario.setAvatar(Avatar.VIBORITA_VERDE);
 		jugadores.add(propietario);
 	}
 	

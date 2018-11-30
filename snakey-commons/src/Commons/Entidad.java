@@ -1,6 +1,9 @@
 package Commons;
 
-public class Entidad {
+import java.io.Serializable;
+
+public class Entidad implements Serializable {
+	private static final long serialVersionUID = 4896347083729920857L;
 	private Coordenada posicion;
 	private Avatar avatar;
 	

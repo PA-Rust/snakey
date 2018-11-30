@@ -30,6 +30,7 @@ public class LoginController implements Controller {
 		
 		if (contraseñaValida) {
 			Jugador jugadorDB = daoJugador.getJugador(jugador);
+			manejadorUsuario.setJugador(jugadorDB);
 			return new LoginResponse(contraseñaValida, jugadorDB, "Inicio de sesion correcto");
 		}
 		return new LoginResponse(contraseñaValida, null, "Contraseña incorrecta");

@@ -1,5 +1,7 @@
 package Commons;
 
-public interface Input {
+import java.io.Serializable;
+
+public interface Input extends Serializable {
 	public String getTipoInput();
 }

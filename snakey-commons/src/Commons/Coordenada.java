@@ -1,7 +1,9 @@
 package Commons;
 
-public class Coordenada {
+import java.io.Serializable;
 
+public class Coordenada implements Serializable {
+	private static final long serialVersionUID = 4054280452238525600L;
 	private int x = 0;
 	private int y = 0;
 	

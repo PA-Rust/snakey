@@ -172,7 +172,6 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	}
 	
 	public void mostrarSala() {
-		
 		for(int i=0;i<salas.size();i++) {
 			modelo.add(i, salas.get(i).getNombreSala());
 		}
@@ -197,6 +196,6 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 			JOptionPane.showMessageDialog(this, crearSalaResponse.getTipoMensaje(), "Error,no se pudo crear sala", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		new SalaActual(crearSalaResponse.getSala().getJugadorPropietario(), crearSalaResponse.getSala(), this);
+		new SalaActual(crearSalaResponse.getSala(), this);
 	}
 }

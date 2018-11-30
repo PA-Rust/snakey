@@ -31,10 +31,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class IniciarSesion extends JFrame implements EscuchadorLogin {
-
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	static ImageIcon fondo;
+	private JPanel contentPane;
 	private JPasswordField passClaveUsuario;
 	private JTextField textTxtNombre;
 	private JFrame yo;
@@ -87,7 +86,7 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 		passClaveUsuario = new JPasswordField();
 		passClaveUsuario.setToolTipText("password");
 
-		lblClave = new JLabel("CLAVE");
+		lblClave = new JLabel("Clava");
 		lblClave.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClave.setFont(new Font("Stencil", Font.PLAIN, 20));
 
@@ -117,7 +116,6 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 					btnIniciar.setEnabled(false);
 					Enviable loginRequest = new LoginRequest(nombreUsuario, clave);
 					HiloCliente.getInstance().enviarMensaje(loginRequest);
-					
 				}
 
 			}
@@ -173,7 +171,7 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 
 	@Override
 	public void notificarLoginResponse(LoginResponse loginResponse) {
-		if(!loginResponse.getSuccess()) {
+		if (!loginResponse.getSuccess()) {
 			JOptionPane.showMessageDialog(this, loginResponse.getMensaje(), "Error, ingreso fallido", JOptionPane.ERROR_MESSAGE);
 			textTxtNombre.setEnabled(true);
 			passClaveUsuario.setEnabled(true);

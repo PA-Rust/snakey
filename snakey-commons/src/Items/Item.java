@@ -6,6 +6,7 @@ import Commons.Entidad;
 import Viborita.Viborita;
 
 public abstract class Item extends Entidad {
+	private static final long serialVersionUID = -2445641118808933898L;
 	private int reloj;
 	
 	public Item(Coordenada coordenada) {

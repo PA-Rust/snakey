@@ -15,6 +15,7 @@ public class ManejadorJuego extends Thread {
 	
 	public ManejadorJuego(Partida partida, ArrayList<ManejadorUsuario> listeners) {
 		this.bucleJuego = new BucleJuego(partida, this);
+		bucleJuego.start();
 		this.listeners = listeners;
 	}
 	
@@ -24,9 +25,10 @@ public class ManejadorJuego extends Thread {
 		}
 	}
 	
-	public void enviarPartidaListeners(Partida partida) throws IOException {
+	public void enviarPartidaListeners() throws IOException {
 		for (ManejadorUsuario listener: listeners) {
-			listener.enviarMensaje(new EstadoPartidaNotification(partida));
+			System.out.println(this.getBucleJuego().getPartida().getJugadores().get(0).getAvatar().getSprite());
+			listener.enviarMensaje(new EstadoPartidaNotification(this.bucleJuego.getPartida()));
 		}
 	}
 	

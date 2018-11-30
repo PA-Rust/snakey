@@ -4,6 +4,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.net.Socket;
 import java.rmi.UnknownHostException;
 import java.util.ArrayList;
@@ -88,11 +89,11 @@ public class HiloCliente extends Thread {
 		return instancia;
 	}
 	
-	public void enviarMensaje(Enviable enviable) {
+	public synchronized void enviarMensaje(Enviable enviable) {
 		try {
 			emisor.writeObject(enviable);
+			emisor.reset();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

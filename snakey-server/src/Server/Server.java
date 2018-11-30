@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import BaseDeDatos.HibernateSingleton;
 import Commons.Jugador;
 import Commons.Sala;
 
@@ -17,6 +18,9 @@ public class Server {
 	}
 	
 	public Server(int puerto) {
+		// Caliento la base de datos
+		HibernateSingleton.getSessionFactory().openSession();
+		
 		manejadoresDeSala = new ArrayList<ManejadorSala>();
 		ServerSocket serverSocket;
 		try {
@@ -58,7 +62,8 @@ public class Server {
 	
 	public synchronized ManejadorSala getManejadorSala(Sala sala) {
 		for (ManejadorSala manejador: manejadoresDeSala) {
-			if (manejador.getSala() == sala) {
+			if (manejador.getSala().getJugadorPropietario() 
+					== sala.getJugadorPropietario()) {
 				return manejador;
 			}
 		}
@@ -82,6 +87,10 @@ public class Server {
 	
 	public void deregistrarManejador(ManejadorUsuario manejador) {
 		log("Deregistrando manejador");
+		
+		// TODO(toti): Acordarse de borrar como listener de sala y
+		// juego en caso de estar participando de uno / varios de ellos.
+		
 		manejadoresDeUsuario.remove(manejador);
 	}
 	

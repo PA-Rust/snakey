@@ -19,6 +19,7 @@ public class ManejadorSala extends Thread {
 	public ManejadorSala(Sala sala, ManejadorUsuario manejadorUsuario) {
 		listeners = new ArrayList<ManejadorUsuario>();
 		this.sala = sala;
+		manejadorUsuario.setSalaActual(sala);
 		addListener(manejadorUsuario);
 	}
 	
@@ -28,7 +29,7 @@ public class ManejadorSala extends Thread {
 	
 	public void iniciarNuevaPartida() throws IOException {
 		partidaActual =
-			new ManejadorJuego(new Partida((Jugador[]) sala.getJugadores().toArray()), listeners);
+			new ManejadorJuego(new Partida(sala.getJugadores()), listeners);
 		for (ManejadorUsuario listener: listeners) {
 			listener.enviarMensaje(new JuegoIniciadoNotification(partidaActual.getBucleJuego().getPartida()));
 		}
@@ -41,7 +42,7 @@ public class ManejadorSala extends Thread {
 		enviarMensajeListeners(new CambioSalaNotification(sala));
 	}
 	
-	public void nuevaInput(Jugador jugador, Input input) {
+	public synchronized void nuevaInput(Jugador jugador, Input input) {
 		if (partidaActual != null) {
 			partidaActual.nuevaInput(jugador, input);
 		}
@@ -64,11 +65,7 @@ public class ManejadorSala extends Thread {
 	
 	public void enviarMensajeListeners(Enviable enviable) {
 		for (ManejadorUsuario listener: listeners) {
-			try {
-				listener.enviarMensaje(enviable);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			listener.enviarMensaje(enviable);
 		}
 	}
 }
