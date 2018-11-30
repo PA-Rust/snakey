@@ -26,7 +26,7 @@ public class BucleJuego extends Thread {
 		double nextGameTick = System.currentTimeMillis();
 	    int loops;
 
-	    while (partida.getTimer() > 0 || partida.getMapa().getViboritas().size() != 0) {
+	    while (partida.getTimer() > 0 && partida.getMapa().getViboritas().size() != 0) {
 	        loops = 0;
 	        while (System.currentTimeMillis() > nextGameTick
 	                && loops < MAX_FRAMESKIP) {
@@ -44,6 +44,7 @@ public class BucleJuego extends Thread {
 	    }
 	    
 	    try {
+	    	System.out.println("terminada la partida!");
 			manejadorJuego.enviarPartidaFinalizada();
 		} catch (IOException e) {
 			e.printStackTrace();

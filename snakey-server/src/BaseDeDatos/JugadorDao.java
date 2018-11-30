@@ -25,8 +25,9 @@ public class JugadorDao extends Dao<Jugador, String> {
 	}
 	
 	public Jugador getJugador(Jugador jugador) {
-		Jugador jugadorDB = (Jugador)getSession().createQuery(
+		Jugador jugadorDB = (Jugador) getSession().createQuery(
 				"select j from Jugador j where j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ").uniqueResult();
+		getSession().getTransaction().commit();
 		if(jugadorDB!=null) {
 			jugadorDB.setClaveDeUsuario(null);
 			return jugadorDB;
