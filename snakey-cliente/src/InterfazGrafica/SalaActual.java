@@ -106,8 +106,8 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
 			jLabel.setForeground(jugador.getAvatar().getColor());
 			panelJugadores.add(jLabel);
-			repaint();
 		}
+		panelJugadores.revalidate();
 	}
 	
 	@Override
