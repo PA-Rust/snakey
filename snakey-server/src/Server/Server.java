@@ -19,7 +19,7 @@ public class Server {
 	
 	public Server(int puerto) {
 		// Caliento la base de datos
-		 HibernateSingleton.getSessionFactory().openSession();
+		HibernateSingleton.getSessionFactory().openSession();
 		
 		manejadoresDeSala = new ArrayList<ManejadorSala>();
 		ServerSocket serverSocket;
