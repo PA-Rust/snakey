@@ -38,6 +38,8 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	private GroupLayout groupLayout;
 	private Sala sala;
 	private JFrame yo;
+	private FrameJuego frameJuego;
+	
 	public SalaActual(Sala sala, JFrame frameParent) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCambioSala(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorJuegoComenzo(this);
@@ -111,7 +113,14 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		repintarJPanel();
 	}
 	
+	public void finalizarPartida() {
+		frameJuego = null;
+	}
+	
 	public void requestDeCerrar() {
+		if (frameJuego != null) {
+			frameJuego.dispose();
+		}
 		HiloCliente.getInstance().enviarMensaje( new QuitSalaRequest());
     	new SalasDisponibles(yo);
 	}
@@ -127,12 +136,15 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	
 	@Override
 	public void notificarJuegoComenzo(JuegoIniciadoNotification juegoIniciadoNotification) {	
-		new FrameJuego(juegoIniciadoNotification.getPartida(), yo);
+		frameJuego = new FrameJuego(juegoIniciadoNotification.getPartida(), yo);
 	}
 
 	@Override
 	public void notificarCambioSala(CambioSalaNotification cambioSalaNotification) {
 		if (cambioSalaNotification.getSala().getJugadorPropietario() == null) {
+			if (frameJuego != null) {
+				frameJuego.dispose();
+			}
 			JOptionPane.showMessageDialog(this, "La sala se cerrara porque el propietario cerro la sala.", "Propietario cerro sala", JOptionPane.INFORMATION_MESSAGE);
 	    	new SalasDisponibles(yo);
 		} else {

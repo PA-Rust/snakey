@@ -40,7 +40,6 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		    	yo.dispose();
 				((SalaActual) padre).requestDeCerrar();
 		    }
 		});
