@@ -110,5 +110,6 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	@Override
 	public void notificarPartidaFinalizada(JuegoFinalizadoNotification juegoFinalizadoNotification) {
 		JOptionPane.showMessageDialog(this, "Partida Finalizada", "La partida termino!", JOptionPane.INFORMATION_MESSAGE);
+		dispose();
 	}
 }
