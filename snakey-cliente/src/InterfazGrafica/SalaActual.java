@@ -34,7 +34,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	private JPanel panel_jugadores;
 	
 	public SalaActual(Sala sala,JFrame frameParent) {
-		
 		setSize(450, 300);
 		setLocationRelativeTo(frameParent);
 		setResizable(false);
@@ -96,8 +95,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	}
 	
 	public void repintarJPanel(ArrayList<Jugador> jugadores) {
-		System.out.println("repintando");
-		for(Jugador jugador :jugadores) {
+		for (Jugador jugador :jugadores) {
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
 			jLabel.setForeground(jugador.getAvatar().getColor());
 			panel_jugadores.add(jLabel);

@@ -19,13 +19,15 @@ public class UnirseSalaController implements Controller {
 	public Enviable manejarMensaje() {
 		ManejadorSala manejadorSala = manejadorUsuario.getServerSocket()
             .getManejadorSala(unirseSalaRequest.getSala());
-		System.out.println(manejadorSala == null ? "Sala null" : "Sala conseguida");
+
 		if (manejadorSala == null) {
 			return new UnirseSalaResponse(false, null, "Sala no existente.");
 		}
+		
 		if (manejadorSala.getSala().getSalaLlena()) {
 			return new UnirseSalaResponse(false, null, "Sala llena.");
 		}
+		
 		manejadorSala.unirNuevoUsuario(manejadorUsuario);
 		return new UnirseSalaResponse(true, manejadorSala.getSala(), "Se ha unido a la sala exitosamente");
 	}

@@ -26,8 +26,7 @@ import Comunicacion.Notifications.InputNotification;
 import Misc.RutaImagen;
 
 public class FrameJuego extends JFrame implements EscuchadorEstadoPartida {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 5255914042969054269L;
 	private PanelJuego panelJuego;
 	private Partida partida;
 

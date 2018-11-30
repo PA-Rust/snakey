@@ -94,7 +94,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala", "ERROR", JOptionPane.WARNING_MESSAGE);
 					return;
 				} else {
-					HiloCliente.getInstance().enviarMensaje(new UnirseSalaRequest(salas.get(listSalasDisponibles.getSelectedIndex())));
+					HiloCliente.getInstance().enviarMensaje(new UnirseSalaRequest(salas.get(selectedIndex)));
 				}
 			}
 		});

@@ -62,8 +62,7 @@ public class Server {
 	
 	public synchronized ManejadorSala getManejadorSala(Sala sala) {
 		for (ManejadorSala manejador: manejadoresDeSala) {
-			if (manejador.getSala().getJugadorPropietario() 
-					== sala.getJugadorPropietario()) {
+			if (manejador.getSala().equals(sala)) {
 				return manejador;
 			}
 		}

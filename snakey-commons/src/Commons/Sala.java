@@ -95,4 +95,14 @@ public class Sala implements Serializable {
 	public void setJugando(boolean jugando) {
 		this.jugando = jugando;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Sala)) {
+			return false;
+		}
+		
+		Sala sala = (Sala) obj;
+		return jugadorPropietario.equals(sala.getJugadorPropietario());
+	}
 }

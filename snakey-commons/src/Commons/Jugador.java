@@ -94,7 +94,20 @@ public class Jugador implements Serializable {
 	public void setPuntajeAcumulado(int puntajeAcumulado) {
 		this.puntajeAcumulado = puntajeAcumulado;
 	}
+	
+	public int getPuntajeActual() {
+		return puntajeActual;
+	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof Jugador)) {
+			return false;
+		}
+		
+		Jugador jugador = (Jugador) object;
+		return nombreDeUsuario.equals(jugador.getNombreDeUsuario());
+	}
 
 }
 
