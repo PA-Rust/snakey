@@ -23,7 +23,6 @@ import Juego.FrameJuego;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -135,10 +134,12 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	@Override
 	public void notificarCambioSala(CambioSalaNotification cambioSalaNotification) {
 		if (cambioSalaNotification.getSala().getJugadorPropietario() == null) {
+			System.out.println("es nulo el propietario");
 			JOptionPane.showMessageDialog(this, cambioSalaNotification.getTipoMensaje(), "La sala se cerrara porque el propietario cerro la sala.", JOptionPane.INFORMATION_MESSAGE);
 			requestDeCerrar();
 		} else {
 			panelJugadores.removeAll();
+			panelJugadores.repaint();
 			panel.setLayout(groupLayout);
 			this.sala = cambioSalaNotification.getSala();
 			repintarJPanel();

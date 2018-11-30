@@ -76,6 +76,7 @@ public class ManejadorSala extends Thread {
 		enviarMensajeListeners(new CambioSalaNotification(sala));
 		
 		if (sala.getJugadorPropietario().equals(listener.getJugador())) {
+			sala.setJugadorPropietario(null);
 			listeners.removeAll(listeners);
 			server.eliminarManejadorSala(this);
 		}
