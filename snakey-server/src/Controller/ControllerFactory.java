@@ -26,6 +26,8 @@ public class ControllerFactory {
 				return new IniciarPartidaController(enviable, manejador);
 			case MENSAJE_INPUTS:
 				return new InputNotificationController(enviable, manejador);
+			case QUIT_SALA_REQUEST:
+				return new QuitSalaController(enviable, manejador);
 			default:
 				throw new RuntimeException("Tipo de mensaje desconocido.");
 		}

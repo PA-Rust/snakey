@@ -1,6 +1,5 @@
 package Comunicacion.Requests;
 
-import Commons.Sala;
 import Comunicacion.Enviable;
 import Comunicacion.TiposMensaje;
 
@@ -10,6 +9,4 @@ public class QuitSalaRequest extends Enviable {
 	public QuitSalaRequest() {
 		super(TiposMensaje.QUIT_SALA_REQUEST);
 	}
-	
-	
 }

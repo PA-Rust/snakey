@@ -73,6 +73,7 @@ public class Server {
 		Sala nuevaSala = new Sala(nombreSala, cantidadJugadores, manejadorUsuario.getJugador());
 		manejadoresDeSala.add(
 			new ManejadorSala(
+				this,
 				nuevaSala,
 				manejadorUsuario
 			)
@@ -80,7 +81,7 @@ public class Server {
 		return nuevaSala;
 	}
 	
-	public void eliminatManejadorSala(ManejadorSala manejadorSala) {
+	public void eliminarManejadorSala(ManejadorSala manejadorSala) {
 		manejadoresDeSala.remove(manejadorSala);
 	}
 	
@@ -89,7 +90,9 @@ public class Server {
 		
 		// TODO(toti): Acordarse de borrar como listener de sala y
 		// juego en caso de estar participando de uno / varios de ellos.
-		
+		if (manejador.getSalaActual() != null) {
+			getManejadorSala(manejador.getSalaActual()).removeListener(manejador);
+		}
 		manejadoresDeUsuario.remove(manejador);
 	}
 	

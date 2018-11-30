@@ -34,7 +34,7 @@ public class CrearNuevaSala extends JDialog {
 	private JDialog yo;
 	private Sala nuevasala;
 
-	public  CrearNuevaSala(JFrame padre,Jugador jugador) {
+	public  CrearNuevaSala(JFrame padre) {
 
 		yo = this;
 		setModal(true);
@@ -71,7 +71,7 @@ public class CrearNuevaSala extends JDialog {
 				if (txtNombreDeSala.getText().trim().length() == 0) { /* Valido que el nombre tenga algo valido */
 					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
-					nuevasala = new Sala(txtNombreDeSala.getText(),comboBox.getSelectedIndex() + 1,jugador);/* agrego el 1 ya que va de 0-3 */
+					nuevasala = new Sala(txtNombreDeSala.getText(),comboBox.getSelectedIndex() + 1, new Jugador("provisorio", "provisorio"));
 					((SalasDisponibles) padre).llamarARequest(nuevasala);
 					yo.dispose(); // cierro el frame
 					setModal(false);

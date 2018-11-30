@@ -54,6 +54,13 @@ public class BucleJuego extends Thread {
 		return partida;
 	}
 	
+	public void removerJugador(Jugador jugador) {
+		Viborita viboritaJugador = partida.getViboritaJugador(jugador);
+		if (viboritaJugador != null) {
+			partida.getMapa().getViboritas().remove(viboritaJugador);
+		}
+	}
+	
 	public synchronized void nuevaInput(Jugador jugador, Input input) {
 		if (input.getTipoInput() == "Direccion") {
 			Direccion nuevaDireccion = (Direccion) input;

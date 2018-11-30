@@ -53,7 +53,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	SalaActual salaActual;
 	JButton btnUnirse;
 
-	public SalasDisponibles(Jugador jugador, JFrame frameParent) {
+	public SalasDisponibles(JFrame frameParent) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorSalas(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCrearSala(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEntrarSala(this);
@@ -102,7 +102,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		JButton btnCrearSala = new JButton("Crear Sala");
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				crearNuevaSala = new CrearNuevaSala(yo,jugador);
+				crearNuevaSala = new CrearNuevaSala(yo);
 				crearNuevaSala.setResizable(false);
 				crearNuevaSala.setLocationRelativeTo(null);
 				crearNuevaSala.setVisible(true);
