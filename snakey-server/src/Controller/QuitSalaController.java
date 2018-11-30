@@ -5,6 +5,7 @@ import Comunicacion.Requests.QuitSalaRequest;
 import Server.ManejadorUsuario;
 
 public class QuitSalaController implements Controller {
+	@SuppressWarnings("unused")
 	private QuitSalaRequest quitSalaRequest;
 	private ManejadorUsuario manejadorUsuario;
 	

@@ -43,7 +43,6 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 	private JLabel lblClave;
 	private JLabel lblUsuario;
 	private GroupLayout gl_panel;
-	private Jugador jugador;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -99,7 +98,7 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 		btnIniciar = new JButton("Iniciar Sesion");
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jugador = new Jugador();
+				Jugador jugador = new Jugador();
 				jugador.setNombreDeUsuario(textTxtNombre.getText());
 				
 				/* Obtengo la clave del usuario para luego consultarlo en la BD */
@@ -183,7 +182,7 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 			btnIniciar.setText("Iniciar Sesion");
 			return;
 		}
-		SalasDisponibles disponibles= new SalasDisponibles(jugador, this);
+		SalasDisponibles disponibles= new SalasDisponibles(this);
 		disponibles.setLocationRelativeTo(null);
 		disponibles.setResizable(false);
 		

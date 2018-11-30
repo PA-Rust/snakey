@@ -27,9 +27,15 @@ public class ManejadorSala extends Thread {
 		return sala;
 	}
 	
+	public void notificarPartidaTerminada() {
+		sala.setJugando(false);
+		partidaActual = null;
+	}
+	
 	public void iniciarNuevaPartida() throws IOException {
+		sala.setJugando(true);
 		partidaActual =
-			new ManejadorJuego(new Partida(sala.getJugadores()), listeners);
+			new ManejadorJuego(new Partida(sala.getJugadores()), this);
 		for (ManejadorUsuario listener: listeners) {
 			listener.enviarMensaje(new JuegoIniciadoNotification(partidaActual.getBucleJuego().getPartida()));
 		}
@@ -60,12 +66,25 @@ public class ManejadorSala extends Thread {
 		sala.removerJugador(listener.getJugador());
 		listener.setSalaActual(null);
 		listeners.remove(listener);
+		
+		if (partidaActual != null) {
+			partidaActual.eliminarListener(listener);
+		}
+		
 		enviarMensajeListeners(new CambioSalaNotification(sala));
+		
+		if (sala.getJugadorPropietario().equals(listener.getJugador())) {
+			listeners.removeAll(listeners);
+		}
 	}
 	
 	public void enviarMensajeListeners(Enviable enviable) {
 		for (ManejadorUsuario listener: listeners) {
 			listener.enviarMensaje(enviable);
 		}
+	}
+	
+	public ArrayList<ManejadorUsuario> getListeners() {
+		return listeners;
 	}
 }
