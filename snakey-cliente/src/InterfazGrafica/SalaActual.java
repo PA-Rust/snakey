@@ -105,6 +105,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
 			jLabel.setForeground(jugador.getAvatar().getColor());
 			panel_jugadores.add(jLabel);
+			repaint();
 		}
 	}
 	
@@ -115,7 +116,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 
 	@Override
 	public void notificarCambioSala(CambioSalaNotification cambioSalaNotification) {
-		System.out.println("Alguien entro???");
 		panel_jugadores.removeAll();
 		this.sala = cambioSalaNotification.getSala();
 		repintarJPanel();			
