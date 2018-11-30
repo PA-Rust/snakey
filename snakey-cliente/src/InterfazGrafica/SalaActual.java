@@ -112,7 +112,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	public void requestDeCerrar() {
 		System.out.println("se va a cerrar la salaActual");
 		HiloCliente.getInstance().enviarMensaje( new QuitSalaRequest());
-    	new SalasDisponibles(new Jugador("provisorio","provisorio"), yo);
+    	new SalasDisponibles(yo);
 	}
 	
 	public void repintarJPanel() {
