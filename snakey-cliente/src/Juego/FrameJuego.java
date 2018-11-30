@@ -68,7 +68,7 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida {
 	public class PanelJuego extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private Map<Avatar, Image> imagenes;
-		final int TAM_BLOQUE = 600 / 50;
+		final int TAM_BLOQUE = 550 / 50;
 		
 		public PanelJuego() {
 			imagenes = new HashMap<Avatar, Image>();
