@@ -73,6 +73,7 @@ public class Server {
 		Sala nuevaSala = new Sala(nombreSala, cantidadJugadores, manejadorUsuario.getJugador());
 		manejadoresDeSala.add(
 			new ManejadorSala(
+				this,
 				nuevaSala,
 				manejadorUsuario
 			)

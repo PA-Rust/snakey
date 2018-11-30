@@ -13,10 +13,12 @@ import Comunicacion.Notifications.CambioSalaNotification;
 
 public class ManejadorSala extends Thread {
 	private Sala sala;
+	private Server server;
 	private ManejadorJuego partidaActual = null;
 	private ArrayList<ManejadorUsuario> listeners;
 	
-	public ManejadorSala(Sala sala, ManejadorUsuario manejadorUsuario) {
+	public ManejadorSala(Server server, Sala sala, ManejadorUsuario manejadorUsuario) {
+		this.server = server;
 		listeners = new ArrayList<ManejadorUsuario>();
 		this.sala = sala;
 		manejadorUsuario.setSalaActual(sala);
@@ -75,6 +77,7 @@ public class ManejadorSala extends Thread {
 		
 		if (sala.getJugadorPropietario().equals(listener.getJugador())) {
 			listeners.removeAll(listeners);
+			server.eliminarManejadorSala(this);
 		}
 	}
 	
