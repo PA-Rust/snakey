@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -110,12 +111,10 @@ public class Mapa implements Serializable {
 	}
 	
 	public void reubicarViboritas() {
-		for (Viborita viborita: viboritas) {
-			if (viborita == null) {
-				return;
-			}
+		for (Iterator<Viborita> iterator = viboritas.iterator(); iterator.hasNext(); ) {
+			Viborita viborita = iterator.next();
 			if (!viborita.estaViva()) {
-				removerViborita(viborita);
+				iterator.remove();
 			}
 			for (Cuerpo parte: viborita.getCuerpo()) {
 				Coordenada coordenadaParte =
