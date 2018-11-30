@@ -112,7 +112,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	}
 	
 	public void requestDeCerrar() {
-		System.out.println("se va a cerrar la salaActual");
 		HiloCliente.getInstance().enviarMensaje( new QuitSalaRequest());
     	new SalasDisponibles(yo);
 	}
@@ -134,9 +133,8 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	@Override
 	public void notificarCambioSala(CambioSalaNotification cambioSalaNotification) {
 		if (cambioSalaNotification.getSala().getJugadorPropietario() == null) {
-			System.out.println("es nulo el propietario");
-			JOptionPane.showMessageDialog(this, cambioSalaNotification.getTipoMensaje(), "La sala se cerrara porque el propietario cerro la sala.", JOptionPane.INFORMATION_MESSAGE);
-			requestDeCerrar();
+			JOptionPane.showMessageDialog(this, "La sala se cerrara porque el propietario cerro la sala.", "Propietario cerro sala", JOptionPane.INFORMATION_MESSAGE);
+	    	new SalasDisponibles(yo);
 		} else {
 			panelJugadores.removeAll();
 			panelJugadores.repaint();
