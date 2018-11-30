@@ -65,6 +65,7 @@ public class ManejadorSala extends Thread {
 	}
 	
 	public void removeListener(ManejadorUsuario listener) {
+		boolean esPropietario = sala.getJugadorPropietario().equals(listener.getJugador());
 		sala.removerJugador(listener.getJugador());
 		listener.setSalaActual(null);
 		listeners.remove(listener);
@@ -73,10 +74,13 @@ public class ManejadorSala extends Thread {
 			partidaActual.eliminarListener(listener);
 		}
 		
+		if (esPropietario) {
+			sala.setJugadorPropietario(null);
+		}
+		
 		enviarMensajeListeners(new CambioSalaNotification(sala));
 		
-		if (sala.getJugadorPropietario().equals(listener.getJugador())) {
-			sala.setJugadorPropietario(null);
+		if (esPropietario) {
 			listeners.removeAll(listeners);
 			server.eliminarManejadorSala(this);
 		}
