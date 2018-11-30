@@ -26,13 +26,13 @@ public class LoginController implements Controller {
 			return new LoginResponse(existeUsuario, null, "No existe el usuario " + jugador.getNombreDeUsuario());
 		}
 
-		boolean contraseñaValida = daoJugador.claveCorrecta(jugador);
+		boolean claveValida = daoJugador.claveCorrecta(jugador);
 		
-		if (contraseñaValida) {
+		if (claveValida) {
 			Jugador jugadorDB = daoJugador.getJugador(jugador);
 			manejadorUsuario.setJugador(jugadorDB);
-			return new LoginResponse(contraseñaValida, jugadorDB, "Inicio de sesion correcto");
+			return new LoginResponse(claveValida, jugadorDB, "Inicio de sesion correcto");
 		}
-		return new LoginResponse(contraseñaValida, null, "Contraseña incorrecta");
+		return new LoginResponse(claveValida, null, "Contraseï¿½a incorrecta");
 	}
 }
