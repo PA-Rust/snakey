@@ -5,6 +5,10 @@ import Comunicacion.Enviable;
 import Comunicacion.TiposMensaje;
 
 public class UnirseSalaResponse extends Enviable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1893207883161770948L;
 	private boolean success;
 	private Sala sala;
 	private String message;
@@ -15,7 +19,7 @@ public class UnirseSalaResponse extends Enviable {
 		this.message = message;
 	}
 
-	public boolean isSuccess() {
+	public boolean getSuccess() {
 		return success;
 	}
 
