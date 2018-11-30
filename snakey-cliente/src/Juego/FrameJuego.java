@@ -23,15 +23,24 @@ import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorEstadoPartida;
 import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.InputNotification;
+import InterfazGrafica.SalaActual;
 import Misc.RutaImagen;
 
 public class FrameJuego extends JFrame implements EscuchadorEstadoPartida {
 	private static final long serialVersionUID = 5255914042969054269L;
 	private PanelJuego panelJuego;
 	private Partida partida;
-
+	private JFrame yo;
 	public FrameJuego(Partida partida, JFrame padre) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEstadoPartida(this);
+		yo = this;
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	yo.dispose();
+				((SalaActual) padre).requestDeCerrar();
+		    }
+		});
 		this.partida = partida;
 		setLocationRelativeTo(padre);
 		setVisible(true);

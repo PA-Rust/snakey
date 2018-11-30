@@ -16,7 +16,7 @@ public class QuitSalaController implements Controller {
 	@Override
 	public Enviable manejarMensaje() {
 		manejadorUsuario.getServerSocket()
-			.getManejadorSala(quitSalaRequest.getSala())
+			.getManejadorSala(manejadorUsuario.getSalaActual())
 			.removeListener(manejadorUsuario);
 		return null;
 	}

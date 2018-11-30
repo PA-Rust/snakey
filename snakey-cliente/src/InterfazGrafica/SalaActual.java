@@ -16,6 +16,7 @@ import Comunicacion.ManejadorDeRespuestas.EscuchadorJuegoComenzo;
 import Comunicacion.Notifications.CambioSalaNotification;
 import Comunicacion.Notifications.JuegoIniciadoNotification;
 import Comunicacion.Requests.IniciarPartidaRequest;
+import Comunicacion.Requests.QuitSalaRequest;
 import Juego.FrameJuego;
 
 import javax.swing.GroupLayout;
@@ -34,17 +35,24 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	private JPanel panelJugadores;
 	private GroupLayout groupLayout;
 	private Sala sala;
-	
+	private JFrame yo;
 	public SalaActual(Sala sala, JFrame frameParent) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCambioSala(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorJuegoComenzo(this);
+		yo = this;
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			 @Override
+			    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				 	requestDeCerrar();
+			    }
+		});
 		this.sala = sala;
 		setSize(450, 300);
 		setLocationRelativeTo(frameParent);
 		setResizable(false);
 		setVisible(true);
 		setTitle(this.sala.getNombreSala());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -101,6 +109,12 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		repintarJPanel();
 	}
 	
+	public void requestDeCerrar() {
+		System.out.println("se va a cerrar la salaActual");
+		HiloCliente.getInstance().enviarMensaje( new QuitSalaRequest());
+    	new SalasDisponibles(new Jugador("provisorio","provisorio"), yo);
+	}
+	
 	public void repintarJPanel() {
 		for (Jugador jugador: this.sala.getJugadores()) {
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
@@ -112,7 +126,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	
 	@Override
 	public void notificarJuegoComenzo(JuegoIniciadoNotification juegoIniciadoNotification) {	
-		new FrameJuego(juegoIniciadoNotification.getPartida(), this);
+		new FrameJuego(juegoIniciadoNotification.getPartida(), yo);
 	}
 
 	@Override
