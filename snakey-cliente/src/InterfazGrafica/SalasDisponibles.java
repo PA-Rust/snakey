@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class SalasDisponibles extends JFrame implements EscuchadorSalas,EscuchadorCrearSala,EscuchadorEntrarSala{
 
@@ -62,23 +64,28 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		salas = new ArrayList<>();
 		setTitle("Salas Disponibles");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 353, 272);
+		setBounds(100, 100, 384, 448);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		yo = this;
 		JPanel panel = new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(panel,
-				GroupLayout.PREFERRED_SIZE, 327, Short.MAX_VALUE));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(panel,
-				GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE));
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(154, Short.MAX_VALUE))
+		);
 
 		btnUnirse = new JButton("Unirse");
 		btnUnirse.setEnabled(false);
 		btnUnirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				if (listSalasDisponibles.getSelectedIndex() == -1) {
 					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala", "ERROR", JOptionPane.WARNING_MESSAGE);
 				}
@@ -98,22 +105,31 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 			}
 		});
 
-		JLabel lbldisponible = new JLabel("\u00BFDisponible?");
-		lbldisponible.setHorizontalAlignment(SwingConstants.CENTER);
-		lbldisponible.setFont(new Font("Stencil", Font.PLAIN, 20));
-
-		JLabel lblRta = new JLabel("RTA");
-		lblRta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRta.setFont(new Font("Stencil", Font.PLAIN, 20));
-
-		JLabel lblSalas = new JLabel("SALAS");
-		lblSalas.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSalas.setFont(new Font("Stencil", Font.PLAIN, 20));
+		JLabel lblEstado = new JLabel("");
+		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEstado.setFont(new Font("Stencil", Font.PLAIN, 20));
 
 		listSalasDisponibles = new JList();
+		listSalasDisponibles.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				btnUnirse.setEnabled(true);
+				int selectedIndex = listSalasDisponibles.getSelectedIndex();
+				if (selectedIndex != -1) {
+					lblEstado.setText(
+						salas.get(selectedIndex).getCantJugadoresActual()
+						+ " / " +
+						salas.get(selectedIndex).getCantJugadores()
+					);
+					btnUnirse.setEnabled(true);
+				} else {
+					lblEstado.setText("");
+					btnUnirse.setEnabled(false);
+				}
+			}
+		});
 		modelo = new DefaultListModel();
 		
-		JButton btnRefresh = new JButton("Refresh");
+		JButton btnRefresh = new JButton("Refrezcar Salas");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				HiloCliente.getInstance().enviarMensaje(new GetSalasRequest());
@@ -122,47 +138,37 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(listSalasDisponibles, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblSalas, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
-							.addGap(18)
+						.addComponent(listSalasDisponibles, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblRta, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lbldisponible, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(btnUnirse)
-							.addPreferredGap(ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
-							.addComponent(btnCrearSala)))
-					.addGap(10))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(46)
-					.addComponent(btnRefresh)
-					.addContainerGap(202, Short.MAX_VALUE))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(btnCrearSala, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnUnirse, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+								.addComponent(btnRefresh, GroupLayout.PREFERRED_SIZE, 253, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblEstado, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(11)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(listSalasDisponibles, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lbldisponible, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSalas, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblRta, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-						.addComponent(listSalasDisponibles, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(btnRefresh)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnUnirse)
-						.addComponent(btnCrearSala))
-					.addContainerGap())
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnRefresh)
+							.addGap(12)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnCrearSala)
+								.addComponent(btnUnirse)))
+						.addComponent(lblEstado, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
+					.addGap(162))
 		);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
@@ -170,12 +176,13 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	}
 	
 	public void mostrarSala() {
-		for(int i=0;i<salas.size();i++) {
+		modelo.removeAllElements();
+		
+		for (int i = 0; i < salas.size(); i++) {
 			modelo.add(i, salas.get(i).getNombreSala());
 		}
-				
+
 		this.listSalasDisponibles.setModel(modelo);
-		btnUnirse.setEnabled(true);
 	}
 	
 	public void llamarARequest(Sala sala) {
