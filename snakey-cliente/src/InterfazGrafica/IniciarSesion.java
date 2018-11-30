@@ -62,6 +62,9 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 
 	public IniciarSesion() {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorLogin(this);
+		setResizable(false);
+		setVisible(true);
+		setLocationRelativeTo(null);
 		setTitle("Inicio de sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 400);
@@ -85,15 +88,17 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 
 		passClaveUsuario = new JPasswordField();
 		passClaveUsuario.setToolTipText("password");
+		
 
-		lblClave = new JLabel("Clava");
+		lblUsuario = new JLabel("Usuario");
+		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+
+		lblClave = new JLabel("Clave");
 		lblClave.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClave.setFont(new Font("Stencil", Font.PLAIN, 20));
 
 		btnIniciar = new JButton("Iniciar Sesion");
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				jugador = new Jugador();
 				jugador.setNombreDeUsuario(textTxtNombre.getText());
 				
@@ -122,51 +127,49 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 		});
 
 		textTxtNombre = new JTextField();
-		textTxtNombre.setText("usuario");
 		textTxtNombre.setColumns(10);
 
-		lblUsuario = new JLabel("Usuario");
-		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuario.setFont(new Font("Stencil", Font.PLAIN, 20));
 		gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addComponent(lblUsuario, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnCrearUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+								.addComponent(btnIniciar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+								.addComponent(passClaveUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+								.addComponent(textTxtNombre, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+								.addComponent(lblClave, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE))
+							.addGap(16))))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(44)
+					.addComponent(lblUsuario)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textTxtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblClave)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(passClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+					.addComponent(btnIniciar)
+					.addGap(18)
+					.addComponent(btnCrearUsuario)
+					.addGap(41))
+		);
 		manejarPanel();
 		panel.setLayout(gl_panel);
 
 	}
 	
 	public void manejarPanel() {
-		gl_panel.setHorizontalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_panel.createSequentialGroup()
-								.addComponent(btnIniciar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-								.addGap(136)
-								.addComponent(btnCrearUsuario, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(passClaveUsuario, Alignment.LEADING)
-								.addComponent(lblUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(textTxtNombre, Alignment.LEADING)
-								.addComponent(lblClave, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)))
-						.addContainerGap())
-			);
-			gl_panel.setVerticalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel.createSequentialGroup()
-						.addGap(44)
-						.addComponent(lblClave)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textTxtNombre, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(lblUsuario)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(passClaveUsuario, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-							.addComponent(btnIniciar)
-							.addComponent(btnCrearUsuario)))
-			);
 	}
 
 	@Override

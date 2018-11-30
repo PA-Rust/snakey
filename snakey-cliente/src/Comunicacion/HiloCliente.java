@@ -4,7 +4,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
 import java.net.Socket;
 import java.rmi.UnknownHostException;
 import java.util.ArrayList;
@@ -35,7 +34,10 @@ public class HiloCliente extends Thread {
 		HiloCliente.instanciado =  true;
 		escuchadores = new ArrayList<Escuchador>();
 		try {
-			server = new Socket("localhost", 3000);
+			server = new Socket(
+				EstadosAplicacion.getInstancia().getServerIP(),
+				EstadosAplicacion.getInstancia().getServerPuerto()
+			);
 			emisor = new ObjectOutputStream(server.getOutputStream());
 			this.start();
 		} catch (UnknownHostException e) {
