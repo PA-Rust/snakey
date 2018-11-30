@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -22,6 +23,8 @@ import Juego.FrameJuego;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -131,9 +134,14 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 
 	@Override
 	public void notificarCambioSala(CambioSalaNotification cambioSalaNotification) {
-		panelJugadores.removeAll();
-		panel.setLayout(groupLayout);
-		this.sala = cambioSalaNotification.getSala();
-		repintarJPanel();			
+		if (cambioSalaNotification.getSala().getJugadorPropietario() == null) {
+			JOptionPane.showMessageDialog(this, cambioSalaNotification.getTipoMensaje(), "La sala se cerrara porque el propietario cerro la sala.", JOptionPane.INFORMATION_MESSAGE);
+			requestDeCerrar();
+		} else {
+			panelJugadores.removeAll();
+			panel.setLayout(groupLayout);
+			this.sala = cambioSalaNotification.getSala();
+			repintarJPanel();
+		}			
 	}
 }
