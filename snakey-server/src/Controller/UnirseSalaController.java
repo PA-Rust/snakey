@@ -19,6 +19,7 @@ public class UnirseSalaController implements Controller {
 	public Enviable manejarMensaje() {
 		ManejadorSala manejadorSala = manejadorUsuario.getServerSocket()
             .getManejadorSala(unirseSalaRequest.getSala());
+		System.out.println(manejadorSala == null ? "Sala null" : "Sala conseguida");
 		if (manejadorSala == null) {
 			return new UnirseSalaResponse(false, null, "Sala no existente.");
 		}

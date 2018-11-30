@@ -18,6 +18,8 @@ public class ControllerFactory {
 				return new RegisterController(enviable, manejador);
 			case CREATE_SALA_REQUEST:
 				return new CrearSalaController(enviable, manejador);
+			case JOIN_SALA_REQUEST:
+				return new UnirseSalaController(enviable, manejador);
 			case GET_SALAS_REQUEST:
 				return new GetSalasController(enviable, manejador);
 			case START_GAME_REQUEST:

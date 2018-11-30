@@ -57,6 +57,9 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		ManejadorDeRespuestas.getInstancia().setEscuchadorSalas(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCrearSala(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEntrarSala(this);
+		
+		HiloCliente.getInstance().enviarMensaje(new GetSalasRequest());
+		
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
@@ -86,10 +89,11 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		btnUnirse.setEnabled(false);
 		btnUnirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (listSalasDisponibles.getSelectedIndex() == -1) {
+				int selectedIndex = listSalasDisponibles.getSelectedIndex();
+				if (selectedIndex == -1) {
 					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala", "ERROR", JOptionPane.WARNING_MESSAGE);
-				}
-				else {
+					return;
+				} else {
 					HiloCliente.getInstance().enviarMensaje(new UnirseSalaRequest(salas.get(listSalasDisponibles.getSelectedIndex())));
 				}
 			}
