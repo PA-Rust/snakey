@@ -93,6 +93,7 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 		}
 		
 		public void actualizar(Graphics g) {
+			System.out.println("Timer: " + partida.getTimer());
 			partida.getMapa().dibujar(g, imagenes, TAM_BLOQUE);
 		}
 	}

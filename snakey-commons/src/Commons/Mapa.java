@@ -77,8 +77,6 @@ public class Mapa implements Serializable {
 	}
 	
 	public void removerViborita(Viborita viborita) {
-		// TODO(toti): Remover la viborita de la grilla inmediatamente
-		// para no tenerla en los calculos de otra viborita.
 		viboritas.remove(viborita);
 	}
 	
