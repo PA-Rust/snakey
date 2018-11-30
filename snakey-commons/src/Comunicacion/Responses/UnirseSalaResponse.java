@@ -5,6 +5,7 @@ import Comunicacion.Enviable;
 import Comunicacion.TiposMensaje;
 
 public class UnirseSalaResponse extends Enviable {
+	private static final long serialVersionUID = -3103135071091839230L;
 	private boolean success;
 	private Sala sala;
 	private String message;
