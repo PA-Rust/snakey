@@ -31,7 +31,8 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	private JButton btnIniciarPartida;
 	private JPanel panel;
 	private JButton btnEspectear;
-	private JPanel panel_jugadores;
+	private JPanel panelJugadores;
+	private GroupLayout groupLayout;
 	private Sala sala;
 	
 	public SalaActual(Sala sala, JFrame frameParent) {
@@ -67,35 +68,35 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			}
 		});
 		
-		panel_jugadores = new JPanel();
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
+		panelJugadores = new JPanel();
+		groupLayout = new GroupLayout(panel);
+		groupLayout.setHorizontalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(65)
 							.addComponent(btnIniciarPartida)
 							.addGap(79)
 							.addComponent(btnEspectear))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(29)
-							.addComponent(panel_jugadores, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(100, Short.MAX_VALUE))
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+		groupLayout.setVerticalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap(37, Short.MAX_VALUE)
-					.addComponent(panel_jugadores, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnIniciarPartida)
 						.addComponent(btnEspectear))
 					.addContainerGap())
 		);
-		panel.add(panel_jugadores);
-		panel.setLayout(gl_panel);
+		panel.add(panelJugadores);
+		panel.setLayout(groupLayout);
 		
 		repintarJPanel();
 	}
@@ -104,7 +105,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		for (Jugador jugador: this.sala.getJugadores()) {
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
 			jLabel.setForeground(jugador.getAvatar().getColor());
-			panel_jugadores.add(jLabel);
+			panelJugadores.add(jLabel);
 			repaint();
 		}
 	}
@@ -116,7 +117,8 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 
 	@Override
 	public void notificarCambioSala(CambioSalaNotification cambioSalaNotification) {
-		panel_jugadores.removeAll();
+		panelJugadores.removeAll();
+		panel.setLayout(groupLayout);
 		this.sala = cambioSalaNotification.getSala();
 		repintarJPanel();			
 	}
