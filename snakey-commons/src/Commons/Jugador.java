@@ -11,6 +11,8 @@ public class Jugador implements Serializable {
 	private int puntajeAcumulado;
 	private Avatar avatar;
 	private int puntajeActual = 0;
+	private int manzanitasComidasActuales;
+	private int manzanitasComidasTotales;
 
 	public Jugador() {
 		this.nombreDeUsuario = "toti";
@@ -20,6 +22,22 @@ public class Jugador implements Serializable {
 	public Jugador(String nombreDeUsuario,String claveDeUsuario) {
 		this.nombreDeUsuario = nombreDeUsuario;
 		this.claveDeUsuario = claveDeUsuario;
+	}
+	
+	public int getManzanitasComidasTotales() {
+		return manzanitasComidasTotales;
+	}
+	
+	public void setManzanitasComidasTotales(int comidasTotales) {
+		this.manzanitasComidasTotales = comidasTotales;
+	}
+
+	public int getManzanitasComidasActuales() {
+		return manzanitasComidasActuales;
+	}
+	
+	public void setManzanitasComidasActuales(int comidasActuales) {
+		this.manzanitasComidasActuales = comidasActuales;
 	}
 	
 	public Avatar getAvatar() {

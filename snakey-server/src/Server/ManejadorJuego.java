@@ -35,15 +35,37 @@ public class ManejadorJuego extends Thread {
 		}
 	}
 	
+	public Jugador getJugadorGanador() {
+		Jugador ganador = null;
+		for (ManejadorUsuario listener: listeners) {
+			Jugador jugador = listener.getJugador();
+			if (ganador == null || jugador.getPuntajeActual() > jugador.getPuntajeActual()) {
+				jugador = ganador;
+			}
+		}
+		return ganador;
+	}
+	
 	public void enviarPartidaFinalizada() throws IOException {
 		JugadorDao dao = new JugadorDao();
+		Jugador jugadorGanador = getJugadorGanador();
 		for (ManejadorUsuario listener: listeners) {
-			listener.getJugador().setPuntajeAcumulado(
-				listener.getJugador().getPuntajeActual()
-				+ listener.getJugador().getPuntajeAcumulado()
-			);
-			System.out.println("actualizo");
-			dao.actualizarDatos(listener.getJugador());
+			if (listeners.size() >= 2) {
+				if (listener.getJugador().equals(jugadorGanador)) {
+					listener.getJugador().setPartidasGanadas(
+						listener.getJugador().getPartidasGanadas() + 1
+					);
+				}
+				listener.getJugador().setPuntajeAcumulado(
+					listener.getJugador().getPuntajeActual()
+					+ listener.getJugador().getPuntajeAcumulado()
+				);
+				listener.getJugador().setManzanitasComidasTotales(
+					listener.getJugador().getManzanitasComidasTotales() +
+					listener.getJugador().getManzanitasComidasActuales()
+				);
+				dao.actualizarDatos(listener.getJugador());
+			}
 			listener.enviarMensaje(new JuegoFinalizadoNotification());
 		}
 		manejadorSala.notificarPartidaTerminada();

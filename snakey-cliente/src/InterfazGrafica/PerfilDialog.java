@@ -35,39 +35,39 @@ public class PerfilDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public PerfilDialog(int partidasGanadas, int puntos, String nombreUsuario) {
+	public PerfilDialog(int partidasGanadas, int puntos, int manzanitas, String nombreUsuario) {
 		setTitle("Perfil");
 		
 		yo = this;
 		yo.setModal(true);
-		setBounds(100, 100, 450, 216);
+		setBounds(100, 100, 425, 223);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			lblNewLabel = new JLabel(nombreUsuario);
-			lblNewLabel.setBounds(5, 5, 421, 55);
+			lblNewLabel.setBounds(5, 5, 394, 38);
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		
 		JLabel lblPartidasGanadas = new JLabel("Partidas Ganadas :");
-		lblPartidasGanadas.setBounds(5, 55, 175, 44);
+		lblPartidasGanadas.setBounds(5, 55, 175, 32);
 		lblPartidasGanadas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblPartidasGanadas.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JLabel lblPuntajeAcumulado = new JLabel("Puntaje Acumulado :");
-		lblPuntajeAcumulado.setBounds(5, 98, 175, 44);
+		lblPuntajeAcumulado.setBounds(5, 84, 175, 32);
 		lblPuntajeAcumulado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPuntajeAcumulado.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JLabel labelGanadas = new JLabel(Integer.toString(partidasGanadas));
-		labelGanadas.setBounds(170, 71, 140, 25);
+		labelGanadas.setBounds(170, 59, 140, 25);
 		labelGanadas.setHorizontalAlignment(SwingConstants.CENTER);
 		labelGanadas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		JLabel labelAcumulado = new JLabel(Integer.toString(puntos));
-		labelAcumulado.setBounds(170, 108, 140, 25);
+		labelAcumulado.setBounds(170, 88, 140, 25);
 		labelAcumulado.setHorizontalAlignment(SwingConstants.CENTER);
 		labelAcumulado.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPanel.setLayout(null);
@@ -76,6 +76,18 @@ public class PerfilDialog extends JDialog {
 		contentPanel.add(lblPuntajeAcumulado);
 		contentPanel.add(labelGanadas);
 		contentPanel.add(labelAcumulado);
+		
+		JLabel lblMazanitasConsumidas = new JLabel("Mazanitas Consumidas");
+		lblMazanitasConsumidas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMazanitasConsumidas.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblMazanitasConsumidas.setBounds(5, 113, 175, 32);
+		contentPanel.add(lblMazanitasConsumidas);
+		
+		JLabel lblManzanitas = new JLabel(Integer.toString(manzanitas));
+		lblManzanitas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblManzanitas.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblManzanitas.setBounds(170, 117, 140, 25);
+		contentPanel.add(lblManzanitas);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

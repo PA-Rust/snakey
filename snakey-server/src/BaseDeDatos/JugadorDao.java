@@ -1,12 +1,5 @@
 package BaseDeDatos;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Transaction;
-
 import Commons.Jugador;
 
 public class JugadorDao extends Dao<Jugador, String> {
@@ -19,8 +12,11 @@ public class JugadorDao extends Dao<Jugador, String> {
 		long cantidad = (long) getSession().createQuery(
 				"select count(*) from Jugador j where j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ")
 				.uniqueResult();
-		if (cantidad == 1) 
+		if (cantidad == 1)  {
+			getSession().getTransaction().commit();
 			return true;
+		}
+		getSession().getTransaction().commit();
 		return false;
 	}
 	
@@ -35,6 +31,9 @@ public class JugadorDao extends Dao<Jugador, String> {
 	}
 	
 	public boolean claveCorrecta(Jugador jugador) {
+		if (!getSession().getTransaction().isActive()) {
+			getSession().getTransaction().begin();
+		}
 		long cantidad = (long) getSession().createQuery(
 				"select count(*) from Jugador j where j.claveDeUsuario = '" + jugador.getClaveDeUsuario()+ "' and j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ")
 				.uniqueResult();
@@ -46,12 +45,15 @@ public class JugadorDao extends Dao<Jugador, String> {
 	}
 
 	public boolean insertarEnBdd(Jugador jugador) {
+		if (!getSession().getTransaction().isActive()) {
+			getSession().getTransaction().begin();
+		}
 		if(!existenciaDeJugador(jugador)) {
+			getSession().getTransaction().begin();
 			getSession().save(jugador);
 			getSession().getTransaction().commit();
 			return true;
 		}
-		getSession().getTransaction().commit();
 		return false;
 	}
 
@@ -61,17 +63,10 @@ public class JugadorDao extends Dao<Jugador, String> {
 		}
 		getSession().update("UPDATE Jugador j SET j.partidasGanadas = jugador.partidasGanadas "
 				+ "and j.partidasPerdidas = jugador.partidasPerdidas "
-				+ "and j.puntajeAcumulado = jugador.puntajeAcumulado WHERE j.nombreDeUsuario = '"
-				+ jugador.getNombreDeUsuario()+"'", jugador);
+				+ "and j.puntajeAcumulado = jugador.puntajeAcumulado "
+				+ "and j.manzanitasComidasTotales = jugador.manzanitasComidasTotales "
+				+ "WHERE j.nombreDeUsuario = '" + jugador.getNombreDeUsuario()+"'", jugador);
 		getSession().getTransaction().commit();
 		return;
 	}
-
-	public void mostrarJugadores() {
-		Query qu = getSession().createQuery("Select j from Jugador j");
-		List<Jugador> listaJugadores = qu.getResultList();
-		for (Jugador j : listaJugadores)
-			System.out.println(j);
-	}
-
 }

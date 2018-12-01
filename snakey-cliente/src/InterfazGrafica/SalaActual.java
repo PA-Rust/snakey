@@ -179,6 +179,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			PerfilDialog dialog = new PerfilDialog(
 					profileResponse.getJugador().getPartidasGanadas(),
 					profileResponse.getJugador().getPuntajeAcumulado(),
+					profileResponse.getJugador().getManzanitasComidasTotales(),
 					profileResponse.getJugador().getNombreDeUsuario());
 			dialog.setLocationRelativeTo(this);
   			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

@@ -58,6 +58,19 @@ public class Partida implements Serializable {
 		timer -= cantidad;
 	}
 	
+	public void incrementarPuntajeJugadores() {
+		Viborita viboritaJugador;
+		for (Jugador jugador: jugadores) {
+			viboritaJugador = getViboritaJugador(jugador);
+			if (viboritaJugador == null) {
+				continue;
+			}
+			if (getViboritaJugador(jugador).estaViva()) {
+				jugador.incrementarPuntajeActual(1);
+			}
+		}
+	}
+	
 	public void incrementarPuntajeJugador(int puntaje, Jugador jugador) {
 		jugador.incrementarPuntajeActual(puntaje);
 	}

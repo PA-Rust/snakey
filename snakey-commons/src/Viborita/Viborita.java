@@ -57,7 +57,11 @@ public class Viborita extends Entidad {
 			.getPosicion();
 		nuevaCoordenada.desplazar(desplazamiento);
 		
-		getJugador().incrementarPuntajeActual(10);
+		getJugador().setManzanitasComidasActuales(
+			getJugador().getManzanitasComidasActuales() +
+			1
+		);
+		getJugador().incrementarPuntajeActual(100);
 		cuerpo.add(new Cuerpo(nuevaCoordenada));
 	}
 	

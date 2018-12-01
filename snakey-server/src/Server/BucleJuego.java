@@ -33,6 +33,7 @@ public class BucleJuego extends Thread {
 	                && loops < MAX_FRAMESKIP) {
 	        	partida.getMapa().actualizar();
 	        	partida.decrementarTimer(1);
+	        	partida.incrementarPuntajeJugadores();
 	        	nextGameTick += SKIP_TICKS;
 
 		        try {
@@ -42,6 +43,7 @@ public class BucleJuego extends Thread {
 				}
 	            loops++;
 	        }
+	        
 	    }
 	    
 	    try {

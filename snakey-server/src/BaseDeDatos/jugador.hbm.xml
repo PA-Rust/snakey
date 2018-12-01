@@ -3,11 +3,12 @@
 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-mapping>
 	<class name="Commons.Jugador" table="JUGADOR"> 
-		<id column="nombreDeUsuario" name="nombreDeUsuario" type="string" > </id>
+		<id column="nombreDeUsuario" name="nombreDeUsuario" type="string" />
 		<property column="partidasGanadas" name="partidasGanadas" type="int" />
 		<property column="partidasPerdidas" name="partidasPerdidas" type="int" />
 		<property column="puntajeAcumulado" name="puntajeAcumulado" type="int" />
-		<property column="claveDeUsuario" name="claveDeUsuario" type="string"></property>
+		<property column="claveDeUsuario" name="claveDeUsuario" type="string"/>
+		<property column="manzanitasComidasTotales" name="manzanitasComidasTotales" type="int" />
 	</class>
 	
 </hibernate-mapping>
