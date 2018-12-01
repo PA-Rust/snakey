@@ -12,11 +12,13 @@ public class Viborita extends Entidad {
 	private static final long serialVersionUID = 1314787374446017470L;
 	private Jugador jugador;
 	private ArrayList<Cuerpo> cuerpo;
+	private Direccion proximaDireccion;
 	boolean viva = true;
 	private int velocidad = 1;
 	
 	public Viborita(int y, Jugador jugador) {
 		this.jugador = jugador;
+		proximaDireccion = Direccion.derecha;
 		cuerpo = new ArrayList<Cuerpo>();
 		for (int x = 4; x > 0; x--) {
 			cuerpo.add(new Cuerpo(new Coordenada(x, y)));
@@ -104,6 +106,7 @@ public class Viborita extends Entidad {
 	@Override
 	public void actualizar() {
 		desplazar();
+		getCabeza().setDireccion(proximaDireccion);
 	}
 	
 	public Avatar getAvatar() {
@@ -121,7 +124,7 @@ public class Viborita extends Entidad {
 				return;
 			}
 		}
-		getCabeza().setDireccion(direccion);
+		proximaDireccion = direccion;
 	}
 	
 	public boolean estaViva() {
