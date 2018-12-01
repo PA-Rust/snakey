@@ -84,23 +84,23 @@ public class Mapa implements Serializable {
 	/*
 	 * Expected to have a squared panel to draw on.
 	 */
-	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int tamBloque) {
+	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int altoBloque, int anchoBloque) {
 		for (Viborita viborita: viboritas) {
 			for (Cuerpo cuerpo: viborita.getCuerpo()) {
 				graphics.drawImage(
 					imagenes.get(viborita.getJugador().getAvatar()),
-					cuerpo.getPosicion().getX() * tamBloque,
-					cuerpo.getPosicion().getY() * tamBloque,
-					tamBloque, tamBloque, null
+					cuerpo.getPosicion().getX() * anchoBloque,
+					cuerpo.getPosicion().getY() * altoBloque,
+					anchoBloque, altoBloque, null
 				);
 			}
 		}
 
 		graphics.drawImage(
 			imagenes.get(item.getAvatar()),
-			item.getPosicion().getX() * tamBloque,
-			item.getPosicion().getY() * tamBloque,
-			tamBloque, tamBloque, null
+			item.getPosicion().getX() * anchoBloque,
+			item.getPosicion().getY() * altoBloque,
+			anchoBloque, altoBloque, null
 		);
 	}
 	
