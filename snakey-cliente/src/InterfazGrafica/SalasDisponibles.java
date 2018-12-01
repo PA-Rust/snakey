@@ -99,7 +99,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 			public void actionPerformed(ActionEvent arg0) {
 				int selectedIndex = listSalasDisponibles.getSelectedIndex();
 				if (selectedIndex == -1) {
-					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala", "ERROR", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala.", "ERROR", JOptionPane.WARNING_MESSAGE);
 					return;
 				} else if(salas.get(selectedIndex).getClaveSala()==null){
 					llamarARequestDeIngreso(selectedIndex,"null");
