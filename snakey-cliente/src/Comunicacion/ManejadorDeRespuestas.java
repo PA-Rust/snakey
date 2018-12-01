@@ -3,6 +3,7 @@ package Comunicacion;
 import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.JuegoFinalizadoNotification;
 import Comunicacion.Notifications.JuegoIniciadoNotification;
+import Comunicacion.Notifications.TauntNotification;
 import Comunicacion.Notifications.CambioSalaNotification;
 import Comunicacion.Responses.CrearSalaResponse;
 import Comunicacion.Responses.GetProfileResponse;
@@ -62,6 +63,11 @@ public class ManejadorDeRespuestas {
 	}
 	private EscuchadorPartidaFinalizada escuchadorPartidaFinalizada;
 	
+	public interface EscuchadorTaunt {
+		public void notificarNuevaTaunt(TauntNotification tauntNotification);
+	}
+	private EscuchadorTaunt escuchadorTaunt;
+	
 	// Constructor privado porque es un Singleton.
 	private ManejadorDeRespuestas() { }
 	
@@ -110,6 +116,10 @@ public class ManejadorDeRespuestas {
 			case GET_USUARIO_REQUEST:
 				if (escuchadorUsuario != null)
 					escuchadorUsuario.notificarUsuarioResponse((GetProfileResponse) mensaje);
+				break;
+			case TAUNT:
+				if (escuchadorTaunt != null)
+					escuchadorTaunt.notificarNuevaTaunt((TauntNotification) mensaje);
 				break;
 			default:
 				throw new RuntimeException("Tipo de mensaje desconocido.");
@@ -162,6 +172,10 @@ public class ManejadorDeRespuestas {
 
 	public void setEscuchadorPartidaFinalizada(EscuchadorPartidaFinalizada escuchadorPartidaFinalizada) {
 		this.escuchadorPartidaFinalizada = escuchadorPartidaFinalizada;
+	}
+	
+	public void setEscuchadorTaunt(EscuchadorTaunt escuchadorTaunt) {
+		this.escuchadorTaunt = escuchadorTaunt;
 	}
 
 	public static void setInstancia(ManejadorDeRespuestas instancia) {

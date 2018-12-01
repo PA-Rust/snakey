@@ -29,6 +29,7 @@ public enum TiposMensaje {
 	GAME_STARTED,
 	
 	// Game
+	TAUNT,
 	MENSAJE_INPUTS,
 	MENSAJE_PARTIDA,
 	GAME_FINISHED,

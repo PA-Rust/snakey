@@ -7,8 +7,10 @@ import BaseDeDatos.JugadorDao;
 import Commons.Input;
 import Commons.Jugador;
 import Commons.Partida;
+import Commons.Taunt;
 import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.JuegoFinalizadoNotification;
+import Comunicacion.Notifications.TauntNotification;
 
 public class ManejadorJuego extends Thread {
 	private BucleJuego bucleJuego;
@@ -25,6 +27,12 @@ public class ManejadorJuego extends Thread {
 	public void eliminarListener(ManejadorUsuario manejador) {
 		listeners.remove(manejador);
 		bucleJuego.removerJugador(manejador.getJugador());
+	}
+	
+	public void enviarTaunt(Taunt taunt, Jugador jugador) throws IOException {
+		for (ManejadorUsuario listener: listeners) {
+			listener.enviarMensaje(new TauntNotification(taunt, jugador));
+		}
 	}
 	
 	public void enviarPartidaFinalizada() throws IOException {
@@ -52,6 +60,10 @@ public class ManejadorJuego extends Thread {
 	}
 	
 	public void nuevaInput(Jugador jugador, Input input) {
-		bucleJuego.nuevaInput(jugador, input);
+		try {
+			bucleJuego.nuevaInput(jugador, input);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -20,13 +20,16 @@ import Commons.Avatar;
 import Commons.Direccion;
 import Commons.Jugador;
 import Commons.Partida;
+import Commons.Taunt;
 import Comunicacion.HiloCliente;
 import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorEstadoPartida;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorPartidaFinalizada;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorTaunt;
 import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.InputNotification;
 import Comunicacion.Notifications.JuegoFinalizadoNotification;
+import Comunicacion.Notifications.TauntNotification;
 import InterfazGrafica.SalaActual;
 import Misc.RutaImagen;
 import java.awt.GridBagLayout;
@@ -37,15 +40,20 @@ import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, EscuchadorPartidaFinalizada {
+public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, EscuchadorPartidaFinalizada, EscuchadorTaunt {
 	private static final long serialVersionUID = 5255914042969054269L;
 	private PanelJuego panelJuego;
 	private Partida partida;
 	private JPanel panelDatos;
+	
+	private Taunt tauntActual;
+	private Jugador jugadorTauntActual;
 
 	public FrameJuego(Partida partida, SalaActual padre) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEstadoPartida(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorPartidaFinalizada(this);
+		ManejadorDeRespuestas.getInstancia().setEscuchadorTaunt(this);
+		
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -69,9 +77,21 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 				} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.izquierda));
-				}else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.derecha));
+				} else if (e.getKeyCode() == KeyEvent.VK_A) {
+					HiloCliente.getInstance()
+						.enviarMensaje(new InputNotification(Taunt.GG));
+				} else if (e.getKeyCode() == KeyEvent.VK_W) {
+					HiloCliente.getInstance()
+						.enviarMensaje(new InputNotification(Taunt.INSULTAR));
+				} else if (e.getKeyCode() == KeyEvent.VK_S) {
+					HiloCliente.getInstance()
+						.enviarMensaje(new InputNotification(Taunt.LLORAR));
+				} else if (e.getKeyCode() == KeyEvent.VK_D) {
+					HiloCliente.getInstance()
+						.enviarMensaje(new InputNotification(Taunt.REIRSE));
 				}
 			}
 		});
@@ -159,11 +179,19 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 			panelDatos.add(lbl);
 		}
 		
+		if (tauntActual != null && jugadorTauntActual != null) {
+			JLabel labelTaunt = new JLabel(tauntActual.getMensaje());
+			labelTaunt.setForeground(jugadorTauntActual.getAvatar().getColor());
+			labelTaunt.setFont(new Font("Tahoma", Font.BOLD, 60));
+			panelDatos.add(labelTaunt);
+		}
+		
 		panelDatos.revalidate();
 		
 		partida = estadoPartidaNotification.getPartida();
 		
 		panelJuego.repaint();
+		panelDatos.repaint();
 		panelJuego.revalidate();
 	}
 
@@ -171,5 +199,11 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	public void notificarPartidaFinalizada(JuegoFinalizadoNotification juegoFinalizadoNotification) {
 		JOptionPane.showMessageDialog(this, "Partida Finalizada", "La partida termino!", JOptionPane.INFORMATION_MESSAGE);
 		dispose();
+	}
+
+	@Override
+	public void notificarNuevaTaunt(TauntNotification tauntNotification) {
+		tauntActual = tauntNotification.getTaunt();
+		jugadorTauntActual = tauntNotification.getJugador();
 	}
 }
