@@ -117,8 +117,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 					.addGap(65)
 					.addComponent(btnIniciarPartida)
 					.addGap(79)
-					.addComponent(btnEspectear)
-					.addContainerGap(110, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(29)
 					.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
@@ -140,10 +138,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 						.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNewButton))
 					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnIniciarPartida)
-						.addComponent(btnEspectear))
-					.addContainerGap())
+				)
 		);
 		panel.add(panelJugadores);
 		panelJugadores.setLayout(new BoxLayout(panelJugadores, BoxLayout.Y_AXIS));

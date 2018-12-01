@@ -58,7 +58,6 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	private Taunt tauntActual;
 	private Jugador jugadorTauntActual;
 	private int up, left, right, down;
-	private JPanel panelDatos;
 
 	public FrameJuego(Partida partida, SalaActual padre) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEstadoPartida(this);
