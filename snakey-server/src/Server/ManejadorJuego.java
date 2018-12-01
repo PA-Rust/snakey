@@ -40,7 +40,7 @@ public class ManejadorJuego extends Thread {
 		for (ManejadorUsuario listener: listeners) {
 			Jugador jugador = listener.getJugador();
 			if (ganador == null || jugador.getPuntajeActual() > ganador.getPuntajeActual()) {
-				jugador = ganador;
+				ganador = jugador;
 			}
 		}
 		return ganador;

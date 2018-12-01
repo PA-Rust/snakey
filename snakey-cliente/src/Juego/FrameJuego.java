@@ -160,17 +160,6 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	public void notificarEstadoPartida(EstadoPartidaNotification estadoPartidaNotification) {
 		panelDatos.removeAll();
 		
-		JLabel lblTimerStatic = new JLabel("Timer");
-		lblTimerStatic.setFont(new Font("Tahoma", Font.BOLD, 21));
-		lblTimerStatic.setForeground(Color.WHITE);
-		lblTimerStatic.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDatos.add(lblTimerStatic);
-		
-		JLabel lblTimer = new JLabel(Integer.toString(estadoPartidaNotification.getPartida().getTimer()));
-		lblTimer.setForeground(Color.WHITE);
-		lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDatos.add(lblTimer);
-		
 		for (Jugador jugador: estadoPartidaNotification.getPartida().getJugadores()) {
 			JLabel lbl = new JLabel(jugador.getNombreDeUsuario() + " - " + jugador.getPuntajeActual());
 			lbl.setHorizontalAlignment(SwingConstants.CENTER);
