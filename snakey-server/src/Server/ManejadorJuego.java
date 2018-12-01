@@ -42,7 +42,6 @@ public class ManejadorJuego extends Thread {
 	
 	public void enviarPartidaListeners() throws IOException {
 		for (ManejadorUsuario listener: listeners) {
-			System.out.println(this.getBucleJuego().getPartida().getJugadores().get(0).getAvatar().getSprite());
 			listener.enviarMensaje(new EstadoPartidaNotification(this.bucleJuego.getPartida()));
 		}
 	}

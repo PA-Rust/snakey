@@ -44,7 +44,6 @@ public class BucleJuego extends Thread {
 	    }
 	    
 	    try {
-	    	System.out.println("terminada la partida!");
 			manejadorJuego.enviarPartidaFinalizada();
 		} catch (IOException e) {
 			e.printStackTrace();
