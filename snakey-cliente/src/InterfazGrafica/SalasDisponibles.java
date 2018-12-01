@@ -37,6 +37,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class SalasDisponibles extends JFrame implements EscuchadorSalas,EscuchadorCrearSala,EscuchadorEntrarSala{
 
@@ -61,6 +63,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		yo = this;
 		modelo = new DefaultListModel<String>();
 		listSalasDisponibles = new JList();
+		listSalasDisponibles.setBackground(SystemColor.menu);
 		JButton btnCrearSala = new JButton("Crear Sala");
 		JPanel panel = new JPanel();
 		JLabel lblEstado = new JLabel("");
@@ -127,7 +130,10 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 						+ " / " +
 						salas.get(selectedIndex).getCantJugadores()
 					);
-					btnUnirse.setEnabled(true);
+					
+					if (!salas.get(selectedIndex).getJugando() && !salas.get(selectedIndex).getSalaLlena()) {
+						btnUnirse.setEnabled(true);
+					}
 				} else {
 					lblEstado.setText("");
 					btnUnirse.setEnabled(false);

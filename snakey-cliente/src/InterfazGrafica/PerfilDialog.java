@@ -35,83 +35,47 @@ public class PerfilDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public PerfilDialog(int partidasGanadas, int partidasPerdidas ,int puntos,String nombreUsuario) {
+	public PerfilDialog(int partidasGanadas, int puntos, String nombreUsuario) {
+		setTitle("Perfil");
 		
 		yo = this;
 		yo.setModal(true);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 216);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			lblNewLabel = new JLabel(nombreUsuario);
+			lblNewLabel.setBounds(5, 5, 421, 55);
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		
-		JLabel lblPartidasPerdidas = new JLabel("Partidas Perdidas :");
-		lblPartidasPerdidas.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblPartidasPerdidas.setHorizontalAlignment(SwingConstants.CENTER);
-		
 		JLabel lblPartidasGanadas = new JLabel("Partidas Ganadas :");
-		lblPartidasGanadas.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPartidasGanadas.setBounds(5, 55, 175, 44);
+		lblPartidasGanadas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblPartidasGanadas.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JLabel lblPuntajeAcumulado = new JLabel("Puntaje Acumulado :");
+		lblPuntajeAcumulado.setBounds(5, 98, 175, 44);
 		lblPuntajeAcumulado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPuntajeAcumulado.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPuntajeAcumulado.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JLabel labelGanadas = new JLabel(Integer.toString(partidasGanadas));
+		labelGanadas.setBounds(170, 71, 140, 25);
 		labelGanadas.setHorizontalAlignment(SwingConstants.CENTER);
-		labelGanadas.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		
-		JLabel labelPerdidas = new JLabel(Integer.toString(partidasPerdidas));
-		labelPerdidas.setHorizontalAlignment(SwingConstants.CENTER);
-		labelPerdidas.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		labelGanadas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		JLabel labelAcumulado = new JLabel(Integer.toString(puntos));
+		labelAcumulado.setBounds(170, 108, 140, 25);
 		labelAcumulado.setHorizontalAlignment(SwingConstants.CENTER);
-		labelAcumulado.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(lblPartidasGanadas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblPartidasPerdidas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-								.addComponent(lblPuntajeAcumulado, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
-							.addGap(104)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(labelGanadas, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelPerdidas, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelAcumulado, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
-					.addGap(328))
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(21)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPartidasGanadas, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelGanadas, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPartidasPerdidas, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelPerdidas, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblPuntajeAcumulado, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelAcumulado, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(61, Short.MAX_VALUE))
-		);
-		contentPanel.setLayout(gl_contentPanel);
+		labelAcumulado.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		contentPanel.setLayout(null);
+		contentPanel.add(lblNewLabel);
+		contentPanel.add(lblPartidasGanadas);
+		contentPanel.add(lblPuntajeAcumulado);
+		contentPanel.add(labelGanadas);
+		contentPanel.add(labelAcumulado);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

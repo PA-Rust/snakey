@@ -18,6 +18,9 @@ public class IniciarPartidaController implements Controller {
 
 	@Override
 	public Enviable manejarMensaje() {
+		if (!manejadorUsuario.getSalaActual().getJugadorPropietario().equals(manejadorUsuario.getJugador())) {
+			return null;
+		}
 		try {
 			ManejadorSala manejadorDeSala = manejadorUsuario.getServerSocket()
 				.getManejadorSala(manejadorUsuario.getSalaActual());

@@ -34,6 +34,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Font;
 
 public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,EscuchadorCambioSala,EscuchadorUsuario{
 
@@ -41,7 +43,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	private JPanel contentPane;
 	private JButton btnIniciarPartida;
 	private JPanel panel;
-	private JButton btnEspectear;
 	private JPanel panelJugadores;
 	private GroupLayout groupLayout;
 	private Sala sala;
@@ -52,7 +53,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCambioSala(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorJuegoComenzo(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorUsuario(this);
-
 		
 		yo = this;
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -62,7 +62,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			    }
 		});
 		this.sala = sala;
-		setSize(450, 300);
+		setSize(234, 293);
 		setLocationRelativeTo(frameParent);
 		setResizable(false);
 		setVisible(true);
@@ -85,37 +85,30 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			}
 		});
 		
-		btnEspectear = new JButton("Espectear");
-		btnEspectear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
 		panelJugadores = new JPanel();
+		
+		JLabel lblJugadores = new JLabel("Jugadores");
+		lblJugadores.setFont(new Font("Tahoma", Font.BOLD, 16));
 		groupLayout = new GroupLayout(panel);
 		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(65)
-							.addComponent(btnIniciarPartida)
-							.addGap(79)
-							.addComponent(btnEspectear))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(29)
-							.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(100, Short.MAX_VALUE))
+						.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnIniciarPartida)
+						.addComponent(lblJugadores))
+					.addContainerGap(227, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(37, Short.MAX_VALUE)
-					.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnIniciarPartida)
-						.addComponent(btnEspectear))
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblJugadores)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelJugadores, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnIniciarPartida)
 					.addContainerGap())
 		);
 		panel.add(panelJugadores);
@@ -141,8 +134,8 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
 			jLabel.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );
 			jLabel.setForeground(jugador.getAvatar().getColor());
+			jLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 			jLabel.addMouseListener(new MouseAdapter()   {   
-
 		        public void mouseClicked(MouseEvent e)   
 		        {   
 		              JPanel j = new JPanel();
@@ -185,7 +178,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	public void notificarUsuarioResponse(GetProfileResponse profileResponse) {		
 			PerfilDialog dialog = new PerfilDialog(
 					profileResponse.getJugador().getPartidasGanadas(),
-					profileResponse.getJugador().getPartidasPerdidas(),
 					profileResponse.getJugador().getPuntajeAcumulado(),
 					profileResponse.getJugador().getNombreDeUsuario());
 			dialog.setLocationRelativeTo(this);
