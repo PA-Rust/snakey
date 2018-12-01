@@ -210,7 +210,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	@Override
 	public void notificarCrearSalaResponse(CrearSalaResponse crearSalaResponse) {
 		if(!crearSalaResponse.getSuccess()) {
-			JOptionPane.showMessageDialog(this, crearSalaResponse.getTipoMensaje(), "Error,no se pudo crear sala", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error,no se pudo crear sala", crearSalaResponse.message(),  JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		new SalaActual(crearSalaResponse.getSala(), this);
@@ -219,7 +219,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	@Override
 	public void notificarUnirseSalaResponse(UnirseSalaResponse unirseSalaResponse) {
 		if(!unirseSalaResponse.getSuccess()) {
-			JOptionPane.showMessageDialog(this, unirseSalaResponse.getTipoMensaje(), "Error,no se pudo ingresar a sala", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error,no se pudo ingresar a sala", unirseSalaResponse.getMessage(),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		new SalaActual(unirseSalaResponse.getSala(), this);	

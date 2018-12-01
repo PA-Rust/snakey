@@ -170,7 +170,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			if (frameJuego != null) {
 				frameJuego.dispose();
 			}
-			JOptionPane.showMessageDialog(this, "La sala se cerrara porque el propietario cerro la sala.", "Propietario cerro sala", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,"La sala se cerrara porque el propietario cerro la sala.", "Propietario cerro sala", JOptionPane.INFORMATION_MESSAGE);
 	    	new SalasDisponibles(yo);
 		} else {
 			panelJugadores.removeAll();
