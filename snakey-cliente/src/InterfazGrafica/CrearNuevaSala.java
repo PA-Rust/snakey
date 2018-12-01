@@ -71,7 +71,7 @@ public class CrearNuevaSala extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 
 				if (txtNombreDeSala.getText().trim().length() == 0) { /* Valido que el nombre tenga algo valido */
-					JOptionPane.showMessageDialog(null, "Datos Incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Datos incompletos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
 					nuevasala = new Sala(txtNombreDeSala.getText(),comboBox.getSelectedIndex() + 1, new Jugador("provisorio", "provisorio"), claveSala.getText());
 					((SalasDisponibles) padre).llamarARequest(nuevasala);
@@ -84,7 +84,7 @@ public class CrearNuevaSala extends JDialog {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente cancelar la creacion de la sala?",
+				if (JOptionPane.showConfirmDialog(rootPane, "Desea realmente cancelar la creacion de la sala?",
 						"Cancelar nueva sala", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					yo.dispose();
 				}

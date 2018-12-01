@@ -64,7 +64,7 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 
 		passClave = new JPasswordField();
 
-		lblClaveConfirmar = new JLabel("Confirmar Clave");
+		lblClaveConfirmar = new JLabel("Confirmar clave");
 
 		passClaveConfirmatoria = new JPasswordField();
 
@@ -101,7 +101,7 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente cancelar el registro?",
+				if (JOptionPane.showConfirmDialog(rootPane, "Desea realmente cancelar el registro?",
 						"Cancelar registro", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					yo.dispose();
 				}
@@ -159,7 +159,7 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 	@Override
 	public void notificarRegisterResponse(RegisterResponse registerResponse) {
 		if (!registerResponse.getSuccess()) {
-			JOptionPane.showMessageDialog(this, registerResponse.getMensaje(), "Error al registrar Usuario", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this,"Error al registrar Usuario",registerResponse.getMensaje(), JOptionPane.ERROR_MESSAGE);
 			// TODO(ernesto): Volver a habilitar los inputs del formulario.
 			textNombreNuevoReg.setEnabled(true);
 			CrearUsuario.this.passClave.setEnabled(true);
@@ -169,7 +169,7 @@ public class CrearUsuario extends JDialog implements EscuchadorRegister {
 			btnAceptar.setText("Aceptar");
 			return;
 		}
-		JOptionPane.showMessageDialog(this, registerResponse.getMensaje(), "Usuario creado correctamente!", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this,  "Usuario creado correctamente", registerResponse.getMensaje(),JOptionPane.INFORMATION_MESSAGE);
 		yo.dispose();
 	}
 }

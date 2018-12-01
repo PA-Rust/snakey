@@ -176,7 +176,7 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 	@Override
 	public void notificarLoginResponse(LoginResponse loginResponse) {
 		if (!loginResponse.getSuccess()) {
-			JOptionPane.showMessageDialog(this, loginResponse.getMensaje(), "Error, ingreso fallido", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error de ingreso", loginResponse.getMensaje(),JOptionPane.ERROR_MESSAGE);
 			textTxtNombre.setEnabled(true);
 			passClaveUsuario.setEnabled(true);
 			btnCrearUsuario.setEnabled(true);
