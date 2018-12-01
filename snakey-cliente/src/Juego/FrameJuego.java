@@ -20,13 +20,16 @@ import Commons.Avatar;
 import Commons.Direccion;
 import Commons.Jugador;
 import Commons.Partida;
+import Commons.Taunt;
 import Comunicacion.HiloCliente;
 import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorEstadoPartida;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorPartidaFinalizada;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorTaunt;
 import Comunicacion.Notifications.EstadoPartidaNotification;
 import Comunicacion.Notifications.InputNotification;
 import Comunicacion.Notifications.JuegoFinalizadoNotification;
+import Comunicacion.Notifications.TauntNotification;
 import InterfazGrafica.SalaActual;
 import Misc.RutaImagen;
 import java.awt.GridBagLayout;
@@ -37,11 +40,12 @@ import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, EscuchadorPartidaFinalizada {
+public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, EscuchadorPartidaFinalizada, EscuchadorTaunt {
 	private static final long serialVersionUID = 5255914042969054269L;
 	private PanelJuego panelJuego;
 	private Partida partida;
 	private JPanel panelDatos;
+	private JLabel lblTaunt;
 
 	public FrameJuego(Partida partida, SalaActual padre) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEstadoPartida(this);
@@ -69,9 +73,21 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 				} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.izquierda));
-				}else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.derecha));
+				} else if (e.getKeyCode() == KeyEvent.VK_A) {
+					HiloCliente.getInstance()
+						.enviarMensaje(new InputNotification(Taunt.GG));
+				} else if (e.getKeyCode() == KeyEvent.VK_W) {
+					HiloCliente.getInstance()
+						.enviarMensaje(new InputNotification(Taunt.INSULTAR));
+				} else if (e.getKeyCode() == KeyEvent.VK_S) {
+					HiloCliente.getInstance()
+						.enviarMensaje(new InputNotification(Taunt.LLORAR));
+				} else if (e.getKeyCode() == KeyEvent.VK_D) {
+					HiloCliente.getInstance()
+						.enviarMensaje(new InputNotification(Taunt.REIRSE));
 				}
 			}
 		});
@@ -171,5 +187,12 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	public void notificarPartidaFinalizada(JuegoFinalizadoNotification juegoFinalizadoNotification) {
 		JOptionPane.showMessageDialog(this, "Partida Finalizada", "La partida termino!", JOptionPane.INFORMATION_MESSAGE);
 		dispose();
+	}
+
+	@Override
+	public void notificarNuevaTaunt(TauntNotification tauntNotification) {
+		lblTaunt.setText(tauntNotification.getTaunt().getMensaje());
+		lblTaunt.setFont(new Font("Tahoma", Font.BOLD, 50));
+		lblTaunt.setForeground(tauntNotification.getJugador().getAvatar().getColor());
 	}
 }

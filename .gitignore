@@ -11,7 +11,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-.sqlite
+snakey-server/bdd.sqlite
 
 # External tool builders
 .externalToolBuilders/

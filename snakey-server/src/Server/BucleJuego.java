@@ -6,6 +6,7 @@ import Commons.Direccion;
 import Commons.Input;
 import Commons.Jugador;
 import Commons.Partida;
+import Commons.Taunt;
 import Viborita.Viborita;
 
 public class BucleJuego extends Thread {
@@ -61,7 +62,7 @@ public class BucleJuego extends Thread {
 		}
 	}
 	
-	public synchronized void nuevaInput(Jugador jugador, Input input) {
+	public synchronized void nuevaInput(Jugador jugador, Input input) throws IOException {
 		if (input.getTipoInput() == "Direccion") {
 			Direccion nuevaDireccion = (Direccion) input;
 			Viborita viborita = partida.getViboritaJugador(jugador);
@@ -69,8 +70,7 @@ public class BucleJuego extends Thread {
 				viborita.cambiarDireccion(nuevaDireccion);
 			}
 		} else {
-			// TODO (toti): Notificar a todos los listeners de un nuevo Taunt
-			// lanzado en la partida por el `jugador`.
+			manejadorJuego.enviarTaunt((Taunt) input, jugador);
 		}
 	}
 }
