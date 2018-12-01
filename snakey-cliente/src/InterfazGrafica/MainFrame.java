@@ -26,6 +26,7 @@ public class MainFrame extends JFrame {
 				try {
 					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -64,7 +65,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				EstadosAplicacion.getInstancia().setServerIP(textIp.getText());
 				EstadosAplicacion.getInstancia().setServerPuerto(Integer.parseInt(textPort.getText()));
-				new IniciarSesion();
+				IniciarSesion iniciarSesion = new IniciarSesion();
+				iniciarSesion.setLocationRelativeTo(null);
 				dispose();
 				
 			}

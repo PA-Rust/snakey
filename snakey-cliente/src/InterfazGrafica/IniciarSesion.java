@@ -50,9 +50,9 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 			public void run() {
 				try {
 					IniciarSesion frame = new IniciarSesion();
-					frame.setResizable(false);// no lo puedo renderizar
-					frame.setVisible(true); // visible al usuario
-					frame.setLocationRelativeTo(null); // para que se posisione en el medio de la pantalla
+					frame.setResizable(false);
+					frame.setLocationRelativeTo(null);
+					frame.setVisible(true); 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,8 +63,7 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 	public IniciarSesion() {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorLogin(this);
 		setResizable(false);
-		setVisible(true);
-		setBackground(Color.BLUE);
+		setVisible(true);		
 		setLocationRelativeTo(null);
 		setTitle("Inicio de sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
