@@ -36,6 +36,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import javax.swing.BoxLayout;
 
 public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,EscuchadorCambioSala,EscuchadorUsuario{
 
@@ -112,6 +113,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 					.addContainerGap())
 		);
 		panel.add(panelJugadores);
+		panelJugadores.setLayout(new BoxLayout(panelJugadores, BoxLayout.Y_AXIS));
 		panel.setLayout(groupLayout);
 		
 		repintarJPanel();
@@ -134,7 +136,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
 			jLabel.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );
 			jLabel.setForeground(jugador.getAvatar().getColor());
-			jLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+			jLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
 			jLabel.addMouseListener(new MouseAdapter()   {   
 		        public void mouseClicked(MouseEvent e)   
 		        {   
