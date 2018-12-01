@@ -11,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 
 import Commons.Jugador;
 import Commons.Sala;
-import Comunicacion.Escuchador;
 import Comunicacion.HiloCliente;
 import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorCambioSala;
@@ -25,8 +24,6 @@ import Comunicacion.Requests.QuitSalaRequest;
 import Comunicacion.Responses.GetProfileResponse;
 import Juego.FrameJuego;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
@@ -34,7 +31,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import javax.swing.BoxLayout;
 
@@ -45,7 +41,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	private JButton btnIniciarPartida;
 	private JPanel panel;
 	private JPanel panelJugadores;
-	private GroupLayout groupLayout;
 	private Sala sala;
 	private JFrame yo;
 	private FrameJuego frameJuego;
@@ -63,7 +58,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			    }
 		});
 		this.sala = sala;
-		setSize(234, 293);
+		setSize(264, 352);
 		setLocationRelativeTo(frameParent);
 		setResizable(false);
 		setVisible(true);
@@ -80,6 +75,7 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		btnIniciarPartida = new JButton("Iniciar partida");
+		btnIniciarPartida.setBounds(10, 281, 99, 23);
 		btnIniciarPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				HiloCliente.getInstance().enviarMensaje(new IniciarPartidaRequest());
@@ -87,34 +83,17 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		});
 		
 		panelJugadores = new JPanel();
+		panelJugadores.setBounds(10, 37, 226, 233);
 		
 		JLabel lblJugadores = new JLabel("Jugadores");
+		lblJugadores.setBounds(10, 11, 83, 20);
 		lblJugadores.setFont(new Font("Tahoma", Font.BOLD, 16));
-		groupLayout = new GroupLayout(panel);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnIniciarPartida)
-						.addComponent(lblJugadores))
-					.addContainerGap(227, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblJugadores)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelJugadores, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnIniciarPartida)
-					.addContainerGap())
-		);
+		panel.setLayout(null);
 		panel.add(panelJugadores);
 		panelJugadores.setLayout(new BoxLayout(panelJugadores, BoxLayout.Y_AXIS));
-		panel.setLayout(groupLayout);
+		panel.add(panelJugadores);
+		panel.add(btnIniciarPartida);
+		panel.add(lblJugadores);
 		
 		repintarJPanel();
 	}
@@ -170,7 +149,6 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		} else {
 			panelJugadores.removeAll();
 			panelJugadores.repaint();
-			panel.setLayout(groupLayout);
 			this.sala = cambioSalaNotification.getSala();
 			repintarJPanel();
 		}			
