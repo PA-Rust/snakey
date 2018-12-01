@@ -32,7 +32,7 @@ public class UnirseSalaController implements Controller {
 		}
 		
 		if(manejadorSala.getSala().getTieneClave()) { ///tiene contraseña
-			if(!claveSala.equals(claveIngresada))	///claves iguales
+			if(!claveSala.equals(claveIngresada))	///claves inconsistentes
 				return new UnirseSalaResponse(false, null, "Clave invalida.");
 		}
 		

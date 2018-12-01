@@ -25,7 +25,7 @@ public class Sala implements Serializable {
 		this.jugadorPropietario = propietario;
 		this.tieneEspectadores = false;
 		this.claveSala = clave;
-		if(clave != null)
+		if(clave.length() != 0)
 			this.tieneClave = true;
 		jugadores = new ArrayList<Jugador>(cantJugadores);
 		propietario.setAvatar(avatares.pop());
