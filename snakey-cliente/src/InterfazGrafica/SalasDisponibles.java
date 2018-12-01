@@ -106,8 +106,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 				}else {
 					clave = JOptionPane.showInputDialog("Ingresar clave","");
 					llamarARequestDeIngreso(selectedIndex,clave);
-				}
-				
+				}				
 			}
 		});
 
@@ -199,7 +198,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	}
 	
 	public void llamarARequest(Sala sala) {
-		HiloCliente.getInstance().enviarMensaje(new CrearSalaRequest(sala.getNombreSala(), sala.getCantJugadores()));
+		HiloCliente.getInstance().enviarMensaje(new CrearSalaRequest(sala.getNombreSala(), sala.getCantJugadores(), sala.getClaveSala()));
 	}
 	
 	@Override

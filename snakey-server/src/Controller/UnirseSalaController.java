@@ -21,7 +21,7 @@ public class UnirseSalaController implements Controller {
 		ManejadorSala manejadorSala = manejadorUsuario.getServerSocket()
             .getManejadorSala(unirseSalaRequest.getSala());
 		String claveSala = unirseSalaRequest.getSala().getClaveSala();
-		String claveIngresada = unirseSalaRequest.getSala().getClaveSala();
+		String claveIngresada = unirseSalaRequest.getClave();
 		if (manejadorSala == null) {
 			return new UnirseSalaResponse(false, null, "Sala no existente.");
 		}

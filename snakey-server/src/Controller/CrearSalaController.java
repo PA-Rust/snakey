@@ -24,7 +24,8 @@ public class CrearSalaController implements Controller {
 		Sala nuevaSala = manejadorUsuario.getServerSocket().registrarManejadorSala(
 			manejadorUsuario,
 			crearSalaRequest.getNombreSala(),
-			crearSalaRequest.getCantidadJugadores()
+			crearSalaRequest.getCantidadJugadores(),
+			crearSalaRequest.
 		);
 		
 		if (nuevaSala == null) {
