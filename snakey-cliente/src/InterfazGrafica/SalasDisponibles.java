@@ -54,6 +54,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	CrearNuevaSala crearNuevaSala;
 	SalaActual salaActual;
 	JButton btnUnirse;
+	String clave;
 
 	public SalasDisponibles(JFrame frameParent) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorSalas(this);
@@ -101,11 +102,14 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 			public void actionPerformed(ActionEvent arg0) {
 				int selectedIndex = listSalasDisponibles.getSelectedIndex();
 				if (selectedIndex == -1) {
-					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala", "ERROR", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala.", "ERROR", JOptionPane.WARNING_MESSAGE);
 					return;
-				} else {
-					HiloCliente.getInstance().enviarMensaje(new UnirseSalaRequest(salas.get(selectedIndex)));
-				}
+				} else if(!salas.get(selectedIndex).getTieneClave()){
+					llamarARequestDeIngreso(selectedIndex,null);
+				}else {
+					clave = JOptionPane.showInputDialog("Ingresar clave","");
+					llamarARequestDeIngreso(selectedIndex,clave);
+				}				
 			}
 		});
 
@@ -195,8 +199,12 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		this.listSalasDisponibles.setModel(modelo);
 	}
 	
+	public void llamarARequestDeIngreso(int indice, String clave) {
+		HiloCliente.getInstance().enviarMensaje(new UnirseSalaRequest(salas.get(indice),clave));
+	}
+	
 	public void llamarARequest(Sala sala) {
-		HiloCliente.getInstance().enviarMensaje(new CrearSalaRequest(sala.getNombreSala(), sala.getCantJugadores()));
+		HiloCliente.getInstance().enviarMensaje(new CrearSalaRequest(sala.getNombreSala(), sala.getCantJugadores(), sala.getClaveSala()));
 	}
 	
 	@Override

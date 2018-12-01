@@ -69,8 +69,8 @@ public class Server {
 		return null;
 	}
 	
-	public Sala registrarManejadorSala(ManejadorUsuario manejadorUsuario, String nombreSala, int cantidadJugadores) {
-		Sala nuevaSala = new Sala(nombreSala, cantidadJugadores, manejadorUsuario.getJugador());
+	public Sala registrarManejadorSala(ManejadorUsuario manejadorUsuario, String nombreSala, int cantidadJugadores,String clave) {
+		Sala nuevaSala = new Sala(nombreSala, cantidadJugadores, manejadorUsuario.getJugador(),clave);
 		manejadoresDeSala.add(
 			new ManejadorSala(
 				this,
