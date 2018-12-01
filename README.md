@@ -14,7 +14,7 @@ Basta con importar los 3 proyectos en tu IDE de Java preferido para comenzar a p
 
 Para lanzar el juego:
 
-  * Iniciar `src.server.java` del proyecto **Server** en la maquina servidora.
-  * Iniciar `src.InterfazGrafica.iniciarSesion.java` del proyecto **Cliente** en los clientes.
+  * Iniciar `src.Server.java` del proyecto **Server** en la maquina servidora.
+  * Iniciar `src.InterfazGrafica.MainFrame.java` del proyecto **Cliente** en los clientes y conectar a la IP de la computadora servidora.
 
 
