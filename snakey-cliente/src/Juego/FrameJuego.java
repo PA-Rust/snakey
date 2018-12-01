@@ -191,6 +191,7 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 		partida = estadoPartidaNotification.getPartida();
 		
 		panelJuego.repaint();
+		panelDatos.repaint();
 		panelJuego.revalidate();
 	}
 
