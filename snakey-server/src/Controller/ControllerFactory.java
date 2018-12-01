@@ -28,6 +28,8 @@ public class ControllerFactory {
 				return new InputNotificationController(enviable, manejador);
 			case QUIT_SALA_REQUEST:
 				return new QuitSalaController(enviable, manejador);
+			case GET_USUARIO_REQUEST:
+				return new GetUsuarioController(enviable, manejador);
 			default:
 				throw new RuntimeException("Tipo de mensaje desconocido.");
 		}

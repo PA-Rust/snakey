@@ -1,6 +1,7 @@
 package InterfazGrafica;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
@@ -63,6 +64,7 @@ public class IniciarSesion extends JFrame implements EscuchadorLogin {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorLogin(this);
 		setResizable(false);
 		setVisible(true);
+		setBackground(Color.BLUE);
 		setLocationRelativeTo(null);
 		setTitle("Inicio de sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
