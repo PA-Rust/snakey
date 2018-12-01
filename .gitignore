@@ -11,6 +11,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.sqlite
 
 # External tool builders
 .externalToolBuilders/
