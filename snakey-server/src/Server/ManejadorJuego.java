@@ -34,6 +34,7 @@ public class ManejadorJuego extends Thread {
 				listener.getJugador().getPuntajeActual()
 				+ listener.getJugador().getPuntajeAcumulado()
 			);
+			System.out.println("actualizo");
 			dao.actualizarDatos(listener.getJugador());
 			listener.enviarMensaje(new JuegoFinalizadoNotification());
 		}

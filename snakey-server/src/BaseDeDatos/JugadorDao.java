@@ -63,6 +63,7 @@ public class JugadorDao extends Dao<Jugador, String> {
 				+ "and j.partidasPerdidas = jugador.partidasPerdidas "
 				+ "and j.puntajeAcumulado = jugador.puntajeAcumulado WHERE j.nombreDeUsuario = '"
 				+ jugador.getNombreDeUsuario()+"'", jugador);
+		getSession().getTransaction().commit();
 		return;
 	}
 
