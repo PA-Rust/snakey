@@ -18,7 +18,6 @@ import junit.framework.Assert;
 
 public class ViboritaTest {
 
-
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testEntreColisionCabezas() {
@@ -123,11 +122,6 @@ public class ViboritaTest {
 		Assert.assertNotSame(vib.getCabeza().getDireccion(), dirUno);
 		
 		
-		
-		
-		
-		
-		
 	}
 		@SuppressWarnings("deprecation")
 	@Test
@@ -173,29 +167,50 @@ public class ViboritaTest {
 		
 		Assert.assertEquals(true,viborita.getCabeza().getPosicion().getX()==coord.getX()+1);
 	}
-	/*@Test
-	public void testGetCabeza() {
 		
-	
-	}
-
-	
-	@Test+
-	public void testGetCuerpo() {
-		fail("Not yet implemented");
-	}
-
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testGetVelocidad() {
-		fail("Not yet implemented");
+	public void testWarpEnX() {		
+		/*
+		 * Mapa de Alto y Ancho de 100*100
+		 * Entrea por la izquierda y aparece por la derecha
+		 * */
+		
+		int posicion = 5; 
+		Coordenada extremos = new Coordenada(100,100);
+		Viborita viboritaUno= new Viborita(posicion, new Jugador());
+		viboritaUno.getCabeza().setPosicion(new Coordenada(-1,5));
+		
+		assertEquals(99, viboritaUno.getCabeza().getPosicion().warp(extremos).getX());
+		//assertEquals(coor.getY(), viboritaUno.getCabeza().getPosicion().warp(new Coordenada(100,100)).getY());
+		
+		/*
+		 * Entra por la derecha y entra por la izquierda
+		 * */
+		
+		viboritaUno.getCabeza().setPosicion(new Coordenada(101,5));
+		assertEquals(0, viboritaUno.getCabeza().getPosicion().warp(extremos).getX());
+		//assertEquals(coor.getY(), viboritaUno.getCabeza().getPosicion().warp(new Coordenada(100,100)).getY());
+		
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testDesplazar() {
-		fail("Not yet implemented");
+	public void testWarpEnY() {		
+		int posicion = -1; 
+		// Ingresa por abajo y aparece por arriba
+		Coordenada extremos = new Coordenada(100,100);
+		Viborita viboritaUno= new Viborita(posicion, new Jugador());
+		viboritaUno.getCabeza().getPosicion().setX(7);
+		assertEquals(99, viboritaUno.getCabeza().getPosicion().warp(extremos).getY());
+		
+		//Ingresa por arriba y aparece por abajo
+		
+		viboritaUno.getCabeza().getPosicion().setY(101);		
+		assertEquals(0, viboritaUno.getCabeza().getPosicion().warp(extremos).getY());
 	}
 
 	
-*/
+
 
 }
