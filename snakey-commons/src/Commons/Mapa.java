@@ -29,8 +29,7 @@ public class Mapa implements Serializable {
 		this.ancho = 50;
 		this.alto = 50;
 		grilla = new Entidad[ancho][alto];
-		item = new Manzana(new Coordenada(45, 10), 1000);
-		grilla[45][10] = item;
+		spawnearItem();
 	}
 	
 	public void inicializarGrilla() {
@@ -67,10 +66,10 @@ public class Mapa implements Serializable {
 		} else {
 			item.decrementarReloj(1);
 		}
+		chequearColisiones();
 		limpiarGrilla();
 		actualizarViboritas();
 		reubicarViboritas();
-		chequearColisiones();
 	}
 	
 	public ArrayList<Viborita> getViboritas() {
@@ -81,26 +80,23 @@ public class Mapa implements Serializable {
 		viboritas.remove(viborita);
 	}
 	
-	/*
-	 * Expected to have a squared panel to draw on.
-	 */
-	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int tamBloque) {
+	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int altoBloque, int anchoBloque) {
 		for (Viborita viborita: viboritas) {
 			for (Cuerpo cuerpo: viborita.getCuerpo()) {
 				graphics.drawImage(
 					imagenes.get(viborita.getJugador().getAvatar()),
-					cuerpo.getPosicion().getX() * tamBloque,
-					cuerpo.getPosicion().getY() * tamBloque,
-					tamBloque, tamBloque, null
+					cuerpo.getPosicion().getX() * anchoBloque,
+					cuerpo.getPosicion().getY() * altoBloque,
+					anchoBloque, altoBloque, null
 				);
 			}
 		}
 
 		graphics.drawImage(
 			imagenes.get(item.getAvatar()),
-			item.getPosicion().getX() * tamBloque,
-			item.getPosicion().getY() * tamBloque,
-			tamBloque, tamBloque, null
+			item.getPosicion().getX() * anchoBloque,
+			item.getPosicion().getY() * altoBloque,
+			anchoBloque, altoBloque, null
 		);
 	}
 	
