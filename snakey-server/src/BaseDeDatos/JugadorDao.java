@@ -29,7 +29,6 @@ public class JugadorDao extends Dao<Jugador, String> {
 				"select j from Jugador j where j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ").uniqueResult();
 		getSession().getTransaction().commit();
 		if(jugadorDB!=null) {
-			jugadorDB.setClaveDeUsuario(null);
 			return jugadorDB;
 		}
 		return null;
@@ -39,8 +38,6 @@ public class JugadorDao extends Dao<Jugador, String> {
 		long cantidad = (long) getSession().createQuery(
 				"select count(*) from Jugador j where j.claveDeUsuario = '" + jugador.getClaveDeUsuario()+ "' and j.nombreDeUsuario = '" + jugador.getNombreDeUsuario() + "' ")
 				.uniqueResult();
-		
-		System.out.println(cantidad);
 		if (cantidad == 1) {
 			getSession().flush();
 			return true;
@@ -59,6 +56,9 @@ public class JugadorDao extends Dao<Jugador, String> {
 	}
 
 	public void actualizarDatos(Jugador jugador) {
+		if (!getSession().getTransaction().isActive()) {
+			getSession().getTransaction().begin();
+		}
 		getSession().update("UPDATE Jugador j SET j.partidasGanadas = jugador.partidasGanadas "
 				+ "and j.partidasPerdidas = jugador.partidasPerdidas "
 				+ "and j.puntajeAcumulado = jugador.puntajeAcumulado WHERE j.nombreDeUsuario = '"
