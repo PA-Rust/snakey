@@ -107,6 +107,10 @@ public class ManejadorDeRespuestas {
 				if (escuchadorPartidaFinalizada != null)
 					escuchadorPartidaFinalizada.notificarPartidaFinalizada((JuegoFinalizadoNotification) mensaje);
 				break;
+			case GET_USUARIO_REQUEST:
+				if (escuchadorUsuario != null)
+					escuchadorUsuario.notificarUsuarioResponse((GetProfileResponse) mensaje);
+				break;
 			default:
 				throw new RuntimeException("Tipo de mensaje desconocido.");
 		}

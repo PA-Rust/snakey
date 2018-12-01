@@ -1,6 +1,7 @@
 package InterfazGrafica;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,24 +11,31 @@ import javax.swing.border.EmptyBorder;
 
 import Commons.Jugador;
 import Commons.Sala;
+import Comunicacion.Escuchador;
 import Comunicacion.HiloCliente;
 import Comunicacion.ManejadorDeRespuestas;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorCambioSala;
 import Comunicacion.ManejadorDeRespuestas.EscuchadorJuegoComenzo;
+import Comunicacion.ManejadorDeRespuestas.EscuchadorUsuario;
 import Comunicacion.Notifications.CambioSalaNotification;
 import Comunicacion.Notifications.JuegoIniciadoNotification;
+import Comunicacion.Requests.GetProfileRequest;
 import Comunicacion.Requests.IniciarPartidaRequest;
 import Comunicacion.Requests.QuitSalaRequest;
+import Comunicacion.Responses.GetProfileResponse;
 import Juego.FrameJuego;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
-public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,EscuchadorCambioSala{
+public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,EscuchadorCambioSala,EscuchadorUsuario{
 
 	private static final long serialVersionUID = 6003787470428682570L;
 	private JPanel contentPane;
@@ -43,6 +51,9 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	public SalaActual(Sala sala, JFrame frameParent) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorCambioSala(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorJuegoComenzo(this);
+		ManejadorDeRespuestas.getInstancia().setEscuchadorUsuario(this);
+
+		
 		yo = this;
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			 @Override
@@ -128,7 +139,21 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 	public void repintarJPanel() {
 		for (Jugador jugador: this.sala.getJugadores()) {
 			JLabel jLabel = new JLabel(jugador.getNombreDeUsuario());
+			jLabel.setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );
 			jLabel.setForeground(jugador.getAvatar().getColor());
+			jLabel.addMouseListener(new MouseAdapter()   {   
+
+		        public void mouseClicked(MouseEvent e)   
+		        {   
+		              JPanel j = new JPanel();
+		              try {
+		            	 HiloCliente.getInstance().enviarMensaje(new GetProfileRequest(jugador.getNombreDeUsuario()));		      			
+		      		} catch (Exception e1) {
+		      			e1.printStackTrace();
+		      		}
+		        }   
+		});
+		
 			panelJugadores.add(jLabel);
 		}
 		panelJugadores.revalidate();
@@ -154,5 +179,17 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 			this.sala = cambioSalaNotification.getSala();
 			repintarJPanel();
 		}			
+	}
+
+	@Override
+	public void notificarUsuarioResponse(GetProfileResponse profileResponse) {		
+			PerfilDialog dialog = new PerfilDialog(
+					profileResponse.getJugador().getPartidasGanadas(),
+					profileResponse.getJugador().getPartidasPerdidas(),
+					profileResponse.getJugador().getPuntajeAcumulado(),
+					profileResponse.getJugador().getNombreDeUsuario());
+			dialog.setLocationRelativeTo(this);
+  			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+  			dialog.setVisible(true);
 	}
 }
