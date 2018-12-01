@@ -35,6 +35,9 @@ public class ManejadorSala extends Thread {
 	}
 	
 	public void iniciarNuevaPartida() throws IOException {
+		if (partidaActual != null) {
+			return;
+		}
 		sala.setJugando(true);
 		partidaActual =
 			new ManejadorJuego(new Partida(sala.getJugadores()), this);
