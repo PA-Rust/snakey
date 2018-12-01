@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public enum Avatar {
 	VIBORITA_VERDE("viborita_0.png", Color.GREEN),
-	VIBORITA_AMARILLA("viborita_1.png", Color.YELLOW),
-	VIBORITA_AZUL("viborita_2.png", Color.BLUE),
-	VIBORITA_NARANJA("viborita_3.png", Color.ORANGE),
+	VIBORITA_AMARILLA("viborita_3.png", Color.YELLOW),
+	VIBORITA_AZUL("viborita_1.png", Color.BLUE),
+	VIBORITA_NARANJA("viborita_2.png", Color.ORANGE),
 	MANZANITA("manzanita.png", Color.RED);
 	
 	private final String sprite;
