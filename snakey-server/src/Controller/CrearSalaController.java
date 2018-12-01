@@ -25,7 +25,7 @@ public class CrearSalaController implements Controller {
 			manejadorUsuario,
 			crearSalaRequest.getNombreSala(),
 			crearSalaRequest.getCantidadJugadores(),
-			crearSalaRequest.
+			crearSalaRequest.getClave()
 		);
 		
 		if (nuevaSala == null) {
