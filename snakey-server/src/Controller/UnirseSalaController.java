@@ -20,17 +20,18 @@ public class UnirseSalaController implements Controller {
 	public Enviable manejarMensaje() {
 		ManejadorSala manejadorSala = manejadorUsuario.getServerSocket()
             .getManejadorSala(unirseSalaRequest.getSala());
-		String claveSala = unirseSalaRequest.getSala().getClaveSala();
-		String claveIngresada = unirseSalaRequest.getClave();
 		if (manejadorSala == null) {
 			return new UnirseSalaResponse(false, null, "Sala no existente.");
 		}
+		String claveSala = manejadorSala.getSala().getClaveSala();
+		String claveIngresada = unirseSalaRequest.getClave();
+		
 		
 		if (manejadorSala.getSala().getSalaLlena()) {
 			return new UnirseSalaResponse(false, null, "Sala llena.");
 		}
 		
-		if(unirseSalaRequest.getTieneClave()) { ///tiene contraseña
+		if(manejadorSala.getSala().getTieneClave()) { ///tiene contraseña
 			if(!claveSala.equals(claveIngresada))	///claves iguales
 				return new UnirseSalaResponse(false, null, "Clave invalida.");
 		}
