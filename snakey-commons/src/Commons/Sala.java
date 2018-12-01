@@ -15,6 +15,7 @@ public class Sala implements Serializable {
 	private int cantJugadores;
 	private Stack<Avatar> avatares;
 	private transient String claveSala;
+	private boolean tieneClave;
 	
 	public Sala(String nombreSala, int cantJugadores, Jugador propietario,String clave) {
 		avatares = new Stack<Avatar>();
@@ -24,6 +25,8 @@ public class Sala implements Serializable {
 		this.jugadorPropietario = propietario;
 		this.tieneEspectadores = false;
 		this.claveSala = clave;
+		if(clave != null)
+			this.tieneClave = true;
 		jugadores = new ArrayList<Jugador>(cantJugadores);
 		propietario.setAvatar(avatares.pop());
 		jugadores.add(propietario);
@@ -44,6 +47,10 @@ public class Sala implements Serializable {
 	public void removerJugador(Jugador jugador) {
 		jugadores.remove(jugador);
 		avatares.push(jugador.getAvatar());
+	}
+	
+	public boolean getTieneClave() {
+		return this.tieneClave;
 	}
 	
 	public String getClaveSala() {

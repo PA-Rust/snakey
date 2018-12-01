@@ -101,8 +101,8 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 				if (selectedIndex == -1) {
 					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala.", "ERROR", JOptionPane.WARNING_MESSAGE);
 					return;
-				} else if(salas.get(selectedIndex).getClaveSala()==null){
-					llamarARequestDeIngreso(selectedIndex,"null");
+				} else if(!salas.get(selectedIndex).getTieneClave()){
+					llamarARequestDeIngreso(selectedIndex,null);
 				}else {
 					clave = JOptionPane.showInputDialog("Ingresar clave","");
 					llamarARequestDeIngreso(selectedIndex,clave);

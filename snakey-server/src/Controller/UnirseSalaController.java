@@ -30,8 +30,11 @@ public class UnirseSalaController implements Controller {
 			return new UnirseSalaResponse(false, null, "Sala llena.");
 		}
 		
-		if(claveSala.trim().length()!=0 && claveSala.equals(claveIngresada))
-			return new UnirseSalaResponse(false, null, "Clave invalida.");
+		if(unirseSalaRequest.getTieneClave()) { ///tiene contraseña
+			if(!claveSala.equals(claveIngresada))	///claves iguales
+				return new UnirseSalaResponse(false, null, "Clave invalida.");
+		}
+		
 		
 		manejadorSala.unirNuevoUsuario(manejadorUsuario);
 		Sala sala = manejadorSala.getSala();
