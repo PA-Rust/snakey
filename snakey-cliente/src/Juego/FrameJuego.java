@@ -123,8 +123,8 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 		}
 		
 		@Override
-		public void paintComponent(Graphics graphics) {
-			super.paintComponent(graphics);
+		public void paint(Graphics graphics) {
+			super.paint(graphics);
 			actualizar(graphics);
 		}
 		
@@ -162,10 +162,6 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 		panelDatos.revalidate();
 		
 		partida = estadoPartidaNotification.getPartida();
-		
-		Graphics g = getGraphics();
-		if (g != null)
-			panelJuego.paintComponent(g);
 		
 		panelJuego.repaint();
 		panelJuego.revalidate();

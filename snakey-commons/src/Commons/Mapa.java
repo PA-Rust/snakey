@@ -29,8 +29,7 @@ public class Mapa implements Serializable {
 		this.ancho = 50;
 		this.alto = 50;
 		grilla = new Entidad[ancho][alto];
-		item = new Manzana(new Coordenada(45, 10), 1000);
-		grilla[45][10] = item;
+		spawnearItem();
 	}
 	
 	public void inicializarGrilla() {
@@ -67,10 +66,10 @@ public class Mapa implements Serializable {
 		} else {
 			item.decrementarReloj(1);
 		}
+		chequearColisiones();
 		limpiarGrilla();
 		actualizarViboritas();
 		reubicarViboritas();
-		chequearColisiones();
 	}
 	
 	public ArrayList<Viborita> getViboritas() {
@@ -81,9 +80,6 @@ public class Mapa implements Serializable {
 		viboritas.remove(viborita);
 	}
 	
-	/*
-	 * Expected to have a squared panel to draw on.
-	 */
 	public void dibujar(Graphics graphics, Map<Avatar, Image> imagenes, int altoBloque, int anchoBloque) {
 		for (Viborita viborita: viboritas) {
 			for (Cuerpo cuerpo: viborita.getCuerpo()) {
