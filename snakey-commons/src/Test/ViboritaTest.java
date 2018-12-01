@@ -21,7 +21,7 @@ public class ViboritaTest {
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testEnColision() {
+	public void testEntreColisionCabezas() {
 		int posicion = 0; 
 		
 		Viborita viboritaUno= new Viborita(posicion, new Jugador());
@@ -37,7 +37,15 @@ public class ViboritaTest {
 		boolean vidaDos = viboritaDos.estaViva();
 		Assert.assertEquals(false,vidaUno );
 		Assert.assertEquals(false, vidaDos);
-	/*Caso 2:
+	}
+		@SuppressWarnings("deprecation")
+		@Test
+	public void testEntreColisionCabezaYCuerpo() {	
+		int posicion = 0; 
+		boolean vidaUno;
+		Viborita viboritaUno= new Viborita(posicion, new Jugador());
+		Viborita viboritaDos= new Viborita(posicion,new Jugador());
+		/*Caso 2:
 	 * La cabeza de una viborita en la posicion de un cuerpo 
 	 * */
 		viboritaUno= new Viborita(posicion, new Jugador());
@@ -46,9 +54,16 @@ public class ViboritaTest {
 		viboritaUno.enColision(viboritaDos.getCuerpo().get(2));
 		vidaUno= viboritaUno.estaViva();
 		Assert.assertEquals(false,vidaUno );
+		}
 		
+		@SuppressWarnings("deprecation")
+		@Test
+		public void testEntreColisionCabezaYManzana() {
+			int posicion = 0; 
+		Viborita viboritaUno= new Viborita(posicion, new Jugador());
 		/*Caso 3 :
 		 * Una viborita choca contra una manzanita, no tiene que morir */
+		boolean vidaUno;
 		viboritaUno = new Viborita(posicion,new Jugador());
 		vidaUno= viboritaUno.estaViva();
 		Assert.assertEquals(true,vidaUno );
@@ -58,7 +73,7 @@ public class ViboritaTest {
 		Assert.assertEquals(true,vidaUno );
 		
 	}
-
+		@SuppressWarnings("deprecation")
 	@Test
 	public void testCambiarDireccion() {
 		int pos= 4;
@@ -114,6 +129,7 @@ public class ViboritaTest {
 		
 		
 	}
+		@SuppressWarnings("deprecation")
 	@Test
 	public void testGetProximaUbicacion() {
 		Mapa map= new Mapa(new Jugador[1]);
