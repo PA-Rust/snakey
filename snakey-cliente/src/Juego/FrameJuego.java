@@ -6,8 +6,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -32,6 +36,11 @@ import Comunicacion.Notifications.JuegoFinalizadoNotification;
 import Comunicacion.Notifications.TauntNotification;
 import InterfazGrafica.SalaActual;
 import Misc.RutaImagen;
+import InterfazGrafica.ConfigDialog;
+import InterfazGrafica.SalaActual;
+import Misc.RutaImagen;
+import javafx.scene.input.KeyCode;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -48,6 +57,8 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	
 	private Taunt tauntActual;
 	private Jugador jugadorTauntActual;
+	private int up, left, right, down;
+	private JPanel panelDatos;
 
 	public FrameJuego(Partida partida, SalaActual padre) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEstadoPartida(this);
@@ -60,6 +71,17 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 				padre.requestDeCerrar();
 		    }
 		});
+		try {
+			leerArchivoConfig();
+		} catch (IOException e1) {
+			this.down= KeyEvent.VK_DOWN;
+			this.left= KeyEvent.VK_LEFT;
+			this.right= KeyEvent.VK_RIGHT;
+			this.up= KeyEvent.VK_UP;
+			
+			e1.printStackTrace();
+			
+		}
 		this.partida = partida;
 		setLocationRelativeTo(padre);
 		setVisible(true);
@@ -68,16 +90,16 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 		
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
+				if (e.getKeyCode() == up) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.arriba));
-				} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+				} else if (e.getKeyCode() == down) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.abajo));
-				} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+				} else if (e.getKeyCode() == left) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.izquierda));
-				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				}else if (e.getKeyCode() == right) {
 					HiloCliente.getInstance()
 						.enviarMensaje(new InputNotification(Direccion.derecha));
 				} else if (e.getKeyCode() == KeyEvent.VK_A) {
@@ -130,6 +152,21 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 		panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
 	}
 	
+	private void leerArchivoConfig() throws IOException {
+		Scanner sc = new Scanner(new File(ConfigDialog.archivoConfig));
+		this.up= sc.nextInt();
+
+		this.left= sc.nextInt();
+
+		this.down= sc.nextInt();
+
+		this.right=  sc.nextInt();
+		
+		
+		sc.close();
+		
+	}
+
 	public class PanelJuego extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private Map<Avatar, Image> imagenes;
@@ -159,6 +196,17 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	@Override
 	public void notificarEstadoPartida(EstadoPartidaNotification estadoPartidaNotification) {
 		panelDatos.removeAll();
+		
+		JLabel lblTimerStatic = new JLabel("Timer");
+		lblTimerStatic.setFont(new Font("Tahoma", Font.BOLD, 21));
+		lblTimerStatic.setForeground(Color.WHITE);
+		lblTimerStatic.setHorizontalAlignment(SwingConstants.CENTER);
+		panelDatos.add(lblTimerStatic);
+		
+		JLabel lblTimer = new JLabel(Integer.toString(estadoPartidaNotification.getPartida().getTimer()));
+		lblTimer.setForeground(Color.WHITE);
+		lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
+		panelDatos.add(lblTimer);
 		
 		for (Jugador jugador: estadoPartidaNotification.getPartida().getJugadores()) {
 			JLabel lbl = new JLabel(jugador.getNombreDeUsuario() + " - " + jugador.getPuntajeActual());

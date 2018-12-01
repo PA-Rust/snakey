@@ -90,6 +90,20 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 		
 		JLabel lblJugadores = new JLabel("Jugadores");
 		lblJugadores.setFont(new Font("Tahoma", Font.BOLD, 16));
+		JButton btnNewButton = new JButton("Configurar Teclas");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					ConfigDialog dialog = new ConfigDialog();
+					dialog.setLocationRelativeTo(dialog.getParent());
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		groupLayout = new GroupLayout(panel);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -100,6 +114,17 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 						.addComponent(btnIniciarPartida)
 						.addComponent(lblJugadores))
 					.addContainerGap(227, Short.MAX_VALUE))
+					.addGap(65)
+					.addComponent(btnIniciarPartida)
+					.addGap(79)
+					.addComponent(btnEspectear)
+					.addContainerGap(110, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(29)
+					.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+					.addComponent(btnNewButton)
+					.addGap(23))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -110,6 +135,14 @@ public class SalaActual extends JFrame implements EscuchadorJuegoComenzo,Escucha
 					.addComponent(panelJugadores, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnIniciarPartida)
+					.addContainerGap(46, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelJugadores, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnIniciarPartida)
+						.addComponent(btnEspectear))
 					.addContainerGap())
 		);
 		panel.add(panelJugadores);

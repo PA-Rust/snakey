@@ -103,11 +103,7 @@ public class PerfilDialog extends JDialog {
 						dispose();
 					}
 				});
-			/*{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}*/
+			
 		}
 	}
 }
