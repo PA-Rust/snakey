@@ -20,7 +20,8 @@ public class UnirseSalaController implements Controller {
 	public Enviable manejarMensaje() {
 		ManejadorSala manejadorSala = manejadorUsuario.getServerSocket()
             .getManejadorSala(unirseSalaRequest.getSala());
-
+		String claveSala = unirseSalaRequest.getSala().getClaveSala();
+		String claveIngresada = unirseSalaRequest.getSala().getClaveSala();
 		if (manejadorSala == null) {
 			return new UnirseSalaResponse(false, null, "Sala no existente.");
 		}
@@ -28,6 +29,9 @@ public class UnirseSalaController implements Controller {
 		if (manejadorSala.getSala().getSalaLlena()) {
 			return new UnirseSalaResponse(false, null, "Sala llena.");
 		}
+		
+		if(claveSala.trim().length()!=0 && claveSala.equals(claveIngresada))
+			return new UnirseSalaResponse(false, null, "Clave invalida.");
 		
 		manejadorSala.unirNuevoUsuario(manejadorUsuario);
 		Sala sala = manejadorSala.getSala();

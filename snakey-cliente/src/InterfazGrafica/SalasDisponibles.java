@@ -52,6 +52,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 	CrearNuevaSala crearNuevaSala;
 	SalaActual salaActual;
 	JButton btnUnirse;
+	String clave;
 
 	public SalasDisponibles(JFrame frameParent) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorSalas(this);
@@ -100,9 +101,13 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 				if (selectedIndex == -1) {
 					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna sala", "ERROR", JOptionPane.WARNING_MESSAGE);
 					return;
-				} else {
-					HiloCliente.getInstance().enviarMensaje(new UnirseSalaRequest(salas.get(selectedIndex)));
+				} else if(salas.get(selectedIndex).getClaveSala()==null){
+					llamarARequestDeIngreso(selectedIndex,"null");
+				}else {
+					clave = JOptionPane.showInputDialog("Ingresar clave","");
+					llamarARequestDeIngreso(selectedIndex,clave);
 				}
+				
 			}
 		});
 
@@ -187,6 +192,10 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		}
 
 		this.listSalasDisponibles.setModel(modelo);
+	}
+	
+	public void llamarARequestDeIngreso(int indice, String clave) {
+		HiloCliente.getInstance().enviarMensaje(new UnirseSalaRequest(salas.get(indice),clave));
 	}
 	
 	public void llamarARequest(Sala sala) {

@@ -70,7 +70,7 @@ public class Server {
 	}
 	
 	public Sala registrarManejadorSala(ManejadorUsuario manejadorUsuario, String nombreSala, int cantidadJugadores) {
-		Sala nuevaSala = new Sala(nombreSala, cantidadJugadores, manejadorUsuario.getJugador());
+		Sala nuevaSala = new Sala(nombreSala, cantidadJugadores, manejadorUsuario.getJugador(),"provisorio");
 		manejadoresDeSala.add(
 			new ManejadorSala(
 				this,

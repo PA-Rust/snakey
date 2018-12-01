@@ -14,14 +14,16 @@ public class Sala implements Serializable {
 	private boolean tieneEspectadores;
 	private int cantJugadores;
 	private Stack<Avatar> avatares;
-
-	public Sala(String nombreSala, int cantJugadores, Jugador propietario) {
+	private transient String claveSala;
+	
+	public Sala(String nombreSala, int cantJugadores, Jugador propietario,String clave) {
 		avatares = new Stack<Avatar>();
 		inicializarStackAvatares();
 		this.nombreSala = nombreSala;
 		this.cantJugadores = cantJugadores;
 		this.jugadorPropietario = propietario;
 		this.tieneEspectadores = false;
+		this.claveSala = clave;
 		jugadores = new ArrayList<Jugador>(cantJugadores);
 		propietario.setAvatar(avatares.pop());
 		jugadores.add(propietario);
@@ -42,6 +44,14 @@ public class Sala implements Serializable {
 	public void removerJugador(Jugador jugador) {
 		jugadores.remove(jugador);
 		avatares.push(jugador.getAvatar());
+	}
+	
+	public String getClaveSala() {
+		return claveSala;
+	}
+
+	public void setClaveSala(String claveSala) {
+		this.claveSala = claveSala;
 	}
 	
 	public String getNombreSala() {
