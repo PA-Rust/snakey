@@ -174,7 +174,7 @@ public class ManejadorDeRespuestas {
 		this.escuchadorPartidaFinalizada = escuchadorPartidaFinalizada;
 	}
 	
-	public void setEscucharTaunt(EscuchadorTaunt escuchadorTaunt) {
+	public void setEscuchadorTaunt(EscuchadorTaunt escuchadorTaunt) {
 		this.escuchadorTaunt = escuchadorTaunt;
 	}
 

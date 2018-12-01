@@ -1,7 +1,7 @@
 package Commons;
 
 public enum Taunt implements Input {
-	REIRSE("HAHAHAHAHAHA"),
+	REIRSE("HAHAHA"),
 	INSULTAR("@#$*!"),
 	GG("GG!"),
 	LLORAR(":'(");

@@ -45,11 +45,15 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 	private PanelJuego panelJuego;
 	private Partida partida;
 	private JPanel panelDatos;
-	private JLabel lblTaunt;
+	
+	private Taunt tauntActual;
+	private Jugador jugadorTauntActual;
 
 	public FrameJuego(Partida partida, SalaActual padre) {
 		ManejadorDeRespuestas.getInstancia().setEscuchadorEstadoPartida(this);
 		ManejadorDeRespuestas.getInstancia().setEscuchadorPartidaFinalizada(this);
+		ManejadorDeRespuestas.getInstancia().setEscuchadorTaunt(this);
+		
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -175,6 +179,13 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 			panelDatos.add(lbl);
 		}
 		
+		if (tauntActual != null && jugadorTauntActual != null) {
+			JLabel labelTaunt = new JLabel(tauntActual.getMensaje());
+			labelTaunt.setForeground(jugadorTauntActual.getAvatar().getColor());
+			labelTaunt.setFont(new Font("Tahoma", Font.BOLD, 60));
+			panelDatos.add(labelTaunt);
+		}
+		
 		panelDatos.revalidate();
 		
 		partida = estadoPartidaNotification.getPartida();
@@ -191,8 +202,7 @@ public class FrameJuego extends JFrame implements EscuchadorEstadoPartida, Escuc
 
 	@Override
 	public void notificarNuevaTaunt(TauntNotification tauntNotification) {
-		lblTaunt.setText(tauntNotification.getTaunt().getMensaje());
-		lblTaunt.setFont(new Font("Tahoma", Font.BOLD, 50));
-		lblTaunt.setForeground(tauntNotification.getJugador().getAvatar().getColor());
+		tauntActual = tauntNotification.getTaunt();
+		jugadorTauntActual = tauntNotification.getJugador();
 	}
 }
