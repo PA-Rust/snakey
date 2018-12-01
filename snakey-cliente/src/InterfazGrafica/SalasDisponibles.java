@@ -64,12 +64,15 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		yo = this;
 		modelo = new DefaultListModel<String>();
 		listSalasDisponibles = new JList();
+		listSalasDisponibles.setBounds(12, 12, 344, 307);
 		listSalasDisponibles.setBackground(SystemColor.menu);
 		JButton btnCrearSala = new JButton("Crear Sala");
+		btnCrearSala.setBounds(12, 375, 94, 26);
 		JPanel panel = new JPanel();
 		JLabel lblEstado = new JLabel("");
-		JButton btnRefresh = new JButton("Refrezcar Salas");
-		GroupLayout gl_panel = new GroupLayout(panel);
+		lblEstado.setBounds(277, 337, 79, 64);
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setBounds(12, 337, 94, 26);
 		
 		HiloCliente.getInstance().enviarMensaje(new GetSalasRequest());
 		
@@ -97,6 +100,7 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 		);
 
 		btnUnirse = new JButton("Unirse");
+		btnUnirse.setBounds(112, 375, 153, 26);
 		btnUnirse.setEnabled(false);
 		btnUnirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -150,41 +154,28 @@ public class SalasDisponibles extends JFrame implements EscuchadorSalas,Escuchad
 				HiloCliente.getInstance().enviarMensaje(new GetSalasRequest());
 			}
 		});
-
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(listSalasDisponibles, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(btnCrearSala, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnUnirse, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
-								.addComponent(btnRefresh, GroupLayout.PREFERRED_SIZE, 253, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblEstado, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(listSalasDisponibles, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(btnRefresh)
-							.addGap(12)
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnCrearSala)
-								.addComponent(btnUnirse)))
-						.addComponent(lblEstado, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
-					.addGap(162))
-		);
-		panel.setLayout(gl_panel);
+		panel.setLayout(null);
+		panel.add(listSalasDisponibles);
+		panel.add(btnCrearSala);
+		panel.add(btnUnirse);
+		panel.add(btnRefresh);
+		panel.add(lblEstado);
+		
+		JButton btnConfigurarTeclas = new JButton("Configurar Teclas");
+		btnConfigurarTeclas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					ConfigDialog dialog = new ConfigDialog();
+					dialog.setLocationRelativeTo(dialog.getParent());
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnConfigurarTeclas.setBounds(112, 337, 153, 26);
+		panel.add(btnConfigurarTeclas);
 		contentPane.setLayout(gl_contentPane);
 
 	}

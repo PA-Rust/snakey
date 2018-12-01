@@ -37,9 +37,6 @@ import Comunicacion.Notifications.TauntNotification;
 import InterfazGrafica.SalaActual;
 import Misc.RutaImagen;
 import InterfazGrafica.ConfigDialog;
-import InterfazGrafica.SalaActual;
-import Misc.RutaImagen;
-import javafx.scene.input.KeyCode;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
